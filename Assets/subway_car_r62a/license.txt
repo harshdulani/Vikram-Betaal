@@ -1,0 +1,11 @@
+Model Information:
+* title:	Subway Car (R62A)
+* source:	https://sketchfab.com/3d-models/subway-car-r62a-eeccd33aab144e76937c1ebdbc1faa74
+* author:	Subin (https://sketchfab.com/subink)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Subway Car (R62A)" (https://sketchfab.com/3d-models/subway-car-r62a-eeccd33aab144e76937c1ebdbc1faa74) by Subin (https://sketchfab.com/subink) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
