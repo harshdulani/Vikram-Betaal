@@ -62,7 +62,7 @@ namespace Player
                     ""id"": ""f0d5173f-4366-4511-a5c4-18cfa1adcb4a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.25)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -247,7 +247,7 @@ namespace Player
                     ""name"": """",
                     ""id"": ""4caad904-ed6d-4e08-a750-65148039f0bc"",
                     ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Run"",

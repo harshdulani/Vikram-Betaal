@@ -6,6 +6,7 @@ namespace Player
 	public class PlayerMovement : MonoBehaviour
 	{
 		[SerializeField] private float magnitudeLerpSpeed = 7f, movementSpeed;
+		public bool IsRunning { private get; set; }
 
 		private Animator _anim;
 		private Transform _transform;
@@ -25,7 +26,7 @@ namespace Player
 		
 		public void Execute(Vector2 input)
 		{
-			var magnitude = input.magnitude;
+			var magnitude = input.magnitude * (IsRunning ? 3 : 1);
 			_inputMag = Mathf.Lerp(_inputMag, magnitude, magnitudeLerpSpeed * Time.deltaTime);
 			SetAnimValues();
 			
