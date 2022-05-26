@@ -1,13 +1,14 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace Player
+namespace Player.Movement
 {
 	public class PlayerMovement : MonoBehaviour
 	{
 		[SerializeField] private float magnitudeLerpSpeed = 7f, movementSpeed;
 		public bool IsRunning { private get; set; }
 
+		private PlayerState _state;
 		private Animator _anim;
 		private Transform _transform;
 
@@ -19,14 +20,15 @@ namespace Player
 		private static readonly int InputMag = Animator.StringToHash("inputMag");
 
 		private void Start()
-		{
+		{			
+			_state = GetComponent<PlayerState>();
 			_anim = GetComponent<Animator>();
 			_transform = transform;
 		}
 		
 		public void Execute(Vector2 input)
 		{
-			var magnitude = input.magnitude * (IsRunning ? 3 : 1);
+			var magnitude = input.magnitude * (IsRunning && !_state.inCombat ? 3 : 1);
 			_inputMag = Mathf.Lerp(_inputMag, magnitude, magnitudeLerpSpeed * Time.deltaTime);
 			SetAnimValues();
 			
