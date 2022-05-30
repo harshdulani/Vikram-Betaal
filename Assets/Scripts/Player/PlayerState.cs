@@ -4,6 +4,9 @@ namespace Player
 {
 	public class PlayerState : MonoBehaviour
 	{
-		public bool inCombat;
+		public bool inCombat, disableMovementByAnimation;
+		
+		public void EnableMovementByAnimationStatus()  => disableMovementByAnimation = false;
+		public void DisableMovementByAnimationStatus()  => disableMovementByAnimation = true;
 	}
 }

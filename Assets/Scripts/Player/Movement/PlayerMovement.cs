@@ -28,10 +28,19 @@ namespace Player.Movement
 		
 		public void Execute(Vector2 input)
 		{
+			if (_state.disableMovementByAnimation)
+			{
+				_inputMag = Mathf.Lerp(_inputMag, 0f, magnitudeLerpSpeed * 3 * Time.deltaTime);
+				SetAnimValues();
+				return;
+			}
+			
 			var magnitude = input.magnitude * (IsRunning && !_state.inCombat ? 3 : 1);
+			
 			_inputMag = Mathf.Lerp(_inputMag, magnitude, magnitudeLerpSpeed * Time.deltaTime);
 			SetAnimValues();
-			
+
+			Recenter();
 			if(magnitude < 0.01f) return;
 			
 			HandleRotation(input.x);
@@ -54,6 +63,8 @@ namespace Player.Movement
 		{
 			_transform.position += Vector3.right * ((_isFacingRight ? 1 : -1) * _inputMag * movementSpeed * Time.deltaTime);
 		}
+
+		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime);
 
 		private void SetAnimValues() => _anim.SetFloat(InputMag, _inputMag);
 	}
