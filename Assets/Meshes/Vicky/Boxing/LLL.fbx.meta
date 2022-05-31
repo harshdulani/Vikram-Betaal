@@ -102,7 +102,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.13239437
+        functionName: TurnFistsColliders
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3663adad18074ab98e01a1c86a2beede, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.54366195
+        functionName: TurnFistsTriggers
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3663adad18074ab98e01a1c86a2beede, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -131,7 +145,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.27887326
+        functionName: TurnFistsColliders
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3663adad18074ab98e01a1c86a2beede, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.54084504
+        functionName: TurnFistsTriggers
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3663adad18074ab98e01a1c86a2beede, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -160,7 +188,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.04225355
+        functionName: TurnFistsColliders
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3663adad18074ab98e01a1c86a2beede, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.11830984
+        functionName: TurnFistsTriggers
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3663adad18074ab98e01a1c86a2beede, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

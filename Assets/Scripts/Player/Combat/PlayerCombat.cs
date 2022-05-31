@@ -4,6 +4,8 @@ namespace Player.Combat
 {
 	public class PlayerCombat : MonoBehaviour
 	{
+		[SerializeField] private Collider leftHand, rightHand;
+		
 		private PlayerState _state;
 		private Animator _anim;
 
@@ -19,6 +21,7 @@ namespace Player.Combat
 
 		private void Update()
 		{
+			if (Input.GetKeyUp(KeyCode.R)) _anim.enabled = !_anim.isActiveAndEnabled;
 			if(!Input.GetKeyUp(KeyCode.K)) return;
 
 			_state.inCombat = !_state.inCombat;
@@ -30,5 +33,9 @@ namespace Player.Combat
 			if(_state.inCombat)
 				_anim.SetTrigger(Light);
 		}
+
+		public void TurnFistsTriggers() => leftHand.isTrigger = rightHand.isTrigger = true;
+
+		public void TurnFistsColliders() => leftHand.isTrigger = rightHand.isTrigger = false;
 	}
 }
