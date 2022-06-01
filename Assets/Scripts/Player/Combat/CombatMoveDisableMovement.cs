@@ -4,7 +4,7 @@ namespace Player
 {
 	public class CombatMoveDisableMovement : StateMachineBehaviour
 	{
-		[SerializeField] private AttackType myAttackType;
+		[SerializeField] private PlayerAttackType myAttackType;
 		[SerializeField] private bool shouldDisable;
 		private PlayerState _state;
 		

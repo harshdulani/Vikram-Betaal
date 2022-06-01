@@ -88,7 +88,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.356145
   m_HasExitTime: 1
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 1
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1102 &-3104693196847388493
@@ -130,8 +130,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1494553362115267499}
-  - {fileID: -3426218812350251405}
   - {fileID: 9168340161026231359}
+  - {fileID: -3426218812350251405}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -215,13 +215,13 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2174695125029156388}
-    m_Position: {x: -130, y: 400, z: 0}
+    m_Position: {x: 270, y: 390, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3104693196847388493}
-    m_Position: {x: 190, y: 400, z: 0}
+    m_Position: {x: 590, y: 390, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -891849440967048039}
-    m_Position: {x: -130, y: 500, z: 0}
+    m_Position: {x: 270, y: 490, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -246,13 +246,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: hitUppercut
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -380,9 +380,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.55
+  m_TransitionDuration: 0.23502612
   m_TransitionOffset: 0
-  m_ExitTime: 0.356
+  m_ExitTime: 0.7194312
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

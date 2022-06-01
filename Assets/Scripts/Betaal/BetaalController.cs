@@ -1,7 +1,3 @@
-using System;
-using DG.Tweening;
-using Player;
-using Player.Combat;
 using UnityEngine;
 
 public class BetaalController : MonoBehaviour
@@ -31,13 +27,13 @@ public class BetaalController : MonoBehaviour
 		Recenter();
 	}
 
-	public void GiveDamage(int getAttackDamage, AttackType type)
+	public void GiveDamage(int getAttackDamage, PlayerAttackType type)
 	{
 		_currentHealth -= getAttackDamage;
 		_anim.SetTrigger(type switch
 						 {
-							 AttackType.LPunch => HitPunch,
-							 AttackType.LUppercut => HitUppercut,
+							 PlayerAttackType.LPunch => HitPunch,
+							 PlayerAttackType.LUppercut => HitUppercut,
 							 _ => Dummy
 						 });
 		

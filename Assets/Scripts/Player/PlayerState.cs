@@ -1,16 +1,16 @@
 using Player.Combat;
 using UnityEngine;
 
-namespace Player
-{	
-	public enum AttackType { None, LPunch, LUppercut }
+public enum PlayerAttackType { None, LPunch, LUppercut }
 
+namespace Player
+{
 	public class PlayerState : MonoBehaviour
 	{
 		public PlayerCombat Combat { get; private set; }
 		public PlayerController Controller { get; private set; }
 
-		public AttackType CurrentAttackType { get; set; }
+		public PlayerAttackType CurrentAttackType { get; set; }
 		
 		public bool inCombat, disableMovementByAnimation;
 		

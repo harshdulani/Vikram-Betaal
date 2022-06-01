@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 27638817}
   - component: {fileID: 27638816}
   - component: {fileID: 5307641391081696204}
+  - component: {fileID: 1313400018}
   m_Layer: 0
   m_Name: LeftHandHitBox
   m_TagString: Untagged
@@ -75,6 +76,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3138cfba04127141888d04da7721f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  punchImpulse: 0.5
+  uppercutImpulse: 0.65
+--- !u!114 &1313400018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27638814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &1970273042
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +143,7 @@ GameObject:
   - component: {fileID: 1970273045}
   - component: {fileID: 1970273044}
   - component: {fileID: 5824087853895630622}
+  - component: {fileID: 1847023375}
   m_Layer: 0
   m_Name: RightHandHitBox
   m_TagString: Untagged
@@ -150,6 +207,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3138cfba04127141888d04da7721f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  punchImpulse: 0.5
+  uppercutImpulse: 0.65
+--- !u!114 &1847023375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970273042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1001 &4785413892099693930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,7 +279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.825
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -175,7 +287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -327,7 +439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_Name
-      value: Vikram Variant
+      value: Vikram
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_Layer
@@ -1204,6 +1316,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inCombat: 0
   disableMovementByAnimation: 0
+--- !u!114 &4518198904347184844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667882683085054011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e2c17ec34c4e6f884bd0e4d95e3ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbodies:
+  - {fileID: 1247001122}
+  - {fileID: 1475339824}
+  - {fileID: 1101978579}
+  - {fileID: 2084435696}
+  - {fileID: 273951506}
+  - {fileID: 918078845}
+  - {fileID: 1841068069}
+  - {fileID: 342671535}
+  - {fileID: 248066381}
+  - {fileID: 1522766429}
+  - {fileID: 1589554144}
+  ragdollThrowBackForce: 2
+  lPunchDamage: 20
+  lUppercutDamage: 40
+--- !u!195 &8764958824108137654
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667882683085054011}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 3
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!4 &6619333085793723042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
