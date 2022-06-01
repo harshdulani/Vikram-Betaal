@@ -15,7 +15,6 @@ public class BetaalController : MonoBehaviour
 	private Transform _transform;
 
 	private int _currentHealth;
-	private bool _inHitCooldown;
 	private static readonly int HitPunch = Animator.StringToHash("hitPunch");
 	private static readonly int HitUppercut = Animator.StringToHash("hitUppercut");
 	private static readonly int Dummy = Animator.StringToHash("dummy");
@@ -27,14 +26,13 @@ public class BetaalController : MonoBehaviour
 		_currentHealth = maxHealth;
 	}
 
+	private void Update()
+	{
+		Recenter();
+	}
+
 	public void GiveDamage(int getAttackDamage, AttackType type)
 	{
-		print("here");
-		if(_inHitCooldown) return;
-
-		_inHitCooldown = true;
-		DOVirtual.DelayedCall(0.35f, () => _inHitCooldown = false);
-		
 		_currentHealth -= getAttackDamage;
 		_anim.SetTrigger(type switch
 						 {
@@ -55,7 +53,9 @@ public class BetaalController : MonoBehaviour
 		foreach (var rb in rigidbodies)
 		{
 			rb.isKinematic = false;
-			rb.AddForce(-_transform.forward * ragdollThrowBackForce, ForceMode.Impulse);
+			rb.AddForce(-_transform.forward * ragdollThrowBackForce + Vector3.up * ragdollThrowBackForce * 20, ForceMode.Impulse);
 		}
 	}
+
+	private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
 }

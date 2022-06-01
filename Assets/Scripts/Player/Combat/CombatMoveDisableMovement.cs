@@ -24,7 +24,7 @@ namespace Player
 			else
 			{
 				_state.EnableMovementByAnimationStatus();
-				animator.ResetTrigger(Light);
+				//animator.ResetTrigger(Light);
 				_state.Combat.TurnFistsTriggers();
 			}
 		}

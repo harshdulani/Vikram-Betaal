@@ -1,4 +1,4 @@
-using Player.Combat;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Player
@@ -6,6 +6,7 @@ namespace Player
 	public class PlayerFistCollider : MonoBehaviour
 	{
 		private PlayerState _state;
+		private bool _inHitCooldown;
 
 		private void Start()
 		{
@@ -14,13 +15,13 @@ namespace Player
 
 		private void OnCollisionEnter(Collision other)
 		{
-			print(other.transform);
+			if(_inHitCooldown) return;
 			if (!other.collider.CompareTag("Betaal")) return;
-			print(1);
-			
-			if(!other.transform.root.TryGetComponent(out BetaalController betu)) return;
-			print(1);
 
+			if(!other.transform.root.TryGetComponent(out BetaalController betu)) return;
+
+			_inHitCooldown = true;
+			DOVirtual.DelayedCall(0.55f, () => _inHitCooldown = false);
 			var currentAttack = _state.CurrentAttackType;
 			betu.GiveDamage(_state.Controller.GetAttackDamage(currentAttack), currentAttack);
 		}

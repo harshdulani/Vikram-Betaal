@@ -25,7 +25,6 @@ namespace Player.Combat
 
 		private void Update()
 		{
-			if (Input.GetKeyUp(KeyCode.R)) _anim.enabled = !_anim.isActiveAndEnabled;
 			if(!Input.GetKeyUp(KeyCode.T)) return;
 
 			_state.inCombat = !_state.inCombat;
