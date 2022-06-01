@@ -4,18 +4,29 @@ namespace Player
 {
 	public class CombatMoveDisableMovement : StateMachineBehaviour
 	{
+		[SerializeField] private AttackType myAttackType;
 		[SerializeField] private bool shouldDisable;
 		private PlayerState _state;
-	
+		
+		private static readonly int Light = Animator.StringToHash("light");
+
 		// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			if (!_state) _state = animator.GetComponent<PlayerState>();
 
-			if(shouldDisable)
+			_state.CurrentAttackType = myAttackType;
+			if (shouldDisable)
+			{
 				_state.DisableMovementByAnimationStatus();
+				_state.Combat.TurnFistsColliders();
+			}
 			else
+			{
 				_state.EnableMovementByAnimationStatus();
+				animator.ResetTrigger(Light);
+				_state.Combat.TurnFistsTriggers();
+			}
 		}
 
 		// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

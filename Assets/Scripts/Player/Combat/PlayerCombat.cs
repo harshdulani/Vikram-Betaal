@@ -12,17 +12,21 @@ namespace Player.Combat
 		//Animator static hashes
 		private static readonly int InCombat = Animator.StringToHash("inCombat");
 		private static readonly int Light = Animator.StringToHash("light");
+		private Transform _leftHandT, _rightHandT;
 
 		private void Start()
 		{
 			_state = GetComponent<PlayerState>();
 			_anim = GetComponent<Animator>();
+
+			_leftHandT = leftHand.transform;
+			_rightHandT = rightHand.transform;
 		}
 
 		private void Update()
 		{
 			if (Input.GetKeyUp(KeyCode.R)) _anim.enabled = !_anim.isActiveAndEnabled;
-			if(!Input.GetKeyUp(KeyCode.K)) return;
+			if(!Input.GetKeyUp(KeyCode.T)) return;
 
 			_state.inCombat = !_state.inCombat;
 			_anim.SetBool(InCombat, _state.inCombat);
@@ -34,8 +38,18 @@ namespace Player.Combat
 				_anim.SetTrigger(Light);
 		}
 
-		public void TurnFistsTriggers() => leftHand.isTrigger = rightHand.isTrigger = true;
+		public void TurnFistsTriggers()
+		{
+			leftHand.attachedRigidbody.isKinematic = rightHand.attachedRigidbody.isKinematic = true;
+			leftHand.isTrigger = rightHand.isTrigger = true;
+			_leftHandT.localPosition = _rightHandT.localPosition = Vector3.zero;
+		}
 
-		public void TurnFistsColliders() => leftHand.isTrigger = rightHand.isTrigger = false;
+		public void TurnFistsColliders()
+		{
+			leftHand.attachedRigidbody.isKinematic = rightHand.attachedRigidbody.isKinematic = false;
+			leftHand.isTrigger = rightHand.isTrigger = false;			
+			_leftHandT.localPosition = _rightHandT.localPosition = Vector3.zero;
+		}
 	}
 }
