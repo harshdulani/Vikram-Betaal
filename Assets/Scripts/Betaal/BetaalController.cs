@@ -7,6 +7,8 @@ public class BetaalController : MonoBehaviour
 	[SerializeField] private Rigidbody[] rigidbodies;
 	[SerializeField] private float ragdollThrowBackForce;
 
+	[SerializeField] private GameObject lightningFx;
+	
 	private Animator _anim;
 	private Transform _transform;
 
@@ -24,6 +26,7 @@ public class BetaalController : MonoBehaviour
 
 	private void Update()
 	{
+		if(Input.GetKeyDown(KeyCode.K)) GoRagdoll();
 		Recenter();
 	}
 
@@ -46,10 +49,12 @@ public class BetaalController : MonoBehaviour
 
 	private void GoRagdoll()
 	{
+		_anim.enabled = false;
+		lightningFx.SetActive(false);
 		foreach (var rb in rigidbodies)
 		{
 			rb.isKinematic = false;
-			rb.AddForce(-_transform.forward * ragdollThrowBackForce + Vector3.up * ragdollThrowBackForce * 20, ForceMode.Impulse);
+			rb.AddForce(-_transform.forward * ragdollThrowBackForce, ForceMode.Impulse);
 		}
 	}
 

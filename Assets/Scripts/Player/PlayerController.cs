@@ -47,7 +47,7 @@ namespace Player
 			foreach (var rb in rigidbodies)
 			{
 				rb.isKinematic = false;
-				rb.AddForce(-transform.forward * ragdollThrowBackForce + Vector3.up * ragdollThrowBackForce * 20, ForceMode.Impulse);
+				rb.AddForce(-transform.forward * ragdollThrowBackForce, ForceMode.Impulse);
 			}
 		}
 	}
