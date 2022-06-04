@@ -25,7 +25,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 43035
+  controlID: 23738
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -426,9 +426,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.830387, y: 0.6864937, z: 0.6785187}
+    m_Target: {x: 0.29071614, y: 2.6514797, z: 11.417593}
     speed: 2
-    m_Value: {x: 3.830387, y: 0.6864937, z: 0.6785187}
+    m_Value: {x: 0.29071614, y: 2.6514797, z: 11.417593}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -475,20 +475,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.013252518, y: -0.97972566, z: 0.19041114, w: 0.06496045}
+    m_Target: {x: -0.013475749, y: -0.059357807, z: -0.0008014288, w: 0.9981467}
     speed: 2
-    m_Value: {x: 0.013249111, y: -0.9794738, z: 0.19036219, w: 0.06494375}
+    m_Value: {x: -0.013475733, y: -0.059357736, z: -0.0008014279, w: 0.9981455}
   m_Size:
-    m_Target: 0.29650137
+    m_Target: 8.145369
     speed: 2
-    m_Value: 0.29650137
+    m_Value: 8.145369
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 0.34082997
-    m_SpeedNormalized: 0.16999999
+    m_Speed: 0.12094
+    m_SpeedNormalized: 0.06
     m_SpeedMin: 0.001
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 42999
+  controlID: 23705
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -578,8 +578,8 @@ MonoBehaviour:
     y: 0
     width: 532
     height: 443
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -616,10 +616,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
+      scrollPos: {x: 0, y: 16}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0a17feffdcd1ffff02f5ffff0cf5ffff16f5ffff1af5ffff5cf5ffff66f5ffff70f5ffff74f5ffff7ef5ffff82f5ffff86f5ffffa6f5ffffc6f5ffffcef5ffff0af6ffff48f6ffff4cf6ffff5ef6ffff96f6ffff9af6ffffa4f6ffffa8f6ffffacf6ffffc2f6ffffccf6ffffecf6ffffe4faffff22890000a28900001c8c0000c88c0000d48c0000388e0000fe8e0000d08f00001a910000520203005e0203005a050300a4060300
+      m_ExpandedIDs: f2c8fdff8cf4ffffe6f5ffffe4faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -743,9 +743,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: d282c035d1882f4418f8fa51c6cda3e6, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: 8b6fb490fabb010429f22e519bb47f5e, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: -485787488017098608, guid: d282c035d1882f4418f8fa51c6cda3e6, type: 2}
+  - m_Target: {fileID: 4981702270809024896, guid: 8b6fb490fabb010429f22e519bb47f5e, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -777,14 +777,14 @@ MonoBehaviour:
     y: 443
     width: 532
     height: 504
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 11}
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 11}
   - {fileID: 12}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -854,22 +854,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Betaal
+    - Assets/Scripts/Player/Combat
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/Betaal
+  - Assets/Scripts/Player/Combat
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Actual Stuff\Workspace_Unity\FX Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4c730000
-    m_LastClickedID: 29516
-    m_ExpandedIDs: 000000005e71000060710000627100006471000066710000687100006a7100006c7100006e71000070710000727100007471000076710000787100007a7100007c7100007e71000080710000827100008471000000ca9a3b
+    scrollPos: {x: 0, y: 5}
+    m_SelectedIDs: 62d00100
+    m_LastClickedID: 118882
+    m_ExpandedIDs: 000000006471000066710000687100006a7100006c7100006e71000070710000727100007471000076710000787100007a7100007c7100007e71000080710000827100008471000086710000887100008a7100004494010000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -897,7 +897,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000005e71000060710000627100006471000066710000687100006a7100006c7100006e71000070710000727100007471000076710000787100007a7100007c7100007e71000080710000827100008471000000ca9a3b
+    m_ExpandedIDs: 000000006471000066710000687100006a7100006c7100006e71000070710000727100007471000076710000787100007a7100007c7100007e71000080710000827100008471000086710000887100008a71000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -922,8 +922,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 02f7ffff
-    m_LastClickedInstanceID: -2302
+    m_SelectedInstanceIDs: e6f5ffff
+    m_LastClickedInstanceID: -2586
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000de25010070870000147b000092800000348c00003cb8000096820000
     m_RenameOverlay:
@@ -941,7 +941,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -952,7 +952,7 @@ MonoBehaviour:
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 90
+  m_DirectoriesAreaWidth: 250
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1016,7 +1016,7 @@ MonoBehaviour:
     m_CachedPref: -412
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -2550
+  m_LastInspectedObjectInstanceID: -2586
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

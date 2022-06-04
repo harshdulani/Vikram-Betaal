@@ -829,6 +829,13 @@ MonoBehaviour:
   - {fileID: 1277947012}
   ragdollThrowBackForce: 1
   lightningFx: {fileID: 1478116711}
+  handleAttack:
+    drawAttackDebugSphere: 0
+    attackPos: {x: 0, y: 0, z: 0}
+    maxDistanceForAttack: 7
+    shakeTime: 3
+    shakeStrength: 30
+    postAttackInterval: 4
 --- !u!195 &5119882186859737415
 NavMeshAgent:
   m_ObjectHideFlags: 0

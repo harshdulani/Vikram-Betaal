@@ -262,6 +262,37 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!1 &7827552521739761544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7909350564217089431}
+  m_Layer: 0
+  m_Name: AttackPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7909350564217089431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7827552521739761544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5036024843878742657}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4785413892099693930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -439,11 +470,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_Name
-      value: Vikram
+      value: Vikram Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
       propertyPath: m_Layer
@@ -1129,6 +1164,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &5036024843878742657 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
+  m_PrefabInstance: {fileID: 4785413892099693930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5578891247868609376 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
@@ -1290,6 +1330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: {fileID: 27638817}
   rightHand: {fileID: 1970273045}
+  attackHostPosition: {fileID: 7909350564217089431}
 --- !u!114 &2044562832
 MonoBehaviour:
   m_ObjectHideFlags: 0

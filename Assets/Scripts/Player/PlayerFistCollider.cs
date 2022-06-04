@@ -1,3 +1,4 @@
+using Betaal;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;

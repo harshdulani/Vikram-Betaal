@@ -5,14 +5,15 @@ namespace Player.Combat
 	public class PlayerCombat : MonoBehaviour
 	{
 		[SerializeField] private Collider leftHand, rightHand;
+		public Transform attackHostPosition;
 		
 		private PlayerState _state;
 		private Animator _anim;
+		private Transform _leftHandT, _rightHandT;
 
 		//Animator static hashes
 		private static readonly int InCombat = Animator.StringToHash("inCombat");
 		private static readonly int Light = Animator.StringToHash("light");
-		private Transform _leftHandT, _rightHandT;
 
 		private void Start()
 		{

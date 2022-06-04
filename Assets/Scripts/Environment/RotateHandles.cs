@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Betaal;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class RotateHandles : MonoBehaviour
 {
 	[SerializeField] private float interval = 7f, torque;
-	[SerializeField] private Rigidbody[] handles;
+	[SerializeField] private HandleController[] handles;
 	[SerializeField] private List<float> torqueMultipliers = new List<float>();
 	
 	private CinemachineImpulseSource _impulse;
@@ -21,7 +22,7 @@ public class RotateHandles : MonoBehaviour
 										{
 											_impulse.GenerateImpulse();
 											foreach (var handle in handles)
-												handle.AddTorque(Vector3.forward * (torque * (1 + torqueMultipliers[_randomIndex++ % torqueMultipliers.Count])),
+												handle.TryRotate(Vector3.forward * (torque * (1 + torqueMultipliers[_randomIndex++ % torqueMultipliers.Count])),
 																 ForceMode.VelocityChange);
 										}).SetLoops(-1, LoopType.Restart);
 	}

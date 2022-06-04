@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class BetaalBodyCollider : MonoBehaviour
+namespace Betaal
 {
-	private BetaalController _controller;
-
-	private void Start()
+	public class BetaalBodyCollider : MonoBehaviour
 	{
-		_controller = transform.root.GetComponent<BetaalController>();
-	}
+		private BetaalController _controller;
 
-	private void OnCollisionEnter(Collision other)
-	{
-		if(!other.collider.CompareTag("Betaal")) return;
+		private void Start()
+		{
+			_controller = transform.root.GetComponent<BetaalController>();
+		}
+
+		private void OnCollisionEnter(Collision other)
+		{
+			if(!other.collider.CompareTag("Betaal")) return;
+		}
 	}
 }
