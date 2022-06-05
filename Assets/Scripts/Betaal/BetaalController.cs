@@ -13,10 +13,11 @@ namespace Betaal
 
 		[SerializeField] private GameObject lightningFx;
 
+		public BetaalHandleAttack handleAttack;
+		
 		private Animator _anim;
 		private Transform _transform;
 
-		public BetaalHandleAttack handleAttack;
 		private PlayerCombat _player;
 
 		private static readonly int HitPunch = Animator.StringToHash("hitPunch");

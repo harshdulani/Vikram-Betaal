@@ -549,6 +549,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &3138992268271135373 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7666680083751660616, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}
+  m_PrefabInstance: {fileID: 4749736560888104645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4187635436384532794 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -290750445479886849, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}
@@ -835,7 +840,11 @@ MonoBehaviour:
     maxDistanceForAttack: 7
     shakeTime: 3
     shakeStrength: 30
+    perAttackInterval: 0.2
     postAttackInterval: 4
+    lightingPrefab: {fileID: 106988, guid: a9892f6a83fd8d4468ce0c8a3d09d3cd, type: 3}
+    leftHand: {fileID: 3138992268271135373}
+    rightHand: {fileID: 8216205779170197198}
 --- !u!195 &5119882186859737415
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1054,6 +1063,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &8216205779170197198 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5480977901411583989, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}
+  m_PrefabInstance: {fileID: 4749736560888104645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8585859670625588110 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3948933247560734027, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}
