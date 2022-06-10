@@ -755,6 +755,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &1409379425462134786 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
+  m_PrefabInstance: {fileID: 4785413892099693930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1676449931211925985 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3086436065929644917, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
@@ -1169,6 +1174,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
   m_PrefabInstance: {fileID: 4785413892099693930}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5151518691157740805 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 366175167995203695, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
+  m_PrefabInstance: {fileID: 4785413892099693930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5578891247868609376 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}
@@ -1406,6 +1416,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5973947435089045560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667882683085054011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e833ad0fb9b4a5d48bf331ae1f073f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chestCollider: {fileID: 5151518691157740805}
+  headCollider: {fileID: 1409379425462134786}
 --- !u!4 &6619333085793723042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}

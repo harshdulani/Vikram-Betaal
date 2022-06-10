@@ -11,7 +11,7 @@ namespace Betaal
 		[SerializeField] private Rigidbody[] rigidbodies;
 		[SerializeField] private float ragdollThrowBackForce;
 
-		[SerializeField] private GameObject lightningFx;
+		[SerializeField] private GameObject[] lightningFx;
 
 		public BetaalHandleAttack handleAttack;
 		
@@ -42,7 +42,7 @@ namespace Betaal
 			Recenter();
 		}
 
-		private void OnDrawGizmos()
+		private void OnDrawGizmosSelected()
 		{
 			handleAttack.DrawGizmos();
 		}
@@ -73,7 +73,9 @@ namespace Betaal
 		private void GoRagdoll()
 		{
 			_anim.enabled = false;
-			lightningFx.SetActive(false);
+			
+			foreach (var fx in lightningFx) fx.SetActive(false);
+			
 			foreach (var rb in rigidbodies)
 			{
 				rb.isKinematic = false;
