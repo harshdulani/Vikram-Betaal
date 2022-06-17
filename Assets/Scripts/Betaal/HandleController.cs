@@ -1,4 +1,6 @@
 using DG.Tweening;
+using Player;
+using Player.Combat;
 using UnityEngine;
 
 namespace Betaal
@@ -6,8 +8,9 @@ namespace Betaal
 	public class HandleController : MonoBehaviour
 	{
 		private Vector3 _initPos;
-		private bool _isAttacking;
-	
+		private bool _isAttacking, _hasAttacked;
+
+		private static PlayerCombat _player;
 		private Rigidbody _rb;
 		private Transform _transform;
 
@@ -24,6 +27,9 @@ namespace Betaal
 		private void Start()
 		{
 			_rb = GetComponent<Rigidbody>();
+			if(!_player)
+				_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCombat>();
+			
 			_transform = transform;
 			_initPos = _transform.position;
 		}
@@ -34,7 +40,11 @@ namespace Betaal
 			_rb.AddTorque(torqueMultiplier, velocityChange);
 		}
 
-		private void StopAttacking() => _isAttacking = false;
+		private void StopAttacking()
+		{
+			_isAttacking = false; 
+			_hasAttacked = false;
+		}
 
 		private void OnStartHandleAttack(BetaalController betaal)
 		{
@@ -68,6 +78,7 @@ namespace Betaal
 								   betaal.handleAttack.EndHandleAttackControl(_transform);
 							   });
 			
+			betaal.handleAttack.attackPos = _player.attackHostPosition.position;
 			//TODO: add electric explosion here as he shoots the handle at vikram
 			//move this handle to the attack position decided by betaal, and make sure it keeps flying towards goal
 			seq.Append(_transform.DOMove(betaal.handleAttack.attackPos, 0.5f).SetEase(Ease.InExpo));
@@ -89,7 +100,20 @@ namespace Betaal
 								   //let this handle be rotated to simulate train rumble again
 								   _rb.isKinematic = false;
 								   StopAttacking();
+								   BetaalEvents.InvokeEndBetaalAttack();
 							   });
+		}
+
+		private void OnCollisionEnter(Collision other)
+		{
+			if(!_isAttacking) return;
+			if(_hasAttacked) return;
+			if(!other.transform.root.CompareTag("Player")) return;
+
+			var player = other.transform.root.GetComponent<PlayerState>();
+
+			_hasAttacked = true;
+			player.Controller.GetHit(other.relativeVelocity);
 		}
 	}
 }

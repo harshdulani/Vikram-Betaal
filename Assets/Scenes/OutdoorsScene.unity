@@ -2140,7 +2140,7 @@ MonoBehaviour:
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: -196.65158, y: 70.80493, z: 834.60547}
 --- !u!114 &339103256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,7 +2170,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7766323, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -2193,8 +2193,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339103254}
-  m_LocalRotation: {x: 0.025628945, y: 0.29795244, z: -0.008002706, w: 0.95420307}
-  m_LocalPosition: {x: -10.030001, y: 1.5, z: -5.209999}
+  m_LocalRotation: {x: 0.028550098, y: 0.119132176, z: -0.0034270687, w: 0.992462}
+  m_LocalPosition: {x: -8.030001, y: 1.5, z: -5.2099996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4737,7 +4737,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0.5
   m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -616.8628, y: -486.13086, z: -707.4049}
 --- !u!114 &877136658
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -4852,7 +4852,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7766323, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -4906,7 +4906,7 @@ MonoBehaviour:
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: 801.7807, y: -8.357666, z: 600.266}
 --- !u!1 &878943414
 GameObject:
   m_ObjectHideFlags: 0
@@ -8936,7 +8936,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0.5
   m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -889.32556, y: -307.06918, z: 730.4094}
 --- !u!114 &1818156556
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8952,7 +8952,7 @@ MonoBehaviour:
   m_Path: {fileID: 1140798364}
   m_PathPosition: 0.16541827
   m_PositionUnits: 0
-  m_PathOffset: {x: -3, y: 1.5, z: -2}
+  m_PathOffset: {x: -3, y: 1.5, z: 0}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 1
@@ -11066,37 +11066,9 @@ PrefabInstance:
       propertyPath: rightCeiling
       value: 
       objectReference: {fileID: 317192647}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[1].time
-      value: 0.34457645
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[2].time
-      value: 0.5723883
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[2].inSlope
-      value: -0.2201649
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[3].inSlope
-      value: -2.5190709
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[2].outSlope
-      value: -0.2201649
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[3].inWeight
-      value: 0.2485008
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[3].outSlope
-      value: -2.5190709
-      objectReference: {fileID: 0}
-    - target: {fileID: 419483822, guid: 007cbb623c7667f448f16d317c390151, type: 3}
-      propertyPath: snakeCurve.m_Curve.Array.data[2].outWeight
-      value: 0.24118507
+    - target: {fileID: 653054278564734435, guid: 007cbb623c7667f448f16d317c390151, type: 3}
+      propertyPath: handleAttack.maxAttackDamage
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5071278863080137006, guid: 007cbb623c7667f448f16d317c390151, type: 3}
       propertyPath: m_RootOrder

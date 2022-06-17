@@ -9,10 +9,15 @@ namespace Player
 	{
 		[SerializeField] private Rigidbody[] rigidbodies;
 		[SerializeField] private float ragdollThrowBackForce;
-		
+
+		[SerializeField] private float hitImpulseMultiplier;
 		[SerializeField] private int lPunchDamage = 20, lUppercutDamage = 40;
 
+		private PlayerState _me; 
 		private Animator _anim;
+		
+		private static readonly int GetHurtBack = Animator.StringToHash("GetHurtBack");
+		private static readonly int GetHurtFront = Animator.StringToHash("GetHurtFront");
 
 		private void Awake()
 		{
@@ -22,6 +27,7 @@ namespace Player
 		private void Start()
 		{
 			_anim = GetComponent<Animator>();
+			_me = GetComponent<PlayerState>();
 		}
 
 		private void Update()
@@ -39,6 +45,19 @@ namespace Player
 					   PlayerAttackType.LUppercut => lUppercutDamage,
 					   _ => throw new ArgumentOutOfRangeException(nameof (type), type, null)
 				   };
+		}
+
+		public void GetHit(Vector3 damage)
+		{
+			_me.currentHealth -= damage.magnitude;
+
+			if (_me.currentHealth < 0f)
+			{
+				GoRagdoll();
+				return;
+			}
+			_me.Impulse.GenerateImpulse(damage.normalized * hitImpulseMultiplier);
+			_anim.SetTrigger(Vector3.Dot(transform.forward, damage) > 0f ? GetHurtFront : GetHurtBack);
 		}
 		
 		private void GoRagdoll()

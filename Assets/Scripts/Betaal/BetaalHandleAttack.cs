@@ -8,7 +8,9 @@ namespace Betaal
 	public class BetaalHandleAttack
 	{
 		[SerializeField] private bool drawAttackDebugSphere;
+		
 		[HideInInspector] public Vector3 attackPos;
+
 		public float maxDistanceForAttack, shakeTime, shakeStrength, perAttackInterval, postAttackInterval;
 
 		[Header("VFX"), SerializeField] private GameObject lightingPrefab;
@@ -30,7 +32,7 @@ namespace Betaal
 		{
 			if(!drawAttackDebugSphere) return;
 			Gizmos.color = new Color(1f, 0f, 0f, 0.1f);
-			Gizmos.DrawSphere(_betaal.transform.position, maxDistanceForAttack);
+			Gizmos.DrawWireSphere(_betaal.transform.position, maxDistanceForAttack);
 		}
 
 		public int IncreaseHandleCount(Transform handle)

@@ -1365,8 +1365,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8272e7990783d0943a28e7be28aaba1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 200
+  currentHealth: 0
   inCombat: 0
   disableMovementByAnimation: 0
+--- !u!114 &3719399191705628457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667882683085054011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!114 &4518198904347184844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,8 +1447,23 @@ MonoBehaviour:
   - {fileID: 1522766429}
   - {fileID: 1589554144}
   ragdollThrowBackForce: 2
+  hitImpulseMultiplier: 0.15
   lPunchDamage: 20
   lUppercutDamage: 40
+--- !u!114 &5973947435089045560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667882683085054011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e833ad0fb9b4a5d48bf331ae1f073f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chestCollider: {fileID: 5151518691157740805}
+  headCollider: {fileID: 1409379425462134786}
 --- !u!195 &8764958824108137654
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1416,20 +1486,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5973947435089045560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5667882683085054011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e833ad0fb9b4a5d48bf331ae1f073f42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chestCollider: {fileID: 5151518691157740805}
-  headCollider: {fileID: 1409379425462134786}
 --- !u!4 &6619333085793723042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}

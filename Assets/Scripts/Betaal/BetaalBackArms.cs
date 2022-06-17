@@ -47,6 +47,7 @@ namespace Betaal
 		private void AttackChest()
 		{
 			_isAttacking = true;
+			BetaalEvents.InvokeStartBetaalAttack();
 
 			var rand = Random.value;
 			//var selectedHand = rand > 0.5f ? leftIkTarget : rightIkTarget;
@@ -71,7 +72,11 @@ namespace Betaal
 													  .SetEase(snakeCurve)
 													  .SetDelay(0.5f)
 													  .OnComplete(() => selectedHand.DOMove(_currentRightTarget.position, 1.5f)
-																					.OnComplete(() => _isAttacking = false)));
+																					.OnComplete(() =>
+																								{
+																									_isAttacking = false;
+																									BetaalEvents.InvokeEndBetaalAttack();
+																								})));
 		}
 	}
 }

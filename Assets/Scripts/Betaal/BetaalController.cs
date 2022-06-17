@@ -18,8 +18,6 @@ namespace Betaal
 		private Animator _anim;
 		private Transform _transform;
 
-		private PlayerCombat _player;
-
 		private static readonly int HitPunch = Animator.StringToHash("hitPunch");
 		private static readonly int HitUppercut = Animator.StringToHash("hitUppercut");
 		private static readonly int Dummy = Animator.StringToHash("dummy");
@@ -29,7 +27,6 @@ namespace Betaal
 		private void Start()
 		{
 			_anim = GetComponent<Animator>();
-			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCombat>();
 
 			_transform = transform;
 			_currentHealth = maxHealth;
@@ -66,8 +63,8 @@ namespace Betaal
 
 		private void StartHandleAttack()
 		{
-			handleAttack.attackPos = _player.attackHostPosition.position;
 			BetaalEvents.InvokeStartHandleAttack(this);
+			BetaalEvents.InvokeStartBetaalAttack();
 		}
 
 		private void GoRagdoll()

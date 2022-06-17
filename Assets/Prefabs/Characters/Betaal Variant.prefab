@@ -633,7 +633,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5071278863080137006}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &1478116714
 VisualEffect:
@@ -1041,7 +1041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8488945226544974934, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -6170625038081293824, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}
       propertyPath: m_IsActive
@@ -1714,7 +1714,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.39960492
+      time: 0.34457645
       value: 0.013888739
       inSlope: 0.83868784
       outSlope: 0.83868784
@@ -1723,22 +1723,22 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.3426645
     - serializedVersion: 3
-      time: 0.62741673
+      time: 0.5723883
       value: 1.0955145
-      inSlope: 0.51317805
-      outSlope: 0.51317805
+      inSlope: -0.2201649
+      outSlope: -0.2201649
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.421872
-      outWeight: 0.33333334
+      outWeight: 0.24118507
     - serializedVersion: 3
       time: 1
       value: 0.5
-      inSlope: -6.2767262
-      outSlope: -6.2767262
+      inSlope: -2.5190709
+      outSlope: -2.5190709
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.2943121
+      inWeight: 0.2485008
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1772,7 +1772,14 @@ MonoBehaviour:
   - {fileID: 1277947012}
   ragdollThrowBackForce: 1
   lightningFx:
-  - {fileID: 0}
+  - {fileID: 1478116711}
+  - {fileID: 548060044}
+  - {fileID: 933074631}
+  - {fileID: 326209521}
+  - {fileID: 1932019993}
+  - {fileID: 2134705059}
+  - {fileID: 605031179}
+  - {fileID: 1354105324}
   handleAttack:
     drawAttackDebugSphere: 0
     attackPos: {x: 0, y: 0, z: 0}
