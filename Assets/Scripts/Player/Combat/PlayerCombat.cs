@@ -28,8 +28,15 @@ namespace Player.Combat
 		{
 			if(!Input.GetKeyUp(KeyCode.T)) return;
 
-			_state.inCombat = !_state.inCombat;
-			_anim.SetBool(InCombat, _state.inCombat);
+			SetInCombatStatus(!_state.inCombat);
+		}
+
+		public void SetInCombatStatus(bool status)
+		{
+			if(status == _state.inCombat) return;
+			
+			_state.inCombat = status;
+			_anim.SetBool(InCombat, status);
 		}
 
 		public void OnLightAttackInput()

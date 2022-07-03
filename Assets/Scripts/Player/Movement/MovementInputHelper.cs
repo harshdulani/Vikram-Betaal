@@ -51,8 +51,8 @@ namespace Player.Movement
 			_playerMovement.Execute(input);
 		}
 
-		private void OnRunStart(InputAction.CallbackContext context) => _playerMovement.IsRunning = true;
+		private void OnRunStart(InputAction.CallbackContext context) => _playerMovement.UpdateRunningStatus(true);
 
-		private void OnRunEnd(InputAction.CallbackContext context) => _playerMovement.IsRunning = false;
+		private void OnRunEnd(InputAction.CallbackContext context) => _playerMovement.UpdateRunningStatus(false);
 	}
 }

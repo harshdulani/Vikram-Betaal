@@ -24,6 +24,8 @@ namespace Player.Movement
 			_state = GetComponent<PlayerState>();
 			_anim = GetComponent<Animator>();
 			_transform = transform;
+
+			_isFacingRight = Vector3.Dot(_transform.forward, Vector3.right) > 0;
 		}
 		
 		public void Execute(Vector2 input)
@@ -37,7 +39,7 @@ namespace Player.Movement
 			}
 			
 			var magnitude = input.magnitude * (IsRunning && !_state.inCombat ? 3 : 1);
-			
+
 			_inputMag = Mathf.Lerp(_inputMag, magnitude, magnitudeLerpSpeed * Time.deltaTime);
 			SetAnimValues();
 
@@ -45,6 +47,13 @@ namespace Player.Movement
 			
 			HandleRotation(input.x);
 			Move();
+		}
+
+		public void UpdateRunningStatus(bool status)
+		{
+			IsRunning = status;
+
+			if (status) _state.Combat.SetInCombatStatus(false);
 		}
 
 		private void HandleRotation(float inputX)
