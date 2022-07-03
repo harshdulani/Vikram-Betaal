@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInCombat: 0
-  combatBlendValue: 0.5
+  combatBlendValue: 1
   maxDistanceFromPlayer: 10
   aiAttackInterval: 3
   aiRepositionInterval: 1

@@ -11,9 +11,9 @@ public class CinemachineHelper : MonoBehaviour
 	private CinemachineTrackedDolly _walkCamTracker, _fightCamTracker;
 	private Vector3 _initWalkPathOffset, _initFightPathOffset;
 		
-	private Transform _player, _betaal;
-	private bool _isUsingFightCam;
-
+	private Transform _player, _betaal, _oldie;
+	private bool _isUsingFightCam, _isOldieAnEnemy;
+	
 	private void OnEnable()
 	{
 		BetaalEvents.StartBetaalAttack += OnStartBetaalAttack;
@@ -30,6 +30,7 @@ public class CinemachineHelper : MonoBehaviour
 	{
 		_player = GameObject.FindGameObjectWithTag("Player").transform;
 		_betaal = GameObject.FindGameObjectWithTag("Betaal").transform;
+		_oldie = GameObject.FindGameObjectWithTag("Oldie").transform;
 
 		_walkCamTracker = walkCam.GetCinemachineComponent<CinemachineTrackedDolly>();
 		_fightCamTracker = fightCam.GetCinemachineComponent<CinemachineTrackedDolly>();
@@ -40,7 +41,7 @@ public class CinemachineHelper : MonoBehaviour
 		//switch between fight and walk cam
 		DOVirtual.DelayedCall(0.5f, () =>
 									{
-										var dist = Vector3.Distance(_player.position, _betaal.position);
+										var dist = Vector3.Distance(_player.position, _isOldieAnEnemy ? _oldie .position : _betaal.position);
 										if (dist > fightCamDistance)
 										{
 											if(!_isUsingFightCam) return;
