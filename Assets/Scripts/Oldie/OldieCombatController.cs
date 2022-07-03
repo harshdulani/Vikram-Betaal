@@ -56,6 +56,7 @@ namespace Oldie
 		{
 			SetCombatBlendValue();
 
+			isInCombat = true;
 			_attackTween = DOVirtual.DelayedCall(aiAttackInterval, 
 												 () =>
 												 {
