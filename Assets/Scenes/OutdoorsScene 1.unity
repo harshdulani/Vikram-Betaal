@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 34.594833, g: 39.567688, b: 45.625595, a: 1}
+  m_IndirectSpecularColor: {r: 34.628983, g: 39.598877, b: 45.647545, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2343,7 +2343,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339103254}
-  m_LocalRotation: {x: 0.028550098, y: 0.119132176, z: -0.0034270687, w: 0.992462}
+  m_LocalRotation: {x: 0.028550133, y: 0.119132176, z: -0.0034270727, w: 0.992462}
   m_LocalPosition: {x: 6.399999, y: 1.5, z: -5.2099996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3506,13 +3506,14 @@ GameObject:
   - component: {fileID: 545973745}
   - component: {fileID: 545973744}
   - component: {fileID: 545973743}
+  - component: {fileID: 545973748}
   m_Layer: 5
   m_Name: Dialogue Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &545973743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3613,6 +3614,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &545973748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545973742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc4af8e5ca9409081a37188097b5cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 715526968}
+  dialogue: {fileID: 934825313}
 --- !u!1 &557984613
 GameObject:
   m_ObjectHideFlags: 0
@@ -6837,7 +6852,7 @@ GameObject:
   - component: {fileID: 977394103}
   - component: {fileID: 977394102}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: DialogueItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
