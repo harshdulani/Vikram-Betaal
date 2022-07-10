@@ -10,7 +10,7 @@ namespace Betaal
 		private Vector3 _initPos;
 		private bool _isAttacking, _hasAttacked;
 
-		private static PlayerCombat _player;
+		private static PlayerInput _player;
 		private Rigidbody _rb;
 		private Transform _transform;
 
@@ -28,7 +28,7 @@ namespace Betaal
 		{
 			_rb = GetComponent<Rigidbody>();
 			if(!_player)
-				_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCombat>();
+				_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
 			
 			_transform = transform;
 			_initPos = _transform.position;

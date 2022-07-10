@@ -10,7 +10,7 @@ namespace Player
 {
 	public class PlayerState : MonoBehaviour
 	{
-		public PlayerCombat Combat { get; private set; }
+		public PlayerInput Combat { get; private set; }
 		public PlayerController Controller { get; private set; }
 		public PlayerMovement Movement { get; private set; }
 		public NavMeshAgent Agent { get; private set; }
@@ -29,7 +29,7 @@ namespace Player
 		private void Awake()
 		{
 			Movement = GetComponent<PlayerMovement>();
-			Combat = GetComponent<PlayerCombat>();
+			Combat = GetComponent<PlayerInput>();
 			Controller = GetComponent<PlayerController>();
 			Agent = GetComponent<NavMeshAgent>();
 			Impulse = GetComponent<CinemachineImpulseSource>();

@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Player.Combat
 {
-	public class PlayerCombat : MonoBehaviour
+	public class PlayerInput : MonoBehaviour
 	{
+		public static event Action UsePressed;
+		public static void InvokeUsePressed() => UsePressed?.Invoke();
+		
 		[SerializeField] private Collider leftHand, rightHand;
 		public Transform attackHostPosition;
 		

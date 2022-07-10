@@ -3,8 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-	public static GameManager state; 
+	public static GameManager state;
+	public bool InConversationWithBetaal { get; set; }
+	public bool isSadhuEvil { get; private set; }
 	public bool InPreFight { get; private set; }
+	public bool IsInConversation { get; private set; }
+	public DialogueBank.Character ActiveSpeaker { get; set; }
 	
 	private void OnEnable()
 	{
@@ -43,5 +47,9 @@ public class GameManager : MonoBehaviour
 		InPreFight = true;
 	}
 
-	private void OnIntroConversationComplete() => InPreFight = false;
+	private void OnIntroConversationComplete()
+	{
+		InPreFight = false;
+		IsInConversation = false;
+	}
 }

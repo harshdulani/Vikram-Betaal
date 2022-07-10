@@ -64,6 +64,15 @@ namespace Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use"",
+                    ""type"": ""Button"",
+                    ""id"": ""740050fb-22ed-4434-a7bb-dcdd812eecd1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -251,6 +260,28 @@ namespace Player
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""LightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62fa78fa-df0f-49a1-962d-e26460b3a60e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9c25877-9118-4f03-afe8-c1f51704f958"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1117,6 +1148,7 @@ namespace Player
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
             m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
+            m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
             // Player_backup
             m_Player_backup = asset.FindActionMap("Player_backup", throwIfNotFound: true);
             m_Player_backup_Move = m_Player_backup.FindAction("Move", throwIfNotFound: true);
@@ -1198,6 +1230,7 @@ namespace Player
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Run;
         private readonly InputAction m_Player_LightAttack;
+        private readonly InputAction m_Player_Use;
         public struct PlayerActions
         {
             private @PlayerControls m_Wrapper;
@@ -1206,6 +1239,7 @@ namespace Player
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Run => m_Wrapper.m_Player_Run;
             public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
+            public InputAction @Use => m_Wrapper.m_Player_Use;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1227,6 +1261,9 @@ namespace Player
                     @LightAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightAttack;
                     @LightAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightAttack;
                     @LightAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightAttack;
+                    @Use.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                    @Use.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                    @Use.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1243,6 +1280,9 @@ namespace Player
                     @LightAttack.started += instance.OnLightAttack;
                     @LightAttack.performed += instance.OnLightAttack;
                     @LightAttack.canceled += instance.OnLightAttack;
+                    @Use.started += instance.OnUse;
+                    @Use.performed += instance.OnUse;
+                    @Use.canceled += instance.OnUse;
                 }
             }
         }
@@ -1460,6 +1500,7 @@ namespace Player
             void OnLook(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
             void OnLightAttack(InputAction.CallbackContext context);
+            void OnUse(InputAction.CallbackContext context);
         }
         public interface IPlayer_backupActions
         {
