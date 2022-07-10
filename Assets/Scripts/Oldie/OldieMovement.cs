@@ -17,18 +17,29 @@ namespace Oldie
 	
 		private static readonly int BlendValue = Animator.StringToHash("blendValue");
 
+		private void OnEnable()
+		{
+			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
+		}
+
+		private void OnDisable()
+		{
+			GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
+		}
+		
 		private void Start()
 		{
 			_agent = GetComponent<NavMeshAgent>();
 			_my = GetComponent<OldieRefBank>();
 
 			_transform = transform;
+			_agent.enabled = false;
 		}
 
 		private void Update()
 		{
+			if(GameManager.state.InPreFight) return;
 			Recenter();
-			if (Input.GetKeyDown(KeyCode.V)) SetNewDest();
 		
 			if(!_isMoving) return;
 		
@@ -58,5 +69,7 @@ namespace Oldie
 		private void StopMovingAnim() => DOTween.To(BlendValueGetter, BlendValueSetter, 0f, 0.5f);
 		private float BlendValueGetter() => _my.Animator.GetFloat(BlendValue);
 		private void BlendValueSetter(float value) => _my.Animator.SetFloat(BlendValue, value);
+		
+		private void OnIntroConversationComplete() => _agent.enabled = true;
 	}
 }

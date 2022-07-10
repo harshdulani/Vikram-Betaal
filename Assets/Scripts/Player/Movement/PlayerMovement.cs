@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Player.Movement
 {
@@ -9,6 +10,7 @@ namespace Player.Movement
 		public bool IsRunning { private get; set; }
 
 		private PlayerState _state;
+		private NavMeshAgent _agent;
 		private Animator _anim;
 		private Transform _transform;
 
@@ -16,20 +18,33 @@ namespace Player.Movement
 		private bool _isFacingRight = true;
 
 		private Tween _orientationTween;
-		
+
 		private static readonly int InputMag = Animator.StringToHash("inputMag");
 
+		private void OnEnable()
+		{
+			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
+		}
+
+		private void OnDisable()
+		{
+			GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
+		}
 		private void Start()
 		{			
 			_state = GetComponent<PlayerState>();
 			_anim = GetComponent<Animator>();
+			_agent = GetComponent<NavMeshAgent>();
 			_transform = transform;
-
+			
+			_agent.enabled = false;
 			_isFacingRight = Vector3.Dot(_transform.forward, Vector3.right) > 0;
 		}
 		
 		public void Execute(Vector2 input)
 		{
+			if(GameManager.state.InPreFight) return;
+			
 			Recenter();
 			if (_state.disableMovementByAnimation)
 			{
@@ -68,13 +83,12 @@ namespace Player.Movement
 			_isFacingRight = shouldFaceRight;
 		}
 
-		private void Move()
-		{
-			_transform.position += Vector3.right * ((_isFacingRight ? 1 : -1) * _inputMag * movementSpeed * Time.deltaTime);
-		}
+		private void Move() => _transform.position += Vector3.right * ((_isFacingRight ? 1 : -1) * _inputMag * movementSpeed * Time.deltaTime);
 
 		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
 
 		private void SetAnimValues() => _anim.SetFloat(InputMag, _inputMag);
+		
+		private void OnIntroConversationComplete() => _agent.enabled = true;
 	}
 }

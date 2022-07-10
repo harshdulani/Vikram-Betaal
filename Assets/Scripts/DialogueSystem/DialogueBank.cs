@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dialogue : MonoBehaviour
+public class DialogueBank : MonoBehaviour
 {
 	public enum Character { Player, Betaal, Oldie}
 	public List<string> betaalDialogues, oldieDialogues, playerDialogues;

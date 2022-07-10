@@ -15,7 +15,7 @@ namespace Betaal
 
 		private Transform _currentLeftTarget, _currentRightTarget;
 
-		private PlayerRefBank _player;
+		private PlayerState _player;
 		private bool _isAttacking;
 
 		private void Start()
@@ -23,7 +23,7 @@ namespace Betaal
 			_currentLeftTarget = leftAnimTarget;
 			_currentRightTarget = rightAnimTarget;
 
-			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRefBank>();
+			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerState>();
 		}
 
 		private void Update()

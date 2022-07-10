@@ -60,7 +60,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -191,7 +191,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -262,6 +262,37 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!1 &7236922413327236551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3859108869891474866}
+  m_Layer: 0
+  m_Name: Vikram StartPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3859108869891474866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236922413327236551}
+  m_LocalRotation: {x: -0, y: -0.70710695, z: -0, w: 0.7071066}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5036024843878742657}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &7827552521739761544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,9 +1440,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8272e7990783d0943a28e7be28aaba1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestCollider: {fileID: 5151518691157740805}
+  headCollider: {fileID: 1409379425462134786}
   maxHealth: 200
   currentHealth: 0
   inCombat: 0
+  inPreFight: 0
   disableMovementByAnimation: 0
 --- !u!114 &3719399191705628457
 MonoBehaviour:
@@ -1494,20 +1528,6 @@ MonoBehaviour:
   hitImpulseMultiplier: 0.15
   lPunchDamage: 20
   lUppercutDamage: 40
---- !u!114 &5973947435089045560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5667882683085054011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e833ad0fb9b4a5d48bf331ae1f073f42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chestCollider: {fileID: 5151518691157740805}
-  headCollider: {fileID: 1409379425462134786}
 --- !u!195 &8764958824108137654
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1530,6 +1550,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2665210314309543991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667882683085054011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee313c6f06c3e146a10ecc2d2ad2353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sittingSpot: {fileID: 3859108869891474866}
 --- !u!4 &6619333085793723042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}

@@ -1,7 +1,6 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -13,7 +12,7 @@ namespace Player
 		[SerializeField] private float hitImpulseMultiplier;
 		[SerializeField] private int lPunchDamage = 20, lUppercutDamage = 40;
 
-		private PlayerState _me; 
+		private PlayerState _my; 
 		private Animator _anim;
 		
 		private static readonly int GetHurtBack = Animator.StringToHash("GetHurtBack");
@@ -27,13 +26,7 @@ namespace Player
 		private void Start()
 		{
 			_anim = GetComponent<Animator>();
-			_me = GetComponent<PlayerState>();
-		}
-
-		private void Update()
-		{
-			if (Input.GetKeyUp(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-			if (Input.GetKeyUp(KeyCode.E)) GoRagdoll();
+			_my = GetComponent<PlayerState>();
 		}
 
 		public int GetAttackDamage(PlayerAttackType type)
@@ -49,17 +42,17 @@ namespace Player
 
 		public void GetHit(Vector3 damage)
 		{
-			_me.currentHealth -= damage.magnitude;
+			_my.currentHealth -= damage.magnitude;
 
-			if (_me.currentHealth < 0f)
+			if (_my.currentHealth < 0f)
 			{
 				GoRagdoll();
 				return;
 			}
-			_me.Impulse.GenerateImpulse(damage.normalized * hitImpulseMultiplier);
+			_my.Impulse.GenerateImpulse(damage.normalized * hitImpulseMultiplier);
 			_anim.SetTrigger(Vector3.Dot(transform.forward, damage) > 0f ? GetHurtFront : GetHurtBack);
 		}
-		
+
 		private void GoRagdoll()
 		{
 			_anim.enabled = false;
