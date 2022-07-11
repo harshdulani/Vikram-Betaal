@@ -1399,6 +1399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0770d5438839408cb69dcb5b48e59177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sittingSpot: {fileID: 3859108869891474866}
   magnitudeLerpSpeed: 7
   movementSpeed: 2
 --- !u!114 &2044562831
@@ -1445,7 +1446,6 @@ MonoBehaviour:
   maxHealth: 200
   currentHealth: 0
   inCombat: 0
-  inPreFight: 0
   disableMovementByAnimation: 0
 --- !u!114 &3719399191705628457
 MonoBehaviour:
@@ -1550,19 +1550,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2665210314309543991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5667882683085054011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee313c6f06c3e146a10ecc2d2ad2353, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sittingSpot: {fileID: 3859108869891474866}
 --- !u!4 &6619333085793723042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 20cc40e8a5e24c840b14d83ffd34190d, type: 3}

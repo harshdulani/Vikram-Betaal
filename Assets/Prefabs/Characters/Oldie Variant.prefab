@@ -720,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5918514390b092047ac79a66610186db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sittingSpot: {fileID: 8620446488012398246}
   stoppingDistance: 1.5
 --- !u!195 &1399448938
 NavMeshAgent:
@@ -755,20 +756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8101e5353a9d4007bb1405dcfb044068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8749174505554191547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4551958443273306708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee313c6f06c3e146a10ecc2d2ad2353, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sittingSpot: {fileID: 8620446488012398246}
-  character: 2
 --- !u!1 &5196498409754329338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -290750445479886849, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}

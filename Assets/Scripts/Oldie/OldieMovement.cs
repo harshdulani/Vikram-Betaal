@@ -7,15 +7,17 @@ namespace Oldie
 	[RequireComponent(typeof (NavMeshAgent))]
 	public class OldieMovement : MonoBehaviour
 	{
+		[SerializeField] private Transform sittingSpot;
 		[SerializeField] private float stoppingDistance;
 		private bool _isMoving;
-	
+
 		private NavMeshAgent _agent;
 		private Transform _transform;
 
 		private OldieRefBank _my;
-	
+
 		private static readonly int BlendValue = Animator.StringToHash("blendValue");
+		private static readonly int StandUpSitting = Animator.StringToHash("standUpSitting");
 
 		private void OnEnable()
 		{
@@ -34,6 +36,10 @@ namespace Oldie
 
 			_transform = transform;
 			_agent.enabled = false;
+			
+			sittingSpot.parent = null;
+			transform.position = sittingSpot.position;
+			transform.rotation = sittingSpot.rotation;
 		}
 
 		private void Update()
@@ -70,6 +76,10 @@ namespace Oldie
 		private float BlendValueGetter() => _my.Animator.GetFloat(BlendValue);
 		private void BlendValueSetter(float value) => _my.Animator.SetFloat(BlendValue, value);
 		
-		private void OnIntroConversationComplete() => _agent.enabled = true;
+		private void OnIntroConversationComplete() 
+		{
+			_agent.enabled = true;
+			_my.Animator.SetTrigger(StandUpSitting);
+		}
 	}
 }

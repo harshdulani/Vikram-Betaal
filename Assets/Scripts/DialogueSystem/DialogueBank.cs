@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueBank : MonoBehaviour
 {
 	public enum Character { Player, Betaal, Oldie}
-	public List<string> betaalDialogues, oldieDialogues, playerDialogues;
+	public List<string> playerDialogues, oldieDialogues, betaalDialogues;
 
 	public string GetDialogue(Character type, int index)
 	{

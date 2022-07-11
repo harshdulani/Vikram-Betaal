@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using Player.Combat;
 using TMPro;
 using UnityEngine;
@@ -6,18 +7,19 @@ using UnityEngine.UI;
 
 public class DialogueShowController : MonoBehaviour
 {
-	[Header("Text"), SerializeField] private TextMeshProUGUI leftCharacterName;
-	[SerializeField] private TextMeshProUGUI rightCharacterName, dialogue;
+	[Header("Text"), SerializeField] private GameObject dialoguePanel;
+	[SerializeField] private TextMeshProUGUI leftCharacterName, rightCharacterName, dialogue;
 
-	[Header("Image"), SerializeField] private Image leftImage;
-	[SerializeField] private Image rightImage;
+	[Header("Image"), SerializeField] private GameObject leftPivotPanel;
+	[SerializeField] private GameObject rightPivotPanel;
+	[SerializeField] private Image leftImage, rightImage;
 	[SerializeField] private Sprite vikramIcon, betaalIcon, sadhuIcon, sadhuEvilIcon;
 	
 	[Header("Tip"), SerializeField] private TextMeshProUGUI tip;
 	[SerializeField] private float blinkDuration, blinkWaitTime;
 
 	private DialogueBank _dialogue;
-	private int _currentPlayerIndex, _currentBetaalIndex, _currentSadhuIndex;
+	private int _currentPlayerIndex, _currentBetaalIndex, _currentSadhuIndex, _currentConversationIndex;
 
 	private Tween _tipBlinker, _tipWaiter, _tipAppear, _tipDisappear;
 	
@@ -29,11 +31,15 @@ public class DialogueShowController : MonoBehaviour
 	private void OnEnable()
 	{
 		PlayerInput.UsePressed += OnUsePressed;
+		
+		GameEvents.ConversationStart += OnConversationStart;
 	}
 
 	private void OnDisable()
 	{
 		PlayerInput.UsePressed -= OnUsePressed;
+		
+		GameEvents.ConversationStart -= OnConversationStart;
 	}
 
 	private void Start()
@@ -62,20 +68,14 @@ public class DialogueShowController : MonoBehaviour
 		_tipDisappear.Pause();
 	}
 
-	private void SpawnDialog(DialogueBank.Character character, string currentDialogue)
+	private void SpawnDialogSpeaker(DialogueBank.Character character, string currentDialogue)
 	{
-		SetCharacter(DialogueBank.Character.Player);
+		dialoguePanel.SetActive(true);
+		leftPivotPanel.SetActive(true);
+		rightPivotPanel.SetActive(true);
+		
+		SetCharacter(character);
 		SetText(currentDialogue);
-
-		if (_tipBlinker.IsActive())
-		{
-			_tipBlinker.Pause();
-			tip.color = Color.clear;
-		}
-
-		if(_tipWaiter.IsActive()) _tipWaiter.Kill();
-
-		_tipWaiter.Restart();
 	}
 
 	private void SetCharacter(DialogueBank.Character speaker)
@@ -101,41 +101,53 @@ public class DialogueShowController : MonoBehaviour
 
 	private bool TryShowNextDialog()
 	{
-		var currentDialogue = _dialogue.GetDialogue(GameManager.state.ActiveSpeaker, _currentPlayerIndex);
+		ref var currentSpeakerIndex = ref _currentPlayerIndex;
+		
+		switch (GameManager.state.ActiveSpeaker)
+		{
+			case DialogueBank.Character.Player:
+				break;
+			case DialogueBank.Character.Betaal: currentSpeakerIndex = ref _currentBetaalIndex;
+				break;
+			case DialogueBank.Character.Oldie: currentSpeakerIndex = ref _currentSadhuIndex;
+				break;
+			default: throw new ArgumentOutOfRangeException();
+		}
 
-		if (currentDialogue.Equals(GOTOVK))
+		var currentDialogue = _dialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
+
+		print(currentDialogue);
+
+		switch (currentDialogue)
 		{
-			GameManager.state.ActiveSpeaker = DialogueBank.Character.Player;
-		}
-		if (currentDialogue.Equals(GOTOBT))
-		{
-			GameManager.state.ActiveSpeaker = DialogueBank.Character.Betaal;
-		}
-		if (currentDialogue.Equals(GOTOSD))
-		{
-			GameManager.state.ActiveSpeaker = DialogueBank.Character.Oldie;
-		}
-		if (currentDialogue.Equals(EXIT))
-		{
-			EndConversation();
-			return true;
+			case GOTOVK:
+				GameManager.state.ActiveSpeaker = DialogueBank.Character.Player;
+				break;
+			case GOTOBT:
+				GameManager.state.ActiveSpeaker = DialogueBank.Character.Betaal;
+				break;
+			case GOTOSD:
+				GameManager.state.ActiveSpeaker = DialogueBank.Character.Oldie;
+				break;
+			case EXIT:
+				EndConversation();
+				return true;
+			default: break;
 		}
 		
-		SpawnDialog(GameManager.state.ActiveSpeaker, currentDialogue);
+		SpawnDialogSpeaker(GameManager.state.ActiveSpeaker, currentDialogue);
 		return false;
 	}
 
 	private void EndConversation()
 	{
+		dialoguePanel.SetActive(false);
+		leftPivotPanel.SetActive(false);
+		rightPivotPanel.SetActive(false);
+		
+		if(_currentConversationIndex++ == 0)
+			GameEvents.InvokeIntroConversationComplete();
 	}
-
-	private void RestartTipBlinker()
-	{
-		_tipAppear.Restart();
-		_tipBlinker.Restart();
-	}
-
-	private void HideTipBlinker() => _tipDisappear.Restart();
 
 	private void SetSpeakerDetailsPos(DialogueBank.Character speaker, out TextMeshProUGUI text, out Image image)
 	{
@@ -151,6 +163,24 @@ public class DialogueShowController : MonoBehaviour
 			SetLeftIcon(out text, out image);
 	}
 
+	private void SetText(string text) => dialogue.text = text;
+
+	private void ProgressConversation()
+	{
+		if(TryShowNextDialog()) return;
+		
+		if (_tipBlinker.IsActive())
+		{
+			_tipBlinker.Pause();
+			tip.color = Color.clear;
+		}
+
+		HideTipBlinker();
+		if(_tipWaiter.IsActive()) _tipWaiter.Kill();
+		
+		_tipWaiter.Restart();
+	}
+
 	private void SetLeftIcon(out TextMeshProUGUI text, out Image image)
 	{
 		image = leftImage;
@@ -163,23 +193,19 @@ public class DialogueShowController : MonoBehaviour
 		text = leftCharacterName;
 	}
 
-	private void SetText(string text)
+	private void RestartTipBlinker()
 	{
-		dialogue.text = text;
+		_tipAppear.Restart();
+		_tipBlinker.Restart();
 	}
+
+	private void HideTipBlinker() => _tipDisappear.Restart();
+
+	private void OnConversationStart() => ProgressConversation();
 
 	private void OnUsePressed()
 	{
 		if(!GameManager.state.IsInConversation) return;
-		if(TryShowNextDialog()) return;
-		
-		if (_tipBlinker.IsActive())
-		{
-			_tipBlinker.Pause();
-			tip.color = Color.clear;
-		}
-
-		HideTipBlinker();
-		if(_tipWaiter.IsActive()) _tipWaiter.Kill();
+		ProgressConversation();
 	}
 }

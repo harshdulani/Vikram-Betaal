@@ -3220,7 +3220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &465437167
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3800,12 +3800,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09a569a32b1b724ab9d37d80566824b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  betaalDialogues:
-  - Hi, i am betaal
-  oldieDialogues:
-  - Hi, i am sadhu
   playerDialogues:
   - Hi, i am player
+  - EXIT
+  oldieDialogues:
+  - Hi, i am sadhu
+  betaalDialogues:
+  - Hi, i am betaal
 --- !u!114 &545973744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3900,9 +3901,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc4af8e5ca9409081a37188097b5cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 977394100}
   leftCharacterName: {fileID: 1315741988}
   rightCharacterName: {fileID: 1562036196}
   dialogue: {fileID: 934825313}
+  leftPivotPanel: {fileID: 465437166}
+  rightPivotPanel: {fileID: 1754228900}
   leftImage: {fileID: 957288224}
   rightImage: {fileID: 1020006030}
   vikramIcon: {fileID: 21300000, guid: 7b9383a337f82f044bed8cfea902161f, type: 3}
@@ -7082,7 +7086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &977394101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11985,7 +11989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1754228901
 RectTransform:
   m_ObjectHideFlags: 0

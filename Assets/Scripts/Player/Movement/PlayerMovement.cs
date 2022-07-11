@@ -6,6 +6,7 @@ namespace Player.Movement
 {
 	public class PlayerMovement : MonoBehaviour
 	{
+		[SerializeField] private Transform sittingSpot;
 		[SerializeField] private float magnitudeLerpSpeed = 7f, movementSpeed;
 		public bool IsRunning { private get; set; }
 
@@ -20,16 +21,22 @@ namespace Player.Movement
 		private Tween _orientationTween;
 
 		private static readonly int InputMag = Animator.StringToHash("inputMag");
+		private static readonly int GetShockedSitting = Animator.StringToHash("getShockedSitting");
+		private static readonly int WakeUpSitting = Animator.StringToHash("wakeUpSitting");
+		private static readonly int StandUpSitting = Animator.StringToHash("standUpSitting");
 
 		private void OnEnable()
 		{
+			GameEvents.GameplayStart += OnGameplayStart;
 			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
 		}
 
 		private void OnDisable()
 		{
+			GameEvents.GameplayStart -= OnGameplayStart;
 			GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
 		}
+
 		private void Start()
 		{			
 			_state = GetComponent<PlayerState>();
@@ -38,9 +45,14 @@ namespace Player.Movement
 			_transform = transform;
 			
 			_agent.enabled = false;
+			
+			sittingSpot.parent = null;
+			transform.position = sittingSpot.position;
+			transform.rotation = sittingSpot.rotation;
+			
 			_isFacingRight = Vector3.Dot(_transform.forward, Vector3.right) > 0;
 		}
-		
+
 		public void Execute(Vector2 input)
 		{
 			if(GameManager.state.InPreFight) return;
@@ -88,7 +100,28 @@ namespace Player.Movement
 		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
 
 		private void SetAnimValues() => _anim.SetFloat(InputMag, _inputMag);
-		
-		private void OnIntroConversationComplete() => _agent.enabled = true;
+
+		public void EndWakingUpOnAnimation()
+		{
+			_anim.SetTrigger(WakeUpSitting);
+
+			DOTween.To(() => _anim.GetLayerWeight(2), value => _anim.SetLayerWeight(2, value),
+					   1f, 1f);
+			GameEvents.InvokeConversationStart();
+		}
+
+		private void OnGameplayStart()
+		{
+			_anim.SetTrigger(GetShockedSitting);
+		}
+
+		private void OnIntroConversationComplete() 
+		{
+			_agent.enabled = true;
+			_anim.SetTrigger(StandUpSitting);
+			
+			transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart);
+			_transform.DORotate(Vector3.up * 90f, 1f).SetDelay(1.5f);
+		}
 	}
 }
