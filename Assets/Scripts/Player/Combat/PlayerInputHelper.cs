@@ -22,6 +22,7 @@ namespace Player.Combat
 		{
 			_playerControls.Player.LightAttack.performed += OnLightAttack;
 			_playerControls.Player.LightAttack.Enable();
+			
 			_playerControls.Player.Use.performed += OnUse;
 			_playerControls.Player.Use.Enable();
 		}
@@ -31,7 +32,7 @@ namespace Player.Combat
 			_playerControls.Player.LightAttack.performed -= OnLightAttack;
 			_playerControls.Player.LightAttack.Disable();
 			
-			_playerControls.Player.Use.performed += OnUse;
+			_playerControls.Player.Use.performed -= OnUse;
 			_playerControls.Player.Use.Disable();
 		}
 

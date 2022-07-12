@@ -19,7 +19,7 @@ public class DialogueShowController : MonoBehaviour
 	[SerializeField] private float blinkDuration, blinkWaitTime;
 
 	private DialogueBank _dialogue;
-	private int _currentPlayerIndex, _currentBetaalIndex, _currentSadhuIndex, _currentConversationIndex;
+	[SerializeField] private int _currentPlayerIndex, _currentBetaalIndex, _currentSadhuIndex, _currentConversationIndex;
 
 	private Tween _tipBlinker, _tipWaiter, _tipAppear, _tipDisappear;
 	
@@ -103,44 +103,64 @@ public class DialogueShowController : MonoBehaviour
 	{
 		ref var currentSpeakerIndex = ref _currentPlayerIndex;
 		
-		switch (GameManager.state.ActiveSpeaker)
-		{
-			case DialogueBank.Character.Player:
-				break;
-			case DialogueBank.Character.Betaal: currentSpeakerIndex = ref _currentBetaalIndex;
-				break;
-			case DialogueBank.Character.Oldie: currentSpeakerIndex = ref _currentSadhuIndex;
-				break;
-			default: throw new ArgumentOutOfRangeException();
-		}
+		//you cant pass ref locals as ref parameters to methods :c
+		//c++, here i come c:
+		
+		currentSpeakerIndex = ref UpdateActiveSpeakerIndex();
 
 		var currentDialogue = _dialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
-
-		print(currentDialogue);
+		
+		var shouldSkipDialogue = false;
 
 		switch (currentDialogue)
 		{
 			case GOTOVK:
 				GameManager.state.ActiveSpeaker = DialogueBank.Character.Player;
+				shouldSkipDialogue = true;
 				break;
 			case GOTOBT:
 				GameManager.state.ActiveSpeaker = DialogueBank.Character.Betaal;
+				shouldSkipDialogue = true;
 				break;
 			case GOTOSD:
 				GameManager.state.ActiveSpeaker = DialogueBank.Character.Oldie;
+				shouldSkipDialogue = true;
 				break;
 			case EXIT:
 				EndConversation();
 				return true;
 			default: break;
 		}
+
+		print($"{string.Compare(EXIT, currentDialogue)} {currentDialogue}");
+		if (shouldSkipDialogue)
+		{
+			currentSpeakerIndex = ref UpdateActiveSpeakerIndex();
+			currentDialogue = _dialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
+		}
 		
 		SpawnDialogSpeaker(GameManager.state.ActiveSpeaker, currentDialogue);
 		return false;
 	}
 
+	private ref int UpdateActiveSpeakerIndex()
+	{
+		ref var currentIdx = ref _currentPlayerIndex;
+		switch (GameManager.state.ActiveSpeaker)
+		{
+			case DialogueBank.Character.Player: break;
+			case DialogueBank.Character.Betaal: currentIdx = ref _currentBetaalIndex;
+				break;
+			case DialogueBank.Character.Oldie: currentIdx = ref _currentSadhuIndex;
+				break;
+		}
+
+		return ref currentIdx;
+	}
+
 	private void EndConversation()
 	{
+		print("end");
 		dialoguePanel.SetActive(false);
 		leftPivotPanel.SetActive(false);
 		rightPivotPanel.SetActive(false);

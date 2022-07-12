@@ -49,7 +49,13 @@ public class GameManager : MonoBehaviour
 		InPreFight = true;
 		IsInConversation = true;
 	}
-	
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.LeftAlt)) Time.timeScale = 6f;
+		if (Input.GetKeyUp(KeyCode.LeftAlt)) Time.timeScale = 1f;
+	}
+
 	private void OnConversationStart()
 	{
 		IsInConversation = true;

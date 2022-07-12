@@ -3802,9 +3802,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDialogues:
   - Hi, i am player
-  - EXIT
+  - GOTOSD
   oldieDialogues:
   - Hi, i am sadhu
+  - EXIT
   betaalDialogues:
   - Hi, i am betaal
 --- !u!114 &545973744
@@ -3916,6 +3917,10 @@ MonoBehaviour:
   tip: {fileID: 277934254}
   blinkDuration: 0.05
   blinkWaitTime: 0.1
+  _currentPlayerIndex: 0
+  _currentBetaalIndex: 0
+  _currentSadhuIndex: 0
+  _currentConversationIndex: 0
 --- !u!1 &557984613
 GameObject:
   m_ObjectHideFlags: 0
