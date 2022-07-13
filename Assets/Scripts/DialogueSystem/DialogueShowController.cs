@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using Player.Combat;
 using TMPro;
@@ -12,17 +12,19 @@ public class DialogueShowController : MonoBehaviour
 
 	[Header("Image"), SerializeField] private GameObject leftPivotPanel;
 	[SerializeField] private GameObject rightPivotPanel;
-	[SerializeField] private Image leftImage, rightImage;
+	[SerializeField] private Image leftImage, rightImage; 
 	[SerializeField] private Sprite vikramIcon, betaalIcon, sadhuIcon, sadhuEvilIcon;
 	
 	[Header("Tip"), SerializeField] private TextMeshProUGUI tip;
 	[SerializeField] private float blinkDuration, blinkWaitTime;
 
-	private DialogueBank _dialogue;
 	[SerializeField] private int _currentPlayerIndex, _currentBetaalIndex, _currentSadhuIndex, _currentConversationIndex;
+	[SerializeField] private List<Character> firstWordBy;
 
+	private Character _currentLeftCharacter;
+	private DialogueBank _dialogue;
 	private Tween _tipBlinker, _tipWaiter, _tipAppear, _tipDisappear;
-	
+
 	private const string GOTOVK = "GOTOVK";
 	private const string GOTOBT = "GOTOBT";
 	private const string GOTOSD = "GOTOSD";
@@ -67,7 +69,7 @@ public class DialogueShowController : MonoBehaviour
 		_tipDisappear.Pause();
 	}
 
-	private void SpawnDialogSpeaker(DialogueBank.Character character, string currentDialogue)
+	private void SpawnDialogSpeaker(Character character, string currentDialogue)
 	{
 		dialoguePanel.SetActive(true);
 		leftPivotPanel.SetActive(true);
@@ -77,23 +79,23 @@ public class DialogueShowController : MonoBehaviour
 		SetText(currentDialogue);
 	}
 
-	private void SetCharacter(DialogueBank.Character speaker)
+	private void SetCharacter(Character speaker)
 	{
 		SetSpeakerDetailsPos(speaker, out var characterName, out var icon);
 
 		characterName.text = speaker switch
 							 {
-								 DialogueBank.Character.Player => "Vikram",
-								 DialogueBank.Character.Betaal => "Betaal",
-								 DialogueBank.Character.Oldie => "Sadhu",
+								 Character.Player => "Vikram",
+								 Character.Betaal => "Betaal",
+								 Character.Oldie => "Sadhu",
 								 _ => dialogue.text
 							 };
 
 		icon.sprite = speaker switch
 					  {
-						  DialogueBank.Character.Player => vikramIcon,
-						  DialogueBank.Character.Betaal => betaalIcon,
-						  DialogueBank.Character.Oldie => GameManager.state.isSadhuEvil ? sadhuEvilIcon : sadhuIcon,
+						  Character.Player => vikramIcon,
+						  Character.Betaal => betaalIcon,
+						  Character.Oldie => GameManager.state.isSadhuEvil ? sadhuEvilIcon : sadhuIcon,
 						  _ => icon.sprite
 					  };
 	}
@@ -114,21 +116,26 @@ public class DialogueShowController : MonoBehaviour
 		switch (currentDialogue)
 		{
 			case GOTOVK:
-				GameManager.state.ActiveSpeaker = DialogueBank.Character.Player;
+				GameManager.state.ActiveSpeaker = Character.Player;
+				HideAntiPlayer();
 				shouldSkipDialogue = true;
 				break;
 			case GOTOBT:
-				GameManager.state.ActiveSpeaker = DialogueBank.Character.Betaal;
+				GameManager.state.ActiveSpeaker = Character.Betaal;
+				HideAntiPlayer();
 				shouldSkipDialogue = true;
 				break;
 			case GOTOSD:
-				GameManager.state.ActiveSpeaker = DialogueBank.Character.Oldie;
+				GameManager.state.ActiveSpeaker = Character.Oldie;
+				HidePlayer();
 				shouldSkipDialogue = true;
 				break;
 			case EXIT:
 				EndConversation();
 				return true;
-			default: break;
+			default:
+				HidePlayer();
+				break;
 		}
 		
 		if (shouldSkipDialogue)
@@ -141,15 +148,43 @@ public class DialogueShowController : MonoBehaviour
 		return false;
 	}
 
+	private void HidePlayer()
+	{
+		if (_currentLeftCharacter == Character.Player)
+		{
+			HideSpeakerDetails(rightCharacterName, leftImage);
+			ShowSpeakerDetails(leftCharacterName, rightImage);
+		}
+		else
+		{
+			HideSpeakerDetails(leftCharacterName, rightImage);
+			ShowSpeakerDetails(rightCharacterName, leftImage);
+		}
+	}
+
+	private void HideAntiPlayer()
+	{
+		if (_currentLeftCharacter == Character.Oldie)
+		{
+			HideSpeakerDetails(rightCharacterName, leftImage);
+			ShowSpeakerDetails(leftCharacterName, rightImage);
+		}
+		else
+		{
+			HideSpeakerDetails(leftCharacterName, rightImage);
+			ShowSpeakerDetails(rightCharacterName, leftImage);
+		}
+	}
+
 	private ref int UpdateActiveSpeakerIndex()
 	{
 		ref var currentIdx = ref _currentPlayerIndex;
 		switch (GameManager.state.ActiveSpeaker)
 		{
-			case DialogueBank.Character.Player: break;
-			case DialogueBank.Character.Betaal: currentIdx = ref _currentBetaalIndex;
+			case Character.Player: break;
+			case Character.Betaal: currentIdx = ref _currentBetaalIndex;
 				break;
-			case DialogueBank.Character.Oldie: currentIdx = ref _currentSadhuIndex;
+			case Character.Oldie: currentIdx = ref _currentSadhuIndex;
 				break;
 		}
 
@@ -166,17 +201,17 @@ public class DialogueShowController : MonoBehaviour
 			GameEvents.InvokeIntroConversationComplete();
 	}
 
-	private void SetSpeakerDetailsPos(DialogueBank.Character speaker, out TextMeshProUGUI text, out Image image)
+	private void SetSpeakerDetailsPos(Character speaker, out TextMeshProUGUI text, out Image image)
 	{
 		var convWithBetaal = GameManager.state.InConversationWithBetaal;
-		if (speaker == DialogueBank.Character.Player)
+		if (speaker == Character.Player)
 			if (convWithBetaal)
 				SetLeftIcon(out text, out image);
 			else
 				SetRightIcon(out text, out image);
-		else if (speaker == DialogueBank.Character.Betaal)
+		else if (speaker == Character.Betaal)
 			SetRightIcon(out text, out image);
-		else//if (speaker == DialogueBank.Character.Oldie) 
+		else//if (speaker == Character.Oldie) 
 			SetLeftIcon(out text, out image);
 	}
 
@@ -210,6 +245,18 @@ public class DialogueShowController : MonoBehaviour
 		text = leftCharacterName;
 	}
 
+	private void HideSpeakerDetails(TextMeshProUGUI text, Image image)
+	{
+		image.enabled = false;
+		text.enabled = false;
+	}
+
+	private void ShowSpeakerDetails(TextMeshProUGUI text, Image image)
+	{
+		image.enabled = true;
+		text.enabled = true;
+	}
+
 	private void RestartTipBlinker()
 	{
 		_tipAppear.Restart();
@@ -218,7 +265,15 @@ public class DialogueShowController : MonoBehaviour
 
 	private void HideTipBlinker() => _tipDisappear.Restart();
 
-	private void OnConversationStart() => ProgressConversation();
+	private void OnConversationStart()
+	{
+		GameManager.state.ActiveSpeaker = firstWordBy[_currentConversationIndex];
+		if (GameManager.state.ActiveSpeaker == Character.Betaal)
+			_currentLeftCharacter = Character.Player;
+		else if (GameManager.state.ActiveSpeaker == Character.Oldie) 
+			_currentLeftCharacter = Character.Oldie;
+		ProgressConversation();
+	}
 
 	private void OnUsePressed()
 	{

@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Player.Combat;
 using UnityEngine;
 
 namespace Player
@@ -12,12 +13,26 @@ namespace Player
 		[SerializeField] private float hitImpulseMultiplier;
 		[SerializeField] private int lPunchDamage = 20, lUppercutDamage = 40;
 
-		private PlayerState _my; 
+		public bool allowedInteractionWithBetaalChange = true;
+		public bool canInteractWithBetaal;
+
+		private PlayerState _my;
 		private Animator _anim;
-		
+
 		private static readonly int GetHurtBack = Animator.StringToHash("GetHurtBack");
 		private static readonly int GetHurtFront = Animator.StringToHash("GetHurtFront");
 
+		private void OnEnable()
+		{
+			PlayerInput.UsePressed += OnUsePressed;
+		}
+
+		private void OnDisable()
+		{
+			PlayerInput.UsePressed -= OnUsePressed;
+		}
+
+		
 		private void Awake()
 		{
 			DOTween.KillAll();
@@ -61,6 +76,23 @@ namespace Player
 				rb.isKinematic = false;
 				rb.AddForce(-transform.forward * ragdollThrowBackForce, ForceMode.Impulse);
 			}
+		}
+
+		private void OnUsePressed()
+		{
+			if (!canInteractWithBetaal) return;
+
+			canInteractWithBetaal = false;
+			allowedInteractionWithBetaalChange = false;
+			GameEvents.InvokeInteractWithBetaal();
+		}
+
+		public bool TryInteractWithBetaalStatusChange(bool b)
+		{
+			if(!allowedInteractionWithBetaalChange) return false;
+
+			canInteractWithBetaal = b;
+			return true;
 		}
 	}
 }

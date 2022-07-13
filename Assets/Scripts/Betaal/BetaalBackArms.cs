@@ -38,10 +38,10 @@ namespace Betaal
 			rightIkTarget.position = Vector3.Lerp(rightIkTarget.position, _currentRightTarget.position, Time.deltaTime);
 		}
 
-		private void SendToCeiling()
+		public void SendToCeiling()
 		{
 			leftIkTarget.DOMove(leftCeiling.position, 0.5f).OnComplete(() => _currentLeftTarget = leftCeiling);
-			rightIkTarget.DOMove(rightCeiling.position, 0.5f).OnComplete(() => _currentLeftTarget = rightCeiling);
+			rightIkTarget.DOMove(rightCeiling.position, 0.5f).OnComplete(() => _currentRightTarget = rightCeiling);
 		}
 
 		private void AttackChest()

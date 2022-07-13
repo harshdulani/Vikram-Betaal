@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 	public bool isSadhuEvil { get; private set; }
 	public bool InPreFight { get; private set; }
 	public bool IsInConversation { get; private set; }
-	public DialogueBank.Character ActiveSpeaker { get; set; }
+	public Character ActiveSpeaker { get; set; }
 	
 	private void OnEnable()
 	{

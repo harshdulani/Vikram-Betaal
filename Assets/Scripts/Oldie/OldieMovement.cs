@@ -9,7 +9,7 @@ namespace Oldie
 	{
 		[SerializeField] private Transform sittingSpot;
 		[SerializeField] private float stoppingDistance;
-		private bool _isMoving;
+		private bool _isMoving, _disabledMovement;
 
 		private NavMeshAgent _agent;
 		private Transform _transform;
@@ -22,13 +22,15 @@ namespace Oldie
 		private void OnEnable()
 		{
 			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
+			GameEvents.ConversationStart += OnConversationStart;
 		}
 
 		private void OnDisable()
 		{
 			GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
+			GameEvents.ConversationStart -= OnConversationStart;
 		}
-		
+
 		private void Start()
 		{
 			_agent = GetComponent<NavMeshAgent>();
@@ -44,6 +46,7 @@ namespace Oldie
 
 		private void Update()
 		{
+			if(_disabledMovement) return;
 			if(GameManager.state.InPreFight) return;
 			Recenter();
 		
@@ -68,18 +71,23 @@ namespace Oldie
 			_isMoving = true;
 			StartMovingAnim();
 		}
-		
+
+
 		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
 
 		private void StartMovingAnim() => DOTween.To(BlendValueGetter, BlendValueSetter, 1f, 0.5f);
 		private void StopMovingAnim() => DOTween.To(BlendValueGetter, BlendValueSetter, 0f, 0.5f);
 		private float BlendValueGetter() => _my.Animator.GetFloat(BlendValue);
 		private void BlendValueSetter(float value) => _my.Animator.SetFloat(BlendValue, value);
+
+		private void OnConversationStart() => _disabledMovement = true;
 		
 		private void OnIntroConversationComplete() 
 		{
-			_agent.enabled = true;
-			_my.Animator.SetTrigger(StandUpSitting);
+			//_agent.enabled = true;
+
+			//_my.Animator.SetTrigger(StandUpSitting);
+			//transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart);
 		}
 	}
 }
