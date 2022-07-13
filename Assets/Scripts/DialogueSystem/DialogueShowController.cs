@@ -53,14 +53,13 @@ public class DialogueShowController : MonoBehaviour
 		_tipDisappear = tip.DOColor(Color.clear, 0.05f).SetRecyclable(true).SetAutoKill(false);
 		
 		_tipBlinker = DOTween.To(GetCharSpacing, SetCharSpacing, -36, blinkDuration)
-		//_tipBlinker = tip.DOColor(Color.clear, blinkDuration)
-						 .SetLoops(-1, LoopType.Yoyo)
-						 .SetRecyclable(true)
-						 .SetAutoKill(false);
+							 .SetLoops(-1, LoopType.Yoyo)
+							 .SetRecyclable(true)
+							 .SetAutoKill(false);
 
 		_tipWaiter = DOVirtual.DelayedCall(blinkWaitTime, RestartTipBlinker)
 							  .SetRecyclable(true)
-							  .SetAutoKill(false);;
+							  .SetAutoKill(false);
 
 		_tipBlinker.Pause();
 		_tipWaiter.Pause();
@@ -131,8 +130,7 @@ public class DialogueShowController : MonoBehaviour
 				return true;
 			default: break;
 		}
-
-		print($"{string.Compare(EXIT, currentDialogue)} {currentDialogue}");
+		
 		if (shouldSkipDialogue)
 		{
 			currentSpeakerIndex = ref UpdateActiveSpeakerIndex();
@@ -160,7 +158,6 @@ public class DialogueShowController : MonoBehaviour
 
 	private void EndConversation()
 	{
-		print("end");
 		dialoguePanel.SetActive(false);
 		leftPivotPanel.SetActive(false);
 		rightPivotPanel.SetActive(false);
@@ -196,7 +193,7 @@ public class DialogueShowController : MonoBehaviour
 		}
 
 		HideTipBlinker();
-		if(_tipWaiter.IsActive()) _tipWaiter.Kill();
+		if(_tipWaiter.IsActive()) _tipWaiter.Rewind();
 		
 		_tipWaiter.Restart();
 	}
