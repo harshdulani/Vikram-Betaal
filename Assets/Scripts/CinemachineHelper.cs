@@ -52,21 +52,26 @@ public class CinemachineHelper : MonoBehaviour
 											if(_isUsingFightCam) return;
 											GoToFightCam();
 										}
+										CuteCm.only.UpdateInFightCam(_isUsingFightCam);
 									}).SetLoops(-1);
 	}
 
 	private void GoToFightCam()
 	{
 		_isUsingFightCam = true;
+		/*
 		walkCam.m_Priority = 0;
 		fightCam.m_Priority = 1;
+		*/
 	}
 
 	private void GoToWalkCam()
 	{
 		_isUsingFightCam = false;
-		walkCam.m_Priority = 1;
+		/*
+		 walkCam.m_Priority = 1;
 		fightCam.m_Priority = 0;
+		*/
 	}
 
 	private void OnStartBetaalAttack()

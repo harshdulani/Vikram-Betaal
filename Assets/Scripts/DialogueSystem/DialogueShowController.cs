@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class DialogueShowController : MonoBehaviour
 {
+	[SerializeField] private List<DialogueBank> dialogueBanks;
+	
 	[Header("Text"), SerializeField] private GameObject dialoguePanel;
 	[SerializeField] private TextMeshProUGUI leftCharacterName, rightCharacterName, dialogue;
 
@@ -22,8 +24,9 @@ public class DialogueShowController : MonoBehaviour
 	[SerializeField] private List<Character> firstWordBy;
 
 	private Character _currentLeftCharacter;
-	private DialogueBank _dialogue;
+	private DialogueBank _currentDialogue;
 	private Tween _tipBlinker, _tipWaiter, _tipAppear, _tipDisappear;
+	private bool _isInIntroConv;
 
 	private const string GOTOVK = "GOTOVK";
 	private const string GOTOBT = "GOTOBT";
@@ -46,8 +49,6 @@ public class DialogueShowController : MonoBehaviour
 
 	private void Start()
 	{
-		_dialogue = GetComponent<DialogueBank>();
-
 		float GetCharSpacing() => tip.characterSpacing;
 		void SetCharSpacing(float value) => tip.characterSpacing = value;
 
@@ -109,7 +110,7 @@ public class DialogueShowController : MonoBehaviour
 		
 		currentSpeakerIndex = ref UpdateActiveSpeakerIndex();
 
-		var currentDialogue = _dialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
+		var currentDialogue = _currentDialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
 		
 		var shouldSkipDialogue = false;
 
@@ -132,6 +133,9 @@ public class DialogueShowController : MonoBehaviour
 				break;
 			case EXIT:
 				EndConversation();
+				
+				if(_isInIntroConv) break;
+				CuteCm.only.EndDialogue();
 				return true;
 			default:
 				HidePlayer();
@@ -141,7 +145,7 @@ public class DialogueShowController : MonoBehaviour
 		if (shouldSkipDialogue)
 		{
 			currentSpeakerIndex = ref UpdateActiveSpeakerIndex();
-			currentDialogue = _dialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
+			currentDialogue = _currentDialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
 		}
 		
 		SpawnDialogSpeaker(GameManager.state.ActiveSpeaker, currentDialogue);
@@ -173,6 +177,7 @@ public class DialogueShowController : MonoBehaviour
 		{
 			HideSpeakerDetails(leftCharacterName, rightImage);
 			ShowSpeakerDetails(rightCharacterName, leftImage);
+			if(_isInIntroConv) return;
 		}
 	}
 
@@ -198,7 +203,11 @@ public class DialogueShowController : MonoBehaviour
 		rightPivotPanel.SetActive(false);
 		
 		if(_currentConversationIndex++ == 0)
+		{
 			GameEvents.InvokeIntroConversationComplete();
+			if (_currentConversationIndex - 1 == 0) CuteCm.only.SetEndIntroConv();
+			_isInIntroConv = false;
+		}
 	}
 
 	private void SetSpeakerDetailsPos(Character speaker, out TextMeshProUGUI text, out Image image)
@@ -268,10 +277,20 @@ public class DialogueShowController : MonoBehaviour
 	private void OnConversationStart()
 	{
 		GameManager.state.ActiveSpeaker = firstWordBy[_currentConversationIndex];
+		_currentDialogue = dialogueBanks[_currentConversationIndex];
+
+		if (_currentConversationIndex == 0)
+		{
+			CuteCm.only.SetStartIntroConv();
+			_isInIntroConv = true;
+		}
+		
 		if (GameManager.state.ActiveSpeaker == Character.Betaal)
 			_currentLeftCharacter = Character.Player;
 		else if (GameManager.state.ActiveSpeaker == Character.Oldie) 
 			_currentLeftCharacter = Character.Oldie;
+		
+		
 		ProgressConversation();
 	}
 

@@ -22,6 +22,8 @@ namespace Betaal
 
 		private Color _originalSkinColor, _originalEmission;
 		private Tween _textColorTween;
+		private Vector3 _initPos;
+		
 		private static readonly int EmissiveColor = Shader.PropertyToID("_EmissiveColor");
 
 		private void OnEnable()
@@ -39,6 +41,7 @@ namespace Betaal
 			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 			_arms = GetComponent<BetaalBackArms>();
 			_anim = GetComponent<Animator>();
+			_initPos = transform.position;
 
 			DOVirtual.DelayedCall(5f, GoRagdoll);
 			
@@ -59,16 +62,18 @@ namespace Betaal
 								 .SetAutoKill(false);
 			
 			text.color = Color.clear;
+			
 		}
 
 		private void GoRagdoll()
 		{
-			_anim.enabled = false;
-			foreach (var rb in rigidbodies) rb.isKinematic = false;
-			
-			var position = transform.position;
-			position.x -= 3.5f;
-			transform.position = position;
+			transform.position = _initPos;
+
+			DOVirtual.DelayedCall(0.12f, () =>
+										 {
+											 _anim.enabled = false;
+											 foreach (var rb in rigidbodies) rb.isKinematic = false;
+										 });
 		}
 
 		private void OnInteractWithBetaal()
@@ -108,7 +113,7 @@ namespace Betaal
 		{
 			if(!other.CompareTag("Player")) return;
 			
-			TurnInteractionUiStatus(_player.TryInteractWithBetaalStatusChange(false));
+			TurnInteractionUiStatus(false);
 		}
 	}
 }

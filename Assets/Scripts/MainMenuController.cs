@@ -69,6 +69,7 @@ public class MainMenuController : MonoBehaviour
 
 		_hasStarted = true;
 		menuPanel.SetActive(false);
+		aboutPanel.SetActive(false);
 		_currentState = GameState.Playing;
 		
 		GameEvents.InvokeGameplayStart();
