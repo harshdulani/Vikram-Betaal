@@ -23,8 +23,8 @@ namespace Player
 		
 		public bool inCombat, disableMovementByAnimation, isBlocking;
 
-		public void EnableMovementByAnimationStatus()  => disableMovementByAnimation = false;
-		public void DisableMovementByAnimationStatus()  => disableMovementByAnimation = true;
+		public void AllowMovement()  => disableMovementByAnimation = false;
+		public void DisallowMovement()  => disableMovementByAnimation = true;
 
 		private void Awake()
 		{

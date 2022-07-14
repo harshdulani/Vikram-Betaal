@@ -18,12 +18,12 @@ namespace Player
 			_state.CurrentAttackType = myAttackType;
 			if (shouldDisable)
 			{
-				_state.DisableMovementByAnimationStatus();
+				_state.DisallowMovement();
 				_state.Combat.TurnFistsColliders();
 			}
 			else
 			{
-				_state.EnableMovementByAnimationStatus();
+				_state.AllowMovement();
 				//animator.ResetTrigger(Light);
 				_state.Combat.TurnFistsTriggers();
 			}

@@ -26,7 +26,8 @@ namespace Player
 		private void OnEnable()
 		{
 			PlayerInput.UsePressed += OnUsePressed;
-			
+
+			GameEvents.ConversationStart += OnConversationStart;
 			GameEvents.BetaalFightStart += OnFightEnter;
 			GameEvents.BetaalFightEnd += OnBetaalFightEnd;
 		}
@@ -35,6 +36,8 @@ namespace Player
 		{
 			PlayerInput.UsePressed -= OnUsePressed;
 			
+			GameEvents.ConversationStart -= OnConversationStart;
+
 			GameEvents.BetaalFightStart -= OnFightEnter;
 			GameEvents.BetaalFightEnd -= OnBetaalFightEnd;
 		}
@@ -124,6 +127,11 @@ namespace Player
 			healthCanvas.DisableCanvas();
 			if(!isTemporary)
 				_my.currentHealth = _my.maxHealth;
+		}
+
+		private void OnConversationStart()
+		{
+			healthCanvas.DisableCanvas();
 		}
 	}
 }

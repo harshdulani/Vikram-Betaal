@@ -20,7 +20,12 @@ public class Lightning : MonoBehaviour
 	private void Start()
 	{
 		_sun = GetComponent<Light>();
+		
+		StartLightning();
+	}
 
+	private void StartLightning()
+	{
 		_lightningTween = _sun.DOIntensity(peakIntensity, 0.15f)
 							  .SetEase(Ease.Flash)
 							  .SetLoops(4, LoopType.Yoyo)
@@ -40,6 +45,6 @@ public class Lightning : MonoBehaviour
 								.SetLoops(2, LoopType.Yoyo)
 								.SetEase(Ease.Flash)
 								.SetDelay(Random.Range(0, 1f))
-								.OnComplete(() => _lightningTween.Restart(true, Random.Range(waitRange.x, waitRange.y))));
+								.OnComplete(StartLightning));
 	}
 }

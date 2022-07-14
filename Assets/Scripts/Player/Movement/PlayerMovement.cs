@@ -31,7 +31,7 @@ namespace Player.Movement
 			GameEvents.GameplayStart += OnGameplayStart;
 			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
 			GameEvents.ConversationStart += OnConversationStart;
-			GameEvents.ConversationStart += OnConversationEnd;
+			GameEvents.ConversationEnd += OnConversationEnd;
 		}
 
 		private void OnDisable()
@@ -133,24 +133,25 @@ namespace Player.Movement
 		private void OnIntroConversationComplete() 
 		{
 			_anim.SetTrigger(StandUpSitting);
+			_state.DisallowMovement();
 			
 			transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart);
 			_transform.DORotate(Vector3.up * 90f, 1f)
 					  .SetDelay(1.5f)
 					  .OnComplete(() => {
-									  _state.EnableMovementByAnimationStatus();
+									  _state.AllowMovement();
 									  _agent.enabled = true;
 								  });
 		}
 
 		private void OnConversationStart()
 		{
-			_state.EnableMovementByAnimationStatus();
+			_state.DisallowMovement();
 		}
 
 		private void OnConversationEnd()
 		{
-			_state.DisableMovementByAnimationStatus();
+			_state.AllowMovement();
 		}
 	}
 }

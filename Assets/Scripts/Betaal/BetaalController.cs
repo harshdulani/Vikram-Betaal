@@ -83,13 +83,28 @@ namespace Betaal
 			var healthNormalised = _currentHealth / (float) maxHealth;
 			healthCanvas.SetHealth(healthNormalised);
 			
-			if(healthNormalised < healthBeforeMidFightConv && !_hasHadMidFightConv)
-				print("TODO: CODE TO START MIDFIGHT CONV");
-			
+			if(healthNormalised < healthBeforeMidFightConv && !_hasHadMidFightConv) 
+				StartMidFightCon();
+
 			if(_currentHealth > 0) return;
 		
 			Die();
 		}
+
+		private void StartMidFightCon()
+		{
+			_hasHadMidFightConv = true;
+			GameEvents.InvokeConversationStart();
+			GameEvents.InvokeBetaalFightEnd(true);
+			
+			Lightning.only.CustomLightning(3500000);
+			DOVirtual.DelayedCall(0.15f, () =>
+										 {
+											 _transform.position = _movement.initPos;
+											 _player.position = _movement.initPos += Vector3.left * _movement.maxDistanceFromPlayer;
+										 });
+		}
+		
 
 		private void StartCombat()
 		{
@@ -184,6 +199,9 @@ namespace Betaal
 
 		private void OnConversationStart()
 		{
+			EndCombat();
+			_movement.StopMovementTween();
+
 			DOVirtual.DelayedCall(0.15f, () =>
 										 {
 											 if (!GameManager.state.InConversationWithBetaal) return;

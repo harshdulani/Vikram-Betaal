@@ -37,7 +37,7 @@ public class DialogueShowController : MonoBehaviour
 	private void OnEnable()
 	{
 		PlayerInput.UsePressed += OnUsePressed;
-		
+
 		GameEvents.ConversationStart += OnConversationStart;
 	}
 
@@ -247,7 +247,6 @@ public class DialogueShowController : MonoBehaviour
 			SetLeftIcon(out text, out image);
 	}
 
-
 	private void SetText(string text) => dialogue.text = text;
 
 	private void ProgressConversation()
@@ -295,7 +294,6 @@ public class DialogueShowController : MonoBehaviour
 		_tipAppear.Restart();
 		_tipBlinker.Restart();
 	}
-
 
 	private void HideTipBlinker() => _tipDisappear.Restart();
 

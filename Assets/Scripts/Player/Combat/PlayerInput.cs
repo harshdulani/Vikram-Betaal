@@ -7,10 +7,10 @@ namespace Player.Combat
 	{
 		public static event Action UsePressed;
 		public static void InvokeUsePressed() => UsePressed?.Invoke();
-		
+
 		[SerializeField] private Collider leftHand, rightHand;
 		public Transform attackHostPosition;
-		
+
 		private PlayerState _state;
 		private Animator _anim;
 		private Transform _leftHandT, _rightHandT;
@@ -43,8 +43,8 @@ namespace Player.Combat
 
 		public void SetInCombatStatus(bool status)
 		{
-			if(status == _state.inCombat) return;
-			
+			if (status == _state.inCombat) return;
+
 			_state.inCombat = status;
 			_anim.SetBool(InCombat, status);
 
@@ -61,35 +61,37 @@ namespace Player.Combat
 		public void TurnFistsColliders()
 		{
 			leftHand.attachedRigidbody.isKinematic = rightHand.attachedRigidbody.isKinematic = false;
-			leftHand.isTrigger = rightHand.isTrigger = false;			
+			leftHand.isTrigger = rightHand.isTrigger = false;
 			_leftHandT.localPosition = _rightHandT.localPosition = Vector3.zero;
 		}
 
 		public void OnLightAttackInput()
 		{
-			if(_state.inCombat)
-				_anim.SetTrigger(Light);
+			if (GameManager.state.IsInConversation) return;
+			if (_state.inCombat) _anim.SetTrigger(Light);
 		}
 
 		public void OnStartBlocking()
 		{
+			if (GameManager.state.IsInConversation) return;
 			if (!_state.inCombat) return;
-			
+
 			_anim.SetBool(IsBlocking, true);
 			_state.isBlocking = true;
-			_state.DisableMovementByAnimationStatus();
+			_state.DisallowMovement();
 		}
 
 		public void OnStopBlocking()
 		{
+			if (GameManager.state.IsInConversation) return;
 			if (!_state.inCombat) return;
 
 			_anim.SetBool(IsBlocking, false);
 			_state.isBlocking = false;
-			_state.EnableMovementByAnimationStatus();
+			_state.AllowMovement();
 		}
 
 		private void OnFightStart() => SetInCombatStatus(true);
-		private void OnFightEnd(bool isTemporary) => SetInCombatStatus(false);
+		private void OnFightEnd(bool isTemporary) => SetInCombatStatus(isTemporary);
 	}
 }

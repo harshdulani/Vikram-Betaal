@@ -6,15 +6,17 @@ namespace Betaal
 {
 	public class BetaalMovement : MonoBehaviour
 	{
-		[SerializeField] private float maxDistanceFromPlayer, maxDistanceFromHome, aiRepositionInterval;
+		[HideInInspector] public Vector3 initPos;
+		
+		public float maxDistanceFromPlayer;
+		[SerializeField] private float maxDistanceFromHome, aiRepositionInterval;
 		[SerializeField] private float stoppingDistance;
 		private bool _isMoving, _disabledMovement;
 
 		private NavMeshAgent _agent;
 		private Transform _player, _transform;
 		private Tween _movementTween;
-		private Vector3 _initPos;
-		
+
 		private BetaalController _controller;
 
 		private void Start()
@@ -43,9 +45,9 @@ namespace Betaal
 			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
 												   () =>
 												   {
-													   if (Vector3.Distance(_transform.position, _initPos) > maxDistanceFromHome)
+													   if (Vector3.Distance(_transform.position, initPos) > maxDistanceFromHome)
 													   {
-														   SetNewDest(_initPos);
+														   SetNewDest(initPos);
 														   return;
 													   }
 													   
@@ -66,16 +68,16 @@ namespace Betaal
 
 		public void StopMovementTween() => _movementTween.Kill();
 
-		public void AssignNewHomePos() => _initPos = _transform.position;
+		public void AssignNewHomePos() => initPos = _transform.position;
 
 		private void FindNewPosition(Vector3 vector)
 		{
 			var dest = _player.position + vector.normalized * maxDistanceFromPlayer;
 			
-			if(dest.x > _initPos.x)
+			if(dest.x > initPos.x)
 			{
-				print(dest.x + ", " + _initPos.x);
 				_controller.StartArmsAttack();
+				SetNewDest(initPos);
 				return;
 			}
 			SetNewDest(dest);
