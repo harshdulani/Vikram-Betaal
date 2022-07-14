@@ -20,6 +20,18 @@ namespace Player.Combat
 		private static readonly int Light = Animator.StringToHash("light");
 		private static readonly int IsBlocking = Animator.StringToHash("isBlocking");
 
+		private void OnEnable()
+		{
+			GameEvents.BetaalFightStart += OnFightStart;
+			GameEvents.BetaalFightEnd += OnFightEnd;
+		}
+
+		private void OnDisable()
+		{
+			GameEvents.BetaalFightStart -= OnFightStart;
+			GameEvents.BetaalFightEnd -= OnFightEnd;
+		}
+
 		private void Start()
 		{
 			_state = GetComponent<PlayerState>();
@@ -27,13 +39,6 @@ namespace Player.Combat
 
 			_leftHandT = leftHand.transform;
 			_rightHandT = rightHand.transform;
-		}
-
-		private void Update()
-		{
-			if(!Input.GetKeyUp(KeyCode.T)) return;
-
-			SetInCombatStatus(!_state.inCombat);
 		}
 
 		public void SetInCombatStatus(bool status)
@@ -71,6 +76,7 @@ namespace Player.Combat
 			if (!_state.inCombat) return;
 			
 			_anim.SetBool(IsBlocking, true);
+			_state.isBlocking = true;
 			_state.DisableMovementByAnimationStatus();
 		}
 
@@ -78,9 +84,12 @@ namespace Player.Combat
 		{
 			if (!_state.inCombat) return;
 
-			_anim.SetBool(IsBlocking, true);
-			_state.isBlocking = true;
+			_anim.SetBool(IsBlocking, false);
+			_state.isBlocking = false;
 			_state.EnableMovementByAnimationStatus();
 		}
+
+		private void OnFightStart() => SetInCombatStatus(true);
+		private void OnFightEnd(bool isTemporary) => SetInCombatStatus(false);
 	}
 }

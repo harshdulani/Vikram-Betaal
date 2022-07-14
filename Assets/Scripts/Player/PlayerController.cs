@@ -7,6 +7,7 @@ namespace Player
 {
 	public class PlayerController : MonoBehaviour
 	{
+		[SerializeField] private HealthCanvas healthCanvas;
 		[SerializeField] private Rigidbody[] rigidbodies;
 		[SerializeField] private float ragdollThrowBackForce;
 
@@ -25,14 +26,19 @@ namespace Player
 		private void OnEnable()
 		{
 			PlayerInput.UsePressed += OnUsePressed;
+			
+			GameEvents.BetaalFightStart += OnFightEnter;
+			GameEvents.BetaalFightEnd += OnBetaalFightEnd;
 		}
 
 		private void OnDisable()
 		{
 			PlayerInput.UsePressed -= OnUsePressed;
+			
+			GameEvents.BetaalFightStart -= OnFightEnter;
+			GameEvents.BetaalFightEnd -= OnBetaalFightEnd;
 		}
 
-		
 		private void Awake()
 		{
 			DOTween.KillAll();
@@ -59,13 +65,34 @@ namespace Player
 		{
 			_my.currentHealth -= damage.magnitude;
 
+			var normalisedHealth = _my.currentHealth / _my.maxHealth;
+			healthCanvas.SetHealth(normalisedHealth);
+			
 			if (_my.currentHealth < 0f)
 			{
-				GoRagdoll();
+				Die();
 				return;
 			}
 			_my.Impulse.GenerateImpulse(damage.normalized * hitImpulseMultiplier);
 			_anim.SetTrigger(Vector3.Dot(transform.forward, damage) > 0f ? GetHurtFront : GetHurtBack);
+		}
+
+		public bool TryInteractWithBetaalStatusChange(bool b)
+		{
+			if(!allowedInteractionWithBetaalChange) return false;
+
+			canInteractWithBetaal = b;
+			return true;
+		}
+
+
+		public void GetPushedBack() => transform.position -= Vector3.right;
+
+		private void Die()
+		{
+			GoRagdoll();
+			healthCanvas.DisableCanvas();
+			GameEvents.InvokeGameLose();
 		}
 
 		private void GoRagdoll()
@@ -87,12 +114,16 @@ namespace Player
 			GameEvents.InvokeInteractWithBetaal();
 		}
 
-		public bool TryInteractWithBetaalStatusChange(bool b)
+		private void OnFightEnter()
 		{
-			if(!allowedInteractionWithBetaalChange) return false;
-
-			canInteractWithBetaal = b;
-			return true;
+			healthCanvas.EnableCanvas();
+		}
+		
+		private void OnBetaalFightEnd(bool isTemporary)
+		{
+			healthCanvas.DisableCanvas();
+			if(!isTemporary)
+				_my.currentHealth = _my.maxHealth;
 		}
 	}
 }

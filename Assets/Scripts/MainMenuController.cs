@@ -1,7 +1,5 @@
 using System;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,13 +9,23 @@ public enum GameState { MainMenu, Playing, Paused }
 public class MainMenuController : MonoBehaviour
 {
 	[SerializeField] private Image black;
-	[SerializeField] private GameObject menuPanel, aboutPanel, inGamePanel;
+	[SerializeField] private GameObject menuPanel, aboutPanel, inGamePanel, retryPanel;
 	
 	private Tweener _colorTween;
 	
 	private GameState _currentState;
 	private Color _initColor;
 	private bool _hasStarted;
+
+	private void OnEnable()
+	{
+		GameEvents.GameLose += OnGameLose;
+	}
+
+	private void OnDisable()
+	{
+		GameEvents.GameLose -= OnGameLose;
+	}
 
 	private void Start()
 	{
@@ -47,16 +55,21 @@ public class MainMenuController : MonoBehaviour
 
 	private void PauseGame()
 	{
-		//timescale 0
+		Time.timeScale = 0f;
 		inGamePanel.SetActive(true);
 		
 		if(_colorTween.IsActive()) _colorTween.Kill();
 		_colorTween = black.DOColor(_initColor, 0.5f);
 	}
 
+	private void ShowRetryPanel()
+	{
+		retryPanel.SetActive(true);
+	}
+
 	public void OnPressResumeGame()
 	{
-		//timescale 1
+		Time.timeScale = 1f;
 		inGamePanel.SetActive(false);
 		
 		if(_colorTween.IsActive()) _colorTween.Kill();
@@ -77,6 +90,11 @@ public class MainMenuController : MonoBehaviour
 		_colorTween = black.DOColor(Color.clear, 0.5f);
 	}
 
+	public void OnPressRetry()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
 	public void OnPressAbout()
 	{
 		aboutPanel.SetActive(!aboutPanel.activeSelf);
@@ -85,5 +103,10 @@ public class MainMenuController : MonoBehaviour
 	public void OnPressQuit()
 	{
 		Application.Quit();
+	}
+
+	private void OnGameLose()
+	{
+		DOVirtual.DelayedCall(2f, ShowRetryPanel);
 	}
 }

@@ -16,7 +16,7 @@ namespace Player.Movement
 		private Transform _transform;
 
 		private float _inputMag;
-		private bool _isFacingRight = true;
+		private bool _isFacingRight = true, _hasToEnableCombatAgain;
 
 		private Tween _orientationTween;
 
@@ -24,17 +24,22 @@ namespace Player.Movement
 		private static readonly int GetShockedSitting = Animator.StringToHash("getShockedSitting");
 		private static readonly int WakeUpSitting = Animator.StringToHash("wakeUpSitting");
 		private static readonly int StandUpSitting = Animator.StringToHash("standUpSitting");
+		private static readonly int InCombat = Animator.StringToHash("inCombat");
 
 		private void OnEnable()
 		{
 			GameEvents.GameplayStart += OnGameplayStart;
 			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
+			GameEvents.ConversationStart += OnConversationStart;
+			GameEvents.ConversationStart += OnConversationEnd;
 		}
 
 		private void OnDisable()
 		{
 			GameEvents.GameplayStart -= OnGameplayStart;
 			GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
+			GameEvents.ConversationStart -= OnConversationStart;
+			GameEvents.ConversationEnd -= OnConversationEnd;
 		}
 
 		private void Start()
@@ -47,8 +52,8 @@ namespace Player.Movement
 			_agent.enabled = false;
 			
 			sittingSpot.parent = null;
-			transform.position = sittingSpot.position;
-			transform.rotation = sittingSpot.rotation;
+			_transform.position = sittingSpot.position;
+			_transform.rotation = sittingSpot.rotation;
 			
 			_isFacingRight = Vector3.Dot(_transform.forward, Vector3.right) > 0;
 		}
@@ -80,7 +85,16 @@ namespace Player.Movement
 		{
 			IsRunning = status;
 
-			if (status) _state.Combat.SetInCombatStatus(false);
+			if (status)
+			{
+				_hasToEnableCombatAgain = _anim.GetBool(InCombat);
+				_state.Combat.SetInCombatStatus(false);
+			}
+			else if (_hasToEnableCombatAgain)
+			{
+				_hasToEnableCombatAgain = false;
+				_state.Combat.SetInCombatStatus(true);
+			}
 		}
 
 		private void HandleRotation(float inputX)
@@ -113,12 +127,12 @@ namespace Player.Movement
 		private void OnGameplayStart()
 		{
 			_anim.SetTrigger(GetShockedSitting);
+			DOVirtual.DelayedCall(2f, GameManager.state.OnGameplayStart);
 		}
 
 		private void OnIntroConversationComplete() 
 		{
 			_anim.SetTrigger(StandUpSitting);
-			_state.DisableMovementByAnimationStatus();
 			
 			transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart);
 			_transform.DORotate(Vector3.up * 90f, 1f)
@@ -127,6 +141,16 @@ namespace Player.Movement
 									  _state.EnableMovementByAnimationStatus();
 									  _agent.enabled = true;
 								  });
+		}
+
+		private void OnConversationStart()
+		{
+			_state.EnableMovementByAnimationStatus();
+		}
+
+		private void OnConversationEnd()
+		{
+			_state.DisableMovementByAnimationStatus();
 		}
 	}
 }

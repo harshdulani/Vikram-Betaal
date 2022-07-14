@@ -20,7 +20,8 @@ namespace Betaal
 
 			if (!_player) _player = other.transform.root.GetComponent<PlayerController>();
 			
-			_player.GetHit(other.relativeVelocity);
+			_player.GetHit(other.relativeVelocity * 20);
+			_player.GetPushedBack();
 		}
 	}
 }

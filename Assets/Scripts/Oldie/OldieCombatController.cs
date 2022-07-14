@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,7 +16,8 @@ namespace Oldie
 		[SerializeField] private ProjectileAttack projectile;
 		[SerializeField] private ProximityAttack proximity;
 
-		[SerializeField] private int maxHealth;  
+		[SerializeField] private List<Rigidbody> rigidbodies;
+		[SerializeField] private int maxHealth;
 		private int _currentHealth;
 
 		private Transform _player, _transform;
@@ -33,7 +36,7 @@ namespace Oldie
 		{
 			_my = GetComponent<OldieRefBank>();
 
-			_player = GameObject.FindGameObjectWithTag("Player").transform;
+			_player = GameObject.FindGameObjectWithTag("Player").transform.root;
 			_transform = transform;
 
 			_currentHealth = maxHealth;
@@ -66,8 +69,10 @@ namespace Oldie
 			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
 												   () =>
 												   {
-													   var vector = (_player.position - _transform.position);
-													   if (vector.magnitude > maxDistanceFromPlayer)
+													   var vector = _transform.position - _player.position;
+													   print(vector);
+													   if (Vector3.Distance(_player.position, _transform.position) 
+														 > maxDistanceFromPlayer)
 														   FindNewPosition(vector);
 												   }).SetLoops(-1);
 		}
@@ -85,20 +90,33 @@ namespace Oldie
 			print(_currentHealth);
 			if(_currentHealth > 0) return;
 		
-			_my.Animator.enabled = false;
-			//GoRagdoll();
 		}
 
 		public void Die()
 		{
+			GoRagdoll();
 			_my.IsDead = false;
 			_attackTween.Kill();
 			_movementTween.Kill();
+			
+			GameEvents.InvokeGameWin();
+		}
+		
+		private void GoRagdoll()
+		{
+			_my.Animator.enabled = false;
+
+			foreach (var rb in rigidbodies)
+			{
+				rb.isKinematic = false;
+				rb.AddForce(-transform.forward * 2f, ForceMode.Impulse);
+			}
 		}
 
 		private void FindNewPosition(Vector3 vector)
 		{
-			var dest = vector.normalized * maxDistanceFromPlayer;
+			print("find new pos");
+			var dest = _player.position + vector.normalized * maxDistanceFromPlayer;
 			_my.Movement.SetNewDest(dest);
 		}
 

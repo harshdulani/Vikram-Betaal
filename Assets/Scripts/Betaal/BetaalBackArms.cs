@@ -69,10 +69,13 @@ namespace Betaal
 			AttackDuration += 0.75f;
 			
 			selectedHand.DOMove(chargeUpPosition, 1f)
+						.SetTarget(this)
 						.OnComplete(() => selectedHand.DOMove(endPos, 0.25f)
 													  .SetEase(snakeCurve)
+													  .SetTarget(this)
 													  .SetDelay(0.5f)
 													  .OnComplete(() => selectedHand.DOMove(_currentRightTarget.position, 1.5f)
+																					.SetTarget(this)
 																					.SetDelay(0.75f)
 																					.OnComplete(() =>
 																								{

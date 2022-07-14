@@ -1883,9 +1883,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8afce1e59b65554c966bd0654ad2742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noOfDeaths: 2
   healthCanvas: {fileID: 8005131382754176566}
-  healthBeforeMidFightConv: 0
-  maxHealth: 200
+  healthBeforeMidFightConv: 0.5
+  maxHealth: 500
   rigidbodies:
   - {fileID: 1034179424}
   - {fileID: 794806271}
@@ -1909,6 +1910,7 @@ MonoBehaviour:
   - {fileID: 605031179}
   - {fileID: 1354105324}
   waitBetweenAttacksRange: {x: 3, y: 6}
+  minDistanceForHandleAttack: 5
   handleAttack:
     drawAttackDebugSphere: 0
     attackPos: {x: 0, y: 0, z: 0}
@@ -1943,6 +1945,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6363548906184863357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5560571069945281428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32056a3922054b829fa524c6619383ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistanceFromPlayer: 5
+  maxDistanceFromHome: 10
+  aiRepositionInterval: 2
+  stoppingDistance: 1.5
 --- !u!1 &5687893085204715727 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 84bd93bfc5f8f114791a4ac03363d2d5, type: 3}

@@ -5,6 +5,7 @@ namespace Betaal
 {
 	public class BetaalController : MonoBehaviour
 	{
+		[SerializeField] private int noOfDeaths;
 		[SerializeField] private HealthCanvas healthCanvas;
 		[Range(0,1f), SerializeField] private float healthBeforeMidFightConv;
 		[SerializeField] private int maxHealth;
@@ -16,17 +17,20 @@ namespace Betaal
 		[SerializeField] private GameObject[] lightningFx;
 
 		[SerializeField] private Vector2 waitBetweenAttacksRange;
+		[SerializeField] private float minDistanceForHandleAttack;
 		public BetaalHandleAttack handleAttack;
 
 		[HideInInspector] public BetaalBackArms arms;
+		private BetaalMovement _movement;
 		private Animator _anim;
-		private Transform _transform;
-		private Tween _fightingTween;
+		private Transform _transform, _player;
+		private int _currentDeathCount;
 		private bool _hasHadMidFightConv;
 
 		private static readonly int HitPunch = Animator.StringToHash("hitPunch");
 		private static readonly int HitUppercut = Animator.StringToHash("hitUppercut");
 		private static readonly int Dummy = Animator.StringToHash("dummy");
+		private bool _isDead, _isArmAttacking, _isHandleAttacking;
 
 		public BetaalController() { handleAttack = new BetaalHandleAttack(this); }
 
@@ -34,86 +38,40 @@ namespace Betaal
 		{
 			GameEvents.BetaalFightStart += OnBetaalFightStart;
 			GameEvents.ConversationStart += OnConversationStart;
+			
+			GameEvents.GameLose += OnGameLose;
 		}
 
 		private void OnDisable()
 		{
 			GameEvents.BetaalFightStart -= OnBetaalFightStart;
 			GameEvents.ConversationStart -= OnConversationStart;
+			
+			GameEvents.GameLose -= OnGameLose;
 		}
 
 		private void Start()
 		{
+			_movement = GetComponent<BetaalMovement>();
 			arms = GetComponent<BetaalBackArms>();
 			_anim = GetComponent<Animator>();
 
+			_player = GameObject.FindGameObjectWithTag("Player").transform.root;
 			_transform = transform;
 			_currentHealth = maxHealth;
 			healthCanvas.DisableCanvas();
-			
+
 			HandleController.CalculateDuration(this);
 		}
-
-		private void Update() => Recenter();
 
 		private void OnDrawGizmosSelected()
 		{
 			handleAttack.DrawGizmos();
 		}
 
-		private void StartCombat()
-		{
-			healthCanvas.EnableCanvas();
-			_fightingTween = DOVirtual.DelayedCall(0.1f, ChooseAndLaunchAttack)
-									  .SetRecyclable(true)
-									  .SetAutoKill(false)
-									  .OnStart(() => print("start"));
-		}
-
-		private void ChooseAndLaunchAttack()
-		{
-			var random = Random.value;
-
-			if (random > 0.5f)
-				StartHandleAttack();
-			else
-				StartArmsAttack();
-		}
-
-		private void StartArmsAttack()
-		{
-			arms.AttackChest();
-
-			DOVirtual.DelayedCall(0.25f, () =>
-										 {
-											 var delay = Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y);
-											 print(BetaalBackArms.AttackDuration + delay);
-											 DOVirtual.DelayedCall(BetaalBackArms.AttackDuration + delay,
-																   () => _fightingTween.Restart());
-										 });
-		}
-
-		private void StartHandleAttack()
-		{
-			BetaalEvents.InvokeStartHandleAttack(this);
-			BetaalEvents.InvokeStartBetaalAttack();
-
-			DOVirtual.DelayedCall(0.25f, () =>
-										 {
-											 var delay = Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y);
-											 print(HandleController.AttackDuration + delay);
-											 DOVirtual.DelayedCall(HandleController.AttackDuration + delay,
-																   () => _fightingTween.Restart());
-										 });
-		}
-
-		private void EndCombat()
-		{
-			_fightingTween.Rewind();
-		}
-
 		public void GiveDamage(int getAttackDamage, PlayerAttackType type)
 		{
+			if(_isDead) return;
 			_currentHealth -= getAttackDamage;
 			_anim.SetTrigger(type switch
 							 {
@@ -128,13 +86,79 @@ namespace Betaal
 			if(healthNormalised < healthBeforeMidFightConv && !_hasHadMidFightConv)
 				print("TODO: CODE TO START MIDFIGHT CONV");
 			
-			print(_currentHealth);
 			if(_currentHealth > 0) return;
 		
+			Die();
+		}
+
+		private void StartCombat()
+		{
+			healthCanvas.EnableCanvas();
+			ChooseAndLaunchAttack();
+		}
+
+		private void ChooseAndLaunchAttack()
+		{
+			_isArmAttacking = false;
+			_isHandleAttacking = false;
+
+			if (Vector3.Distance(_transform.position, _player.position) > minDistanceForHandleAttack)
+				StartHandleAttack();
+			else
+				StartArmsAttack();
+		}
+
+		public void StartArmsAttack()
+		{
+			if(_isArmAttacking) return;
+
+			_isArmAttacking = true;
+			arms.AttackChest();
+
+			DOVirtual.DelayedCall(0.25f, () =>
+										 {
+											 var delay = Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y);
+											 DOVirtual.DelayedCall(BetaalBackArms.AttackDuration + delay, ChooseAndLaunchAttack)
+													  .SetTarget(this);
+										 })
+					 .SetTarget(this);
+		}
+
+		private void StartHandleAttack()
+		{
+			if(_isHandleAttacking) return;
+
+			_isHandleAttacking = true;
+			
+			BetaalEvents.InvokeStartHandleAttack(this);
+			BetaalEvents.InvokeStartBetaalAttack();
+
+			DOVirtual.DelayedCall(0.25f, () =>
+										 {
+											 var delay = Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y);
+											 DOVirtual.DelayedCall(HandleController.AttackDuration + delay,
+																   ChooseAndLaunchAttack).SetTarget(this);
+										 })
+					 .SetTarget(this);
+		}
+
+		private void EndCombat()
+		{
+			DOTween.Kill(arms);
+			DOTween.Kill(this);
+		}
+
+		private void Die()
+		{
+			_isDead = true;
+			if (_currentDeathCount++ <= noOfDeaths) GameEvents.InvokeConversationStart();
+			
 			_anim.enabled = false;
 			GoRagdoll();
 			EndCombat();
 			healthCanvas.DisableCanvas();
+			GameEvents.InvokeBetaalFightEnd();
+			_movement.StopMovementTween();
 			_hasHadMidFightConv = false;
 		}
 
@@ -151,21 +175,28 @@ namespace Betaal
 			}
 		}
 
-
-		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
-
 		private void OnBetaalFightStart()
 		{
 			StartCombat();
-			_hasHadMidFightConv = true;
+			_movement.StartMovementTween();
+			_movement.AssignNewHomePos();
 		}
 
 		private void OnConversationStart()
 		{
 			DOVirtual.DelayedCall(0.15f, () =>
 										 {
-											 if (GameManager.state.InConversationWithBetaal) EndCombat();
+											 if (!GameManager.state.InConversationWithBetaal) return;
+											 
+											 _movement.StopMovementTween();
+											 EndCombat();
 										 });
+		}
+
+		private void OnGameLose()
+		{
+			EndCombat();
+			_movement.StopMovementTween();
 		}
 	}
 }

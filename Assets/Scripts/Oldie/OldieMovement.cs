@@ -54,15 +54,9 @@ namespace Oldie
 		
 			if(Vector3.Distance(_transform.position, _agent.destination) > stoppingDistance) return;
 
+			_isMoving = false;
 			_agent.isStopped = true;
 			StopMovingAnim();
-		}
-
-		private void SetNewDest()
-		{
-			_agent.SetDestination(_transform.position + Vector3.right * (5f * (Random.value > 0.5f ? 1f : -1f)));
-			_isMoving = true;
-			StartMovingAnim();
 		}
 
 		public void SetNewDest(Vector3 position)
@@ -71,7 +65,6 @@ namespace Oldie
 			_isMoving = true;
 			StartMovingAnim();
 		}
-
 
 		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
 
