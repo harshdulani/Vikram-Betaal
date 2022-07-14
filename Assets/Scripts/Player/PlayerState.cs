@@ -21,8 +21,8 @@ namespace Player
 
 		public float maxHealth, currentHealth;
 		
-		public bool inCombat, disableMovementByAnimation;
-		
+		public bool inCombat, disableMovementByAnimation, isBlocking;
+
 		public void EnableMovementByAnimationStatus()  => disableMovementByAnimation = false;
 		public void DisableMovementByAnimationStatus()  => disableMovementByAnimation = true;
 
@@ -36,5 +36,7 @@ namespace Player
 
 			currentHealth = maxHealth;
 		}
+
+		public bool CanGetAttacked() => !isBlocking;
 	}
 }

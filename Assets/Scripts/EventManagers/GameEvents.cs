@@ -1,12 +1,12 @@
 using System;
-using DG.Tweening;
 
 public static partial class GameEvents
 {
 	public static event Action GameplayStart;
-	public static event Action ConversationStart;
+	public static event Action ConversationStart, ConversationEnd;
 	public static event Action IntroConversationComplete;
-	public static event Action InteractWithBetaal, BetaalConversationStart;
+	public static event Action InteractWithBetaal;
+	public static event Action BetaalFightStart;
 }
 
 public static partial class GameEvents
@@ -16,5 +16,6 @@ public static partial class GameEvents
 
 	public static void InvokeIntroConversationComplete() => IntroConversationComplete?.Invoke();
 	public static void InvokeInteractWithBetaal() => InteractWithBetaal?.Invoke();
-	public static void InvokeBetaalConversationStart() => BetaalConversationStart?.Invoke();
+	public static void InvokeBetaalFightStart() => BetaalFightStart?.Invoke();
+	public static void InvokeConversationEnd() => ConversationEnd?.Invoke();
 }

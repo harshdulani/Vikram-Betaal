@@ -25,6 +25,12 @@ namespace Player.Combat
 			
 			_playerControls.Player.Use.performed += OnUse;
 			_playerControls.Player.Use.Enable();
+
+			_playerControls.Player.Block.started += OnBlockStart;
+			_playerControls.Player.Block.Enable();
+			
+			_playerControls.Player.Block.canceled += OnBlockEnd;
+			_playerControls.Player.Block.Enable();
 		}
 
 		private void OnDisable()
@@ -34,11 +40,22 @@ namespace Player.Combat
 			
 			_playerControls.Player.Use.performed -= OnUse;
 			_playerControls.Player.Use.Disable();
+			
+			_playerControls.Player.Block.started += OnBlockStart;
+			_playerControls.Player.Block.Enable();
+			
+			_playerControls.Player.Block.canceled += OnBlockEnd;
+			_playerControls.Player.Block.Enable();
 		}
+
 
 		private void Start() => _input = GetComponent<PlayerInput>();
 
 		private void OnLightAttack(InputAction.CallbackContext context) => _input.OnLightAttackInput();
+
+		private void OnBlockStart(InputAction.CallbackContext obj) => _input.OnStartBlocking();
+
+		private void OnBlockEnd(InputAction.CallbackContext obj) => _input.OnStopBlocking();
 
 		private static void OnUse(InputAction.CallbackContext context) => PlayerInput.InvokeUsePressed();
 	}

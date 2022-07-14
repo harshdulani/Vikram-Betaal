@@ -13,12 +13,14 @@ public class GameManager : MonoBehaviour
 	private void OnEnable()
 	{
 		GameEvents.ConversationStart += OnConversationStart;
+		GameEvents.ConversationEnd += OnConversationEnd;
 		GameEvents.IntroConversationComplete += OnIntroConversationComplete;
 	}
 
 	private void OnDisable()
 	{
 		GameEvents.ConversationStart -= OnConversationStart;
+		GameEvents.ConversationEnd -= OnConversationEnd;
 		GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
 	}
 
@@ -56,14 +58,9 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp(KeyCode.LeftAlt)) Time.timeScale = 1f;
 	}
 
-	private void OnConversationStart()
-	{
-		IsInConversation = true;
-	}
+	private void OnConversationStart() => IsInConversation = true;
 
-	private void OnIntroConversationComplete()
-	{
-		InPreFight = false;
-		IsInConversation = false;
-	}
+	private void OnIntroConversationComplete() => InPreFight = false;
+
+	private void OnConversationEnd() => IsInConversation = false;
 }

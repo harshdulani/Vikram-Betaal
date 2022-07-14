@@ -18,6 +18,7 @@ namespace Player.Combat
 		//Animator static hashes
 		private static readonly int InCombat = Animator.StringToHash("inCombat");
 		private static readonly int Light = Animator.StringToHash("light");
+		private static readonly int IsBlocking = Animator.StringToHash("isBlocking");
 
 		private void Start()
 		{
@@ -41,12 +42,8 @@ namespace Player.Combat
 			
 			_state.inCombat = status;
 			_anim.SetBool(InCombat, status);
-		}
 
-		public void OnLightAttackInput()
-		{
-			if(_state.inCombat)
-				_anim.SetTrigger(Light);
+			if (!status) _anim.SetBool(IsBlocking, false);
 		}
 
 		public void TurnFistsTriggers()
@@ -61,6 +58,29 @@ namespace Player.Combat
 			leftHand.attachedRigidbody.isKinematic = rightHand.attachedRigidbody.isKinematic = false;
 			leftHand.isTrigger = rightHand.isTrigger = false;			
 			_leftHandT.localPosition = _rightHandT.localPosition = Vector3.zero;
+		}
+
+		public void OnLightAttackInput()
+		{
+			if(_state.inCombat)
+				_anim.SetTrigger(Light);
+		}
+
+		public void OnStartBlocking()
+		{
+			if (!_state.inCombat) return;
+			
+			_anim.SetBool(IsBlocking, true);
+			_state.DisableMovementByAnimationStatus();
+		}
+
+		public void OnStopBlocking()
+		{
+			if (!_state.inCombat) return;
+
+			_anim.SetBool(IsBlocking, true);
+			_state.isBlocking = true;
+			_state.EnableMovementByAnimationStatus();
 		}
 	}
 }

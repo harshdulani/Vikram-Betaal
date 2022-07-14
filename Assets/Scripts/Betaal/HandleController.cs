@@ -7,6 +7,8 @@ namespace Betaal
 {
 	public class HandleController : MonoBehaviour
 	{
+		public static float AttackDuration = 0f;
+		
 		private Vector3 _initPos;
 		private bool _isAttacking, _hasAttacked;
 
@@ -46,9 +48,22 @@ namespace Betaal
 			_hasAttacked = false;
 		}
 
+		public static void CalculateDuration(BetaalController betaal)
+		{
+			if(AttackDuration > 0f) return;
+			
+			AttackDuration = 0f;
+			AttackDuration += betaal.handleAttack.shakeTime;
+			AttackDuration += 0.5f;
+			AttackDuration += betaal.handleAttack.postAttackInterval;
+			AttackDuration += 1.25f;
+			AttackDuration += 0.1f;
+		}
+
 		private void OnStartHandleAttack(BetaalController betaal)
 		{
-			if(Vector3.Distance(betaal.transform.position, _transform.position) > betaal.handleAttack.maxDistanceForAttack) return;
+			if(Vector3.Distance(betaal.transform.position, _transform.position) > betaal.handleAttack.maxDistanceForAttack)
+				return;
 
 			_isAttacking = true;
 			_rb.isKinematic = true;
@@ -66,7 +81,7 @@ namespace Betaal
 												  betaal.handleAttack.shakeStrength, 
 												  10, 90f, false));
 			seq.Join(_transform.DOMoveY(_initPos.y - 0.5f, betaal.handleAttack.shakeTime));
-
+			
 			//store start pos to calculate direction to add force in when dotween to target gets over
 			//since target is in the air
 			var startPos = Vector3.zero;
@@ -86,6 +101,7 @@ namespace Betaal
 
 			//stay on the floor for some time
 			seq.AppendInterval(betaal.handleAttack.postAttackInterval);
+			
 			seq.AppendCallback(() => _rb.isKinematic = true);
 
 			//fly back to the position they were at, on game start
@@ -95,6 +111,7 @@ namespace Betaal
 			seq.Join(_transform.DORotate(Vector3.zero, 1f));
 			
 			seq.AppendInterval(0.1f);
+			
 			seq.AppendCallback(() =>
 							   {
 								   //let this handle be rotated to simulate train rumble again
@@ -112,6 +129,8 @@ namespace Betaal
 
 			var player = other.transform.root.GetComponent<PlayerState>();
 
+			if(!player.CanGetAttacked()) return;
+			
 			_hasAttacked = true;
 			player.Controller.GetHit(other.relativeVelocity);
 		}

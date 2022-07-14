@@ -92,7 +92,7 @@ namespace Betaal
 																	gameObject.SetActive(false);
 																	betaal.SetActive(true);
 																});
-								   GameEvents.InvokeBetaalConversationStart();
+								   GameEvents.InvokeConversationStart();
 							   });
 		}
 

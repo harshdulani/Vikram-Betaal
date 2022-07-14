@@ -117,14 +117,16 @@ namespace Player.Movement
 
 		private void OnIntroConversationComplete() 
 		{
-			_agent.enabled = true;
 			_anim.SetTrigger(StandUpSitting);
 			_state.DisableMovementByAnimationStatus();
 			
 			transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart);
 			_transform.DORotate(Vector3.up * 90f, 1f)
 					  .SetDelay(1.5f)
-					  .OnComplete(_state.EnableMovementByAnimationStatus);
+					  .OnComplete(() => {
+									  _state.EnableMovementByAnimationStatus();
+									  _agent.enabled = true;
+								  });
 		}
 	}
 }

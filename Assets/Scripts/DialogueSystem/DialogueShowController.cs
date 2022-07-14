@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Player.Combat;
 using TMPro;
@@ -109,7 +110,7 @@ public class DialogueShowController : MonoBehaviour
 		//c++, here i come c:
 		
 		currentSpeakerIndex = ref UpdateActiveSpeakerIndex();
-
+		
 		var currentDialogue = _currentDialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
 		
 		var shouldSkipDialogue = false;
@@ -118,17 +119,17 @@ public class DialogueShowController : MonoBehaviour
 		{
 			case GOTOVK:
 				GameManager.state.ActiveSpeaker = Character.Player;
-				HideAntiPlayer();
+				
 				shouldSkipDialogue = true;
 				break;
 			case GOTOBT:
 				GameManager.state.ActiveSpeaker = Character.Betaal;
-				HideAntiPlayer();
+				
 				shouldSkipDialogue = true;
 				break;
 			case GOTOSD:
 				GameManager.state.ActiveSpeaker = Character.Oldie;
-				HidePlayer();
+				
 				shouldSkipDialogue = true;
 				break;
 			case EXIT:
@@ -137,9 +138,6 @@ public class DialogueShowController : MonoBehaviour
 				if(_isInIntroConv) break;
 				CuteCm.only.EndDialogue();
 				return true;
-			default:
-				HidePlayer();
-				break;
 		}
 		
 		if (shouldSkipDialogue)
@@ -148,37 +146,57 @@ public class DialogueShowController : MonoBehaviour
 			currentDialogue = _currentDialogue.GetDialogue(GameManager.state.ActiveSpeaker, currentSpeakerIndex++);
 		}
 		
+		ShowAppropriateCharacter();
 		SpawnDialogSpeaker(GameManager.state.ActiveSpeaker, currentDialogue);
 		return false;
 	}
 
-	private void HidePlayer()
+	private void ShowAppropriateCharacter()
 	{
-		if (_currentLeftCharacter == Character.Player)
+		switch (GameManager.state.ActiveSpeaker)
 		{
-			HideSpeakerDetails(rightCharacterName, leftImage);
-			ShowSpeakerDetails(leftCharacterName, rightImage);
-		}
-		else
-		{
-			HideSpeakerDetails(leftCharacterName, rightImage);
-			ShowSpeakerDetails(rightCharacterName, leftImage);
+			case Character.Player: ShowPlayer();
+				break;
+			case Character.Betaal: ShowBetaal();
+				break;
+			case Character.Oldie: ShowOldie();
+				break;
+			default: throw new ArgumentOutOfRangeException();
 		}
 	}
 
-	private void HideAntiPlayer()
+	private void ShowPlayer()
 	{
-		if (_currentLeftCharacter == Character.Oldie)
+		if (_currentLeftCharacter == Character.Player)
 		{
-			HideSpeakerDetails(rightCharacterName, leftImage);
-			ShowSpeakerDetails(leftCharacterName, rightImage);
-		}
-		else
-		{
-			HideSpeakerDetails(leftCharacterName, rightImage);
+			//player name is on the right and image on left
 			ShowSpeakerDetails(rightCharacterName, leftImage);
-			if(_isInIntroConv) return;
+			HideSpeakerDetails(leftCharacterName, rightImage);
 		}
+		else if(_currentLeftCharacter == Character.Oldie)
+		{
+			//player name is on the left and image on right
+			ShowSpeakerDetails(leftCharacterName, rightImage);
+			HideSpeakerDetails(rightCharacterName, leftImage);
+		}
+	}
+
+	private void ShowBetaal()
+	{
+		//betaal is always on the right
+		ShowSpeakerDetails(leftCharacterName, rightImage);
+
+		//player name is on the right and image on left
+		HideSpeakerDetails(rightCharacterName, leftImage);
+	}
+
+	private void ShowOldie()
+	{
+		//oldie is always on left
+		ShowSpeakerDetails(rightCharacterName, leftImage);
+		
+		//player name is on the left and image on right
+		HideSpeakerDetails(leftCharacterName, rightImage);
 	}
 
 	private ref int UpdateActiveSpeakerIndex()
@@ -202,17 +220,22 @@ public class DialogueShowController : MonoBehaviour
 		leftPivotPanel.SetActive(false);
 		rightPivotPanel.SetActive(false);
 		
+		GameEvents.InvokeConversationEnd();
 		if(_currentConversationIndex++ == 0)
 		{
 			GameEvents.InvokeIntroConversationComplete();
 			if (_currentConversationIndex - 1 == 0) CuteCm.only.SetEndIntroConv();
 			_isInIntroConv = false;
 		}
+		if (_currentConversationIndex > 1 && _currentConversationIndex < dialogueBanks.Count - 1) 
+			GameEvents.InvokeBetaalFightStart();
 	}
 
 	private void SetSpeakerDetailsPos(Character speaker, out TextMeshProUGUI text, out Image image)
 	{
 		var convWithBetaal = GameManager.state.InConversationWithBetaal;
+		//print(convWithBetaal + ", " + GameManager.state.ActiveSpeaker);
+		
 		if (speaker == Character.Player)
 			if (convWithBetaal)
 				SetLeftIcon(out text, out image);
@@ -223,6 +246,7 @@ public class DialogueShowController : MonoBehaviour
 		else//if (speaker == Character.Oldie) 
 			SetLeftIcon(out text, out image);
 	}
+
 
 	private void SetText(string text) => dialogue.text = text;
 
@@ -272,31 +296,37 @@ public class DialogueShowController : MonoBehaviour
 		_tipBlinker.Restart();
 	}
 
+
 	private void HideTipBlinker() => _tipDisappear.Restart();
+
+	private void OnUsePressed()
+	{
+		if(!GameManager.state.IsInConversation) return;
+		ProgressConversation();
+	}
 
 	private void OnConversationStart()
 	{
 		GameManager.state.ActiveSpeaker = firstWordBy[_currentConversationIndex];
 		_currentDialogue = dialogueBanks[_currentConversationIndex];
 
+		GameManager.state.InConversationWithBetaal = GameManager.state.ActiveSpeaker == Character.Betaal;
+		
 		if (_currentConversationIndex == 0)
 		{
 			CuteCm.only.SetStartIntroConv();
 			_isInIntroConv = true;
 		}
-		
-		if (GameManager.state.ActiveSpeaker == Character.Betaal)
-			_currentLeftCharacter = Character.Player;
-		else if (GameManager.state.ActiveSpeaker == Character.Oldie) 
-			_currentLeftCharacter = Character.Oldie;
-		
-		
-		ProgressConversation();
-	}
 
-	private void OnUsePressed()
-	{
-		if(!GameManager.state.IsInConversation) return;
+		if (GameManager.state.InConversationWithBetaal)
+			_currentLeftCharacter = Character.Player;
+		else //if (GameManager.state.ActiveSpeaker == Character.Oldie) 
+			_currentLeftCharacter = Character.Oldie;
+
+		_currentBetaalIndex = 0;
+		_currentPlayerIndex = 0;
+		_currentSadhuIndex = 0;
+		
 		ProgressConversation();
 	}
 }

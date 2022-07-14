@@ -6,6 +6,8 @@ namespace Betaal
 {
 	public class BetaalBackArms : MonoBehaviour
 	{
+		public static float AttackDuration = 0f;
+		
 		[SerializeField] private Transform leftIkTarget, rightIkTarget;
 		
 		[SerializeField] private Transform leftCeiling, rightCeiling;
@@ -13,10 +15,10 @@ namespace Betaal
 		[Header("IK Anims"), SerializeField] private AnimationCurve snakeCurve;
 		[SerializeField] private Transform leftAnimTarget, rightAnimTarget;
 
+		[HideInInspector] public bool isAttacking;
 		private Transform _currentLeftTarget, _currentRightTarget;
 
 		private PlayerState _player;
-		private bool _isAttacking;
 
 		private void Start()
 		{
@@ -26,14 +28,9 @@ namespace Betaal
 			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerState>();
 		}
 
-		private void Update()
-		{
-			if(Input.GetKeyUp(KeyCode.Backspace)) AttackChest();
-		}
-
 		private void LateUpdate()
 		{
-			if(_isAttacking) return;
+			if(isAttacking) return;
 			leftIkTarget.position = Vector3.Lerp(leftIkTarget.position, _currentLeftTarget.position, Time.deltaTime);
 			rightIkTarget.position = Vector3.Lerp(rightIkTarget.position, _currentRightTarget.position, Time.deltaTime);
 		}
@@ -44,14 +41,12 @@ namespace Betaal
 			rightIkTarget.DOMove(rightCeiling.position, 0.5f).OnComplete(() => _currentRightTarget = rightCeiling);
 		}
 
-		private void AttackChest()
+		public void AttackChest()
 		{
-			_isAttacking = true;
+			AttackDuration = 0f;
+			isAttacking = true;
 			BetaalEvents.InvokeStartBetaalAttack();
 
-			var rand = Random.value;
-			//var selectedHand = rand > 0.5f ? leftIkTarget : rightIkTarget;
-			
 			var selectedHand = rightIkTarget;
 
 			var position = selectedHand.position;
@@ -65,16 +60,23 @@ namespace Betaal
 			perpendicular = new Vector3(-perpendicular.y, perpendicular.x, perpendicular.z);
 			chargeUpPosition += perpendicular;
 
-			Debug.DrawLine(position, chargeUpPosition, Color.red, 2f, false);
+			//Debug.DrawLine(position, chargeUpPosition, Color.red, 2f, false);
 
+			AttackDuration += 1f;
+			AttackDuration += 0.5f;
+			AttackDuration += 0.25f;
+			AttackDuration += 1.5f;
+			AttackDuration += 0.75f;
+			
 			selectedHand.DOMove(chargeUpPosition, 1f)
 						.OnComplete(() => selectedHand.DOMove(endPos, 0.25f)
 													  .SetEase(snakeCurve)
 													  .SetDelay(0.5f)
 													  .OnComplete(() => selectedHand.DOMove(_currentRightTarget.position, 1.5f)
+																					.SetDelay(0.75f)
 																					.OnComplete(() =>
 																								{
-																									_isAttacking = false;
+																									isAttacking = false;
 																									BetaalEvents.InvokeEndBetaalAttack();
 																								})));
 		}
