@@ -227,7 +227,7 @@ public class DialogueShowController : MonoBehaviour
 			if (_currentConversationIndex - 1 == 0) CuteCm.only.SetEndIntroConv();
 			_isInIntroConv = false;
 		}
-		if (_currentConversationIndex > 1 && _currentConversationIndex < dialogueBanks.Count - 1) 
+		if (_currentConversationIndex > 1 && _currentConversationIndex < dialogueBanks.Count) 
 			GameEvents.InvokeBetaalFightStart();
 	}
 

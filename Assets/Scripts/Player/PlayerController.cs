@@ -14,14 +14,19 @@ namespace Player
 		[SerializeField] private float hitImpulseMultiplier;
 		[SerializeField] private int lPunchDamage = 20, lUppercutDamage = 40;
 
+		[SerializeField] private GameObject carriedBetaal;
+		
 		public bool allowedInteractionWithBetaalChange = true;
 		public bool canInteractWithBetaal;
 
 		private PlayerState _my;
 		private Animator _anim;
 
+		private GameObject _realBetaal;
+
 		private static readonly int GetHurtBack = Animator.StringToHash("GetHurtBack");
 		private static readonly int GetHurtFront = Animator.StringToHash("GetHurtFront");
+		private static readonly int IsCarrying = Animator.StringToHash("isCarrying");
 
 		private void OnEnable()
 		{
@@ -91,6 +96,13 @@ namespace Player
 
 		public void GetPushedBack() => transform.position -= Vector3.right;
 
+		public void TurnCarriedBetaalOn(GameObject realBetaal)
+		{
+			carriedBetaal.SetActive(true);
+			_anim.SetBool(IsCarrying, true);
+			_realBetaal = realBetaal;
+		}
+
 		private void Die()
 		{
 			GoRagdoll();
@@ -121,7 +133,7 @@ namespace Player
 		{
 			healthCanvas.EnableCanvas();
 		}
-		
+
 		private void OnBetaalFightEnd(bool isTemporary)
 		{
 			healthCanvas.DisableCanvas();

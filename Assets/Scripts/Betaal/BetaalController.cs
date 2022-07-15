@@ -21,6 +21,7 @@ namespace Betaal
 		public BetaalHandleAttack handleAttack;
 
 		[HideInInspector] public BetaalBackArms arms;
+		[SerializeField] private GameObject pickup;
 		private BetaalMovement _movement;
 		private Animator _anim;
 		private Transform _transform, _player;
@@ -104,7 +105,7 @@ namespace Betaal
 											 _player.position = _movement.initPos += Vector3.left * _movement.maxDistanceFromPlayer;
 										 });
 		}
-		
+
 
 		private void StartCombat()
 		{
@@ -175,6 +176,15 @@ namespace Betaal
 			GameEvents.InvokeBetaalFightEnd();
 			_movement.StopMovementTween();
 			_hasHadMidFightConv = false;
+			pickup.SetActive(true);
+
+			if (!GameManager.state.betaalFight1Over)
+			{
+				GameManager.state.betaalFight1Over = true;
+				return;
+			}
+
+			if (!GameManager.state.betaalFight2Over) GameManager.state.betaalFight1Over = true;
 		}
 
 		private void GoRagdoll()

@@ -23,6 +23,7 @@ namespace Betaal
 		private Color _originalSkinColor, _originalEmission;
 		private Tween _textColorTween;
 		private Vector3 _initPos;
+		private bool _hasBeenInteractedWith;
 		
 		private static readonly int EmissiveColor = Shader.PropertyToID("_EmissiveColor");
 
@@ -78,6 +79,9 @@ namespace Betaal
 
 		private void OnInteractWithBetaal()
 		{
+			if(_hasBeenInteractedWith) return;
+			
+			_hasBeenInteractedWith = true;
 			rend.materials[0].DOColor(_originalSkinColor, colorTweenDuration).SetEase(Ease.InOutElastic);
 
 			DOTween.To(() => rend.materials[0].GetColor(EmissiveColor),
