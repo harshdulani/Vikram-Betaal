@@ -26,12 +26,11 @@ namespace Betaal
 		private Animator _anim;
 		private Transform _transform, _player;
 		private int _currentDeathCount;
-		private bool _hasHadMidFightConv;
+		private bool _hasHadMidFightConv, _isArmAttacking, _isHandleAttacking;
 
 		private static readonly int HitPunch = Animator.StringToHash("hitPunch");
 		private static readonly int HitUppercut = Animator.StringToHash("hitUppercut");
 		private static readonly int Dummy = Animator.StringToHash("dummy");
-		private bool _isDead, _isArmAttacking, _isHandleAttacking;
 
 		public BetaalController() { handleAttack = new BetaalHandleAttack(this); }
 
@@ -72,7 +71,6 @@ namespace Betaal
 
 		public void GiveDamage(int getAttackDamage, PlayerAttackType type)
 		{
-			if(_isDead) return;
 			_currentHealth -= getAttackDamage;
 			_anim.SetTrigger(type switch
 							 {
@@ -92,9 +90,20 @@ namespace Betaal
 			Die();
 		}
 
+		public void DeRagdoll()
+		{
+			_anim.enabled = true;
+			
+			foreach (var fx in lightningFx) fx.SetActive(true);
+			
+			foreach (var rb in rigidbodies) rb.isKinematic = true;
+		}
+
 		private void StartMidFightCon()
 		{
 			_hasHadMidFightConv = true;
+			GameManager.state.startFightAfterNextConversation = true;
+
 			GameEvents.InvokeConversationStart();
 			GameEvents.InvokeBetaalFightEnd(true);
 			
@@ -166,7 +175,6 @@ namespace Betaal
 
 		private void Die()
 		{
-			_isDead = true;
 			if (_currentDeathCount++ <= noOfDeaths) GameEvents.InvokeConversationStart();
 			
 			_anim.enabled = false;
@@ -177,14 +185,17 @@ namespace Betaal
 			_movement.StopMovementTween();
 			_hasHadMidFightConv = false;
 			pickup.SetActive(true);
-
+			
 			if (!GameManager.state.betaalFight1Over)
 			{
 				GameManager.state.betaalFight1Over = true;
 				return;
 			}
 
-			if (!GameManager.state.betaalFight2Over) GameManager.state.betaalFight1Over = true;
+			if (!GameManager.state.betaalFight2Over)
+			{
+				GameManager.state.betaalFight2Over = true;
+			}
 		}
 
 		private void GoRagdoll()

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager state;
-	public bool betaalFight1Over, betaalFight2Over;
+	public bool betaalFight1Over, betaalFight2Over, startFightAfterNextConversation;
 	public bool InConversationWithBetaal { get; set; }
 	public bool isSadhuEvil { get; private set; }
 	public bool InPreFight { get; private set; }

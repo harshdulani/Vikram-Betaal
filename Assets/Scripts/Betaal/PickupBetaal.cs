@@ -43,7 +43,7 @@ namespace Betaal
 			DOVirtual.DelayedCall(0.15f, () =>
 										 {
 											 transform.parent.gameObject.SetActive(false);
-											 _player.TurnCarriedBetaalOn(gameObject);
+											 _player.StartCarryingBetaal();
 										 });
 			GameEvents.InvokeConversationStart();
 		}

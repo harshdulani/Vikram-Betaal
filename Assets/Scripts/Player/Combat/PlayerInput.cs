@@ -92,6 +92,7 @@ namespace Player.Combat
 		}
 
 		private void OnFightStart() => SetInCombatStatus(true);
+
 		private void OnFightEnd(bool isTemporary) => SetInCombatStatus(isTemporary);
 	}
 }

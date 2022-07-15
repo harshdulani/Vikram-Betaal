@@ -386,7 +386,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &38900442
 PrefabInstance:
@@ -1948,6 +1948,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1852d1c38bff7af44aa9b59546224bc5, type: 3}
   m_PrefabInstance: {fileID: 895804743}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &169809055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169809056}
+  - component: {fileID: 169809057}
+  m_Layer: 5
+  m_Name: Sadhu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &169809056
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169809055}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 849232207}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &169809057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169809055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09a569a32b1b724ab9d37d80566824b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDialogues:
+  - You'll have to wait longer.
+  - GOTOSD
+  - Free, or bound once again? I won't let you keep this cycle going.
+  - I'm here to stop you.
+  - GOTOSD
+  - Then let it be my last.
+  - EXIT
+  oldieDialogues:
+  - Ah, you've finally arrived. I've been waiting.
+  - GOTOVK
+  - What do you mean? The Vetaal is here.
+  - The end is inevitable now. Everyone will be free.
+  - GOTOVK
+  - You're making a mistake.
+  - GOTOVK
+  betaalDialogues: []
 --- !u!4 &171766746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1852d1c38bff7af44aa9b59546224bc5, type: 3}
@@ -2713,7 +2779,7 @@ RectTransform:
   m_Children:
   - {fileID: 1927668995}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0.236, y: 0.035, z: -0.05}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3690,7 +3756,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339103254}
-  m_LocalRotation: {x: 0.02855009, y: 0.119132385, z: -0.0034270743, w: 0.9924619}
+  m_LocalRotation: {x: 0.028550126, y: 0.119132385, z: -0.0034270787, w: 0.9924619}
   m_LocalPosition: {x: 0.46892023, y: -0.7425213, z: -3.7067986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4509,7 +4575,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &435518757 stripped
 Transform:
@@ -5463,7 +5529,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 03f1959476d66264c8f16b6db56ac6ee, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 03f1959476d66264c8f16b6db56ac6ee, type: 3}
       propertyPath: m_LocalScale.x
@@ -6128,7 +6194,7 @@ RectTransform:
   - {fileID: 1345257194}
   - {fileID: 849232207}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6155,6 +6221,7 @@ MonoBehaviour:
   - {fileID: 953081457}
   - {fileID: 966156883}
   - {fileID: 1879324458}
+  - {fileID: 169809057}
   dialoguePanel: {fileID: 977394100}
   leftCharacterName: {fileID: 1315741988}
   rightCharacterName: {fileID: 1562036196}
@@ -8658,6 +8725,7 @@ RectTransform:
   - {fileID: 953081456}
   - {fileID: 966156882}
   - {fileID: 1879324457}
+  - {fileID: 169809056}
   m_Father: {fileID: 545973747}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9130,7 +9198,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &855423759 stripped
 Transform:
@@ -10772,6 +10840,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5560571069945281428, guid: 007cbb623c7667f448f16d317c390151, type: 3}
   m_PrefabInstance: {fileID: 4749736561485387789}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &963158848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 653054278564734435, guid: 007cbb623c7667f448f16d317c390151, type: 3}
+  m_PrefabInstance: {fileID: 4749736561485387789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963158845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8afce1e59b65554c966bd0654ad2742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &965617635
 GameObject:
   m_ObjectHideFlags: 0
@@ -11837,6 +11916,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3fd1f70bbca2bf47a190c77bef71679, type: 3}
+--- !u!1 &1066476318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1066476320}
+  - component: {fileID: 1066476319}
+  m_Layer: 0
+  m_Name: Fight3Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1066476319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066476318}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.438465, y: 3.7969427, z: 5.594742}
+  m_Center: {x: -1.6256657, y: 1.8154924, z: 0}
+--- !u!4 &1066476320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066476318}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.93, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1069099283
 GameObject:
   m_ObjectHideFlags: 0
@@ -12600,7 +12724,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1149242638
 PrefabInstance:
@@ -13369,7 +13493,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1245342101
 MonoBehaviour:
@@ -13385,6 +13509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   betaalFight1Over: 0
   betaalFight2Over: 0
+  startFightAfterNextConversation: 0
 --- !u!4 &1249682375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 72d535b0dd7c07740a2527ae55791b76, type: 3}
@@ -15581,7 +15706,7 @@ Transform:
   - {fileID: 878152739}
   - {fileID: 339103257}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1440652578
 Animator:
@@ -17078,7 +17203,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 03f1959476d66264c8f16b6db56ac6ee, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 03f1959476d66264c8f16b6db56ac6ee, type: 3}
       propertyPath: m_LocalScale.x
@@ -17950,7 +18075,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1703088131
 PrefabInstance:
@@ -18169,6 +18294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1712574732}
   - component: {fileID: 1712574731}
+  - component: {fileID: 1712574733}
   m_Layer: 0
   m_Name: Fight2Trigger
   m_TagString: Untagged
@@ -18188,7 +18314,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.438465, y: 3.7969427, z: 5.594742}
-  m_Center: {x: -1.6256657, y: 1.8154924, z: 0}
+  m_Center: {x: 0, y: 1.8154924, z: 0}
 --- !u!4 &1712574732
 Transform:
   m_ObjectHideFlags: 0
@@ -18197,13 +18323,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712574730}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 37.62, y: 0, z: 0}
+  m_LocalPosition: {x: 36.77, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1712574733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712574730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef80c8d44ed72b4cbd0297e0c1727b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  betaal: {fileID: 963158848}
 --- !u!1001 &1718912236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19597,7 +19736,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1823688468
 MonoBehaviour:
@@ -20811,7 +20950,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 03f1959476d66264c8f16b6db56ac6ee, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 03f1959476d66264c8f16b6db56ac6ee, type: 3}
       propertyPath: m_LocalScale.x
@@ -22980,7 +23119,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2139979074 stripped
 Transform:

@@ -3910,6 +3910,8 @@ MonoBehaviour:
   lPunchDamage: 20
   lUppercutDamage: 40
   carriedBetaal: {fileID: 3119279007809026825}
+  waitBeforeRegenHealth: 4
+  healthIncreaseAmount: 2.5
   allowedInteractionWithBetaalChange: 1
   canInteractWithBetaal: 0
 --- !u!195 &8764958824108137654

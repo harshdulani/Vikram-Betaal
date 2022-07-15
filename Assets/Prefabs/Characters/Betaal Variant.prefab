@@ -2330,7 +2330,7 @@ MonoBehaviour:
   - {fileID: 2134705059}
   - {fileID: 605031179}
   - {fileID: 1354105324}
-  waitBetweenAttacksRange: {x: 3, y: 6}
+  waitBetweenAttacksRange: {x: 2, y: 4}
   minDistanceForHandleAttack: 5
   handleAttack:
     drawAttackDebugSphere: 0

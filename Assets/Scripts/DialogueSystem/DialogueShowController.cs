@@ -224,17 +224,21 @@ public class DialogueShowController : MonoBehaviour
 		if(_currentConversationIndex++ == 0)
 		{
 			GameEvents.InvokeIntroConversationComplete();
+			GameManager.state.startFightAfterNextConversation = true;
 			if (_currentConversationIndex - 1 == 0) CuteCm.only.SetEndIntroConv();
 			_isInIntroConv = false;
+			return;
 		}
-		if (_currentConversationIndex > 1 && _currentConversationIndex < dialogueBanks.Count) 
-			GameEvents.InvokeBetaalFightStart();
+
+		if (!GameManager.state.startFightAfterNextConversation) return;
+		
+		GameEvents.InvokeBetaalFightStart();
+		GameManager.state.startFightAfterNextConversation = false;
 	}
 
 	private void SetSpeakerDetailsPos(Character speaker, out TextMeshProUGUI text, out Image image)
 	{
 		var convWithBetaal = GameManager.state.InConversationWithBetaal;
-		//print(convWithBetaal + ", " + GameManager.state.ActiveSpeaker);
 		
 		if (speaker == Character.Player)
 			if (convWithBetaal)
