@@ -8,7 +8,7 @@ namespace Betaal
 	{
 		[HideInInspector] public Vector3 initPos;
 		
-		public float maxDistanceFromPlayer;
+		public Vector2 distanceFromPlayerRange;
 		[SerializeField] private float maxDistanceFromHome, aiRepositionInterval;
 		[SerializeField] private float stoppingDistance;
 		private bool _isMoving, _disabledMovement;
@@ -50,15 +50,16 @@ namespace Betaal
 														   SetNewDest(initPos);
 														   return;
 													   }
-													   
+
 													   var vector = _transform.position - _player.position;
-													   
+
 													   //filhaal betaal wants to maintain the same amount of distance from player
+													   var dist = vector.magnitude;
+													   print($"{dist} {distanceFromPlayerRange}");
 													   
 													   //if player is getting away
-													   if (Vector3.Distance(_player.position, _transform.position) 
-														 > maxDistanceFromPlayer) FindNewPosition(vector);
-													   else
+													   if ( dist > distanceFromPlayerRange.y) FindNewPosition(vector);
+													   else if(dist < distanceFromPlayerRange.x)
 													   {
 														   //if player is getting too close and you are far away from the 
 														   FindNewPosition(vector);
@@ -72,7 +73,8 @@ namespace Betaal
 
 		private void FindNewPosition(Vector3 vector)
 		{
-			var dest = _player.position + vector.normalized * maxDistanceFromPlayer;
+			print("new pos");
+			var dest = _player.position + vector.normalized * distanceFromPlayerRange.x;
 			
 			if(dest.x > initPos.x)
 			{

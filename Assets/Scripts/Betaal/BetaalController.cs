@@ -116,7 +116,7 @@ namespace Betaal
 			DOVirtual.DelayedCall(0.15f, () =>
 										 {
 											 _transform.position = _movement.initPos;
-											 _player.position = _movement.initPos += Vector3.left * _movement.maxDistanceFromPlayer;
+											 _player.position = _movement.initPos += Vector3.left * _movement.distanceFromPlayerRange.x;
 										 });
 		}
 

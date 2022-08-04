@@ -2380,7 +2380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initPos: {x: 0, y: 0, z: 0}
-  maxDistanceFromPlayer: 5
+  distanceFromPlayerRange: {x: 3, y: 5}
   maxDistanceFromHome: 10
   aiRepositionInterval: 2
   stoppingDistance: 1.5
