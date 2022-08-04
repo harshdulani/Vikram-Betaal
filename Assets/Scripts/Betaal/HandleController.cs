@@ -30,7 +30,7 @@ namespace Betaal
 		{
 			_rb = GetComponent<Rigidbody>();
 			if(!_player)
-				_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+				_player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerInput>();
 			
 			_transform = transform;
 			_initPos = _transform.position;
@@ -117,7 +117,7 @@ namespace Betaal
 								   //let this handle be rotated to simulate train rumble again
 								   _rb.isKinematic = false;
 								   StopAttacking();
-								   BetaalEvents.InvokeEndBetaalAttack();
+								   BetaalEvents.InvokeEndBetaalHandleAttack();
 							   });
 		}
 

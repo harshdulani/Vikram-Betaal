@@ -25,7 +25,7 @@ namespace Betaal
 			_currentLeftTarget = leftAnimTarget;
 			_currentRightTarget = rightAnimTarget;
 
-			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerState>();
+			_player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerState>();
 		}
 
 		private void LateUpdate()
@@ -45,7 +45,7 @@ namespace Betaal
 		{
 			AttackDuration = 0f;
 			isAttacking = true;
-			BetaalEvents.InvokeStartBetaalAttack();
+			BetaalEvents.InvokeStartBetaalArmsAttack();
 
 			var selectedHand = rightIkTarget;
 
@@ -80,7 +80,7 @@ namespace Betaal
 																					.OnComplete(() =>
 																								{
 																									isAttacking = false;
-																									BetaalEvents.InvokeEndBetaalAttack();
+																									BetaalEvents.InvokeEndBetaalArmsAttack();
 																								})));
 		}
 	}

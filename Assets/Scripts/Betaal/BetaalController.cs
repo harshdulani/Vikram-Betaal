@@ -37,6 +37,8 @@ namespace Betaal
 		private void OnEnable()
 		{
 			GameEvents.BetaalFightStart += OnBetaalFightStart;
+			BetaalEvents.EndBetaalArmsAttack += OnArmsAttackEnd;
+			BetaalEvents.EndBetaalHandleAttack += OnHandleAttackEnd;
 			GameEvents.ConversationStart += OnConversationStart;
 			
 			GameEvents.GameLose += OnGameLose;
@@ -45,6 +47,9 @@ namespace Betaal
 		private void OnDisable()
 		{
 			GameEvents.BetaalFightStart -= OnBetaalFightStart;
+			BetaalEvents.EndBetaalArmsAttack -= OnArmsAttackEnd;
+			BetaalEvents.EndBetaalHandleAttack -= OnBetaalFightStart;
+			
 			GameEvents.ConversationStart -= OnConversationStart;
 			
 			GameEvents.GameLose -= OnGameLose;
@@ -119,13 +124,16 @@ namespace Betaal
 		private void StartCombat()
 		{
 			healthCanvas.EnableCanvas();
+			
+			_isHandleAttacking = false;
+			_isArmAttacking = false;
+			
 			ChooseAndLaunchAttack();
 		}
 
 		private void ChooseAndLaunchAttack()
 		{
-			_isArmAttacking = false;
-			_isHandleAttacking = false;
+			//if(_isArmAttacking || _isHandleAttacking) return;
 
 			if (Vector3.Distance(_transform.position, _player.position) > minDistanceForHandleAttack)
 				StartHandleAttack();
@@ -136,17 +144,9 @@ namespace Betaal
 		public void StartArmsAttack()
 		{
 			if(_isArmAttacking) return;
-
+			
 			_isArmAttacking = true;
 			arms.AttackChest();
-
-			DOVirtual.DelayedCall(0.25f, () =>
-										 {
-											 var delay = Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y);
-											 DOVirtual.DelayedCall(BetaalBackArms.AttackDuration + delay, ChooseAndLaunchAttack)
-													  .SetTarget(this);
-										 })
-					 .SetTarget(this);
 		}
 
 		private void StartHandleAttack()
@@ -154,17 +154,7 @@ namespace Betaal
 			if(_isHandleAttacking) return;
 
 			_isHandleAttacking = true;
-			
 			BetaalEvents.InvokeStartHandleAttack(this);
-			BetaalEvents.InvokeStartBetaalAttack();
-
-			DOVirtual.DelayedCall(0.25f, () =>
-										 {
-											 var delay = Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y);
-											 DOVirtual.DelayedCall(HandleController.AttackDuration + delay,
-																   ChooseAndLaunchAttack).SetTarget(this);
-										 })
-					 .SetTarget(this);
 		}
 
 		private void EndCombat()
@@ -216,6 +206,17 @@ namespace Betaal
 			StartCombat();
 			_movement.StartMovementTween();
 			_movement.AssignNewHomePos();
+		}
+
+		private void OnArmsAttackEnd()
+		{
+			_isArmAttacking = false;
+			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y),ChooseAndLaunchAttack);
+		}
+		private void OnHandleAttackEnd()
+		{
+			_isHandleAttacking = false;
+			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y),ChooseAndLaunchAttack);
 		}
 
 		private void OnConversationStart()

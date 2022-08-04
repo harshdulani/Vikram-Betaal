@@ -39,7 +39,7 @@ namespace Betaal
 
 		private void Start()
 		{
-			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+			_player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerController>();
 			_arms = GetComponent<BetaalBackArms>();
 			_anim = GetComponent<Animator>();
 			_initPos = transform.position;
@@ -109,14 +109,14 @@ namespace Betaal
 		private void OnTriggerEnter(Collider other)
 		{
 			if(!other.CompareTag("Player")) return;
-
+			
 			TurnInteractionUiStatus(_player.TryInteractWithBetaalStatusChange(true));
 		}
 
 		private void OnTriggerExit(Collider other)
 		{
 			if(!other.CompareTag("Player")) return;
-			
+
 			TurnInteractionUiStatus(false);
 		}
 	}

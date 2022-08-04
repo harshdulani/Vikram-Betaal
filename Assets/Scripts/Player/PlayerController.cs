@@ -104,6 +104,7 @@ namespace Player
 		{
 			if(!allowedInteractionWithBetaalChange) return false;
 
+			print(canInteractWithBetaal + " b");
 			canInteractWithBetaal = b;
 			return true;
 		}

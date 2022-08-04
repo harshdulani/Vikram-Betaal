@@ -16,21 +16,23 @@ public class CinemachineHelper : MonoBehaviour
 	
 	private void OnEnable()
 	{
-		BetaalEvents.StartBetaalAttack += OnStartBetaalAttack;
-		BetaalEvents.EndBetaalAttack += OnEndBetaalAttack;
+		BetaalEvents.StartBetaalArmsAttack += OnStartBetaalAttack;
+		BetaalEvents.EndBetaalArmsAttack += OnEndBetaalAttack;
+		BetaalEvents.EndBetaalHandleAttack += OnEndBetaalAttack;
 	}
 
 	private void OnDisable()
 	{
-		BetaalEvents.StartBetaalAttack -= OnStartBetaalAttack;
-		BetaalEvents.EndBetaalAttack -= OnEndBetaalAttack;
+		BetaalEvents.StartBetaalArmsAttack -= OnStartBetaalAttack;
+		BetaalEvents.EndBetaalArmsAttack -= OnEndBetaalAttack;
+		BetaalEvents.EndBetaalHandleAttack -= OnEndBetaalAttack;
 	}
 
 	private void Start()
 	{
-		_player = GameObject.FindGameObjectWithTag("Player").transform;
-		_betaal = GameObject.FindGameObjectWithTag("Betaal").transform;
-		_oldie = GameObject.FindGameObjectWithTag("Oldie").transform;
+		_player = GameObject.FindGameObjectWithTag("Player").transform.root;
+		_betaal = GameObject.FindGameObjectWithTag("Betaal").transform.root;
+		_oldie = GameObject.FindGameObjectWithTag("Oldie").transform.root;
 
 		_walkCamTracker = walkCam.GetCinemachineComponent<CinemachineTrackedDolly>();
 		_fightCamTracker = fightCam.GetCinemachineComponent<CinemachineTrackedDolly>();

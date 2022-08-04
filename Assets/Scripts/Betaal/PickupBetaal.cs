@@ -28,7 +28,7 @@ namespace Betaal
 		private void Start()
 		{
 			_camera = Camera.main.transform;
-			_player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+			_player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerController>();
 			_player.allowedInteractionWithBetaalChange = true;
 		}
 
