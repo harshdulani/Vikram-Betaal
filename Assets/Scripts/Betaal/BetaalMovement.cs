@@ -55,7 +55,6 @@ namespace Betaal
 
 													   //filhaal betaal wants to maintain the same amount of distance from player
 													   var dist = vector.magnitude;
-													   print($"{dist} {distanceFromPlayerRange}");
 													   
 													   //if player is getting away
 													   if ( dist > distanceFromPlayerRange.y) FindNewPosition(vector);
@@ -73,7 +72,6 @@ namespace Betaal
 
 		private void FindNewPosition(Vector3 vector)
 		{
-			print("new pos");
 			var dest = _player.position + vector.normalized * distanceFromPlayerRange.x;
 			
 			if(dest.x > initPos.x)

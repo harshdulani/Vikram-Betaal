@@ -132,7 +132,7 @@ namespace Betaal
 			if(!player.CanGetAttacked()) return;
 			
 			_hasAttacked = true;
-			player.Controller.GetHit(other.relativeVelocity);
+			player.Controller.GetHit(other.relativeVelocity * 10);
 		}
 	}
 }

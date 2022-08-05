@@ -1,21 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 	public static GameManager state;
+	[SerializeField] private List<GameObject> carDoors;
+	
 	public bool betaalFight1Over, betaalFight2Over, startFightAfterNextConversation;
 	public bool InConversationWithBetaal { get; set; }
-	public bool isSadhuEvil { get; private set; }
+	public bool IsSadhuEvil { get; private set; }
 	public bool InPreFight { get; private set; }
 	public bool IsInConversation { get; private set; }
 	public Character ActiveSpeaker { get; set; }
-	
+
+	private readonly Dictionary<GameObject, bool> _carDoorStatuses = new Dictionary<GameObject, bool>();
+
 	private void OnEnable()
 	{
 		GameEvents.ConversationStart += OnConversationStart;
 		GameEvents.ConversationEnd += OnConversationEnd;
 		GameEvents.IntroConversationComplete += OnIntroConversationComplete;
+		
+		GameEvents.BetaalFightStart += OnCombatBegin;
+		GameEvents.BetaalFightEnd += OnCombatEnd;
 	}
 
 	private void OnDisable()
@@ -23,7 +31,11 @@ public class GameManager : MonoBehaviour
 		GameEvents.ConversationStart -= OnConversationStart;
 		GameEvents.ConversationEnd -= OnConversationEnd;
 		GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
+		
+		GameEvents.BetaalFightStart -= OnCombatBegin;
+		GameEvents.BetaalFightEnd -= OnCombatEnd;
 	}
+
 
 	private void Awake()
 	{
@@ -47,23 +59,44 @@ public class GameManager : MonoBehaviour
 		InPreFight = true;
 	}
 
-	#if UNITY_EDITOR
+	private void Start() => SetupCarDoorStatuses();
+
+#if UNITY_EDITOR
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.LeftAlt)) Time.timeScale = 6f;
 		if (Input.GetKeyUp(KeyCode.LeftAlt)) Time.timeScale = 1f;
 	}
-	#endif
+#endif
+
+
+	private void SetupCarDoorStatuses()
+	{
+		foreach (var door in carDoors) _carDoorStatuses.Add(door, door.activeSelf);
+	}
+
+	private void EnableAllCarDoors()
+	{
+		foreach (var door in _carDoorStatuses) door.Key.SetActive(true);
+	}
+
+	private void ResetAllDoorsToInit()
+	{
+		foreach (var door in _carDoorStatuses) door.Key.SetActive(door.Value);
+	}
 
 	private void OnConversationStart() => IsInConversation = true;
 
 	private void OnIntroConversationComplete() => InPreFight = false;
 
 	private void OnConversationEnd() => IsInConversation = false;
-	
+
 	public void OnGameplayStart()
 	{
 		InPreFight = true;
 		IsInConversation = true;
 	}
+
+	private void OnCombatBegin() => EnableAllCarDoors();
+	private void OnCombatEnd(bool isTemporary) => ResetAllDoorsToInit();
 }

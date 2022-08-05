@@ -97,7 +97,7 @@ public class DialogueShowController : MonoBehaviour
 					  {
 						  Character.Player => vikramIcon,
 						  Character.Betaal => betaalIcon,
-						  Character.Oldie => GameManager.state.isSadhuEvil ? sadhuEvilIcon : sadhuIcon,
+						  Character.Oldie => GameManager.state.IsSadhuEvil ? sadhuEvilIcon : sadhuIcon,
 						  _ => icon.sprite
 					  };
 	}
