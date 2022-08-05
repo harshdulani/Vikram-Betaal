@@ -41,10 +41,10 @@ namespace Player.Combat
 			_playerControls.Player.Use.performed -= OnUse;
 			_playerControls.Player.Use.Disable();
 			
-			_playerControls.Player.Block.started += OnBlockStart;
+			_playerControls.Player.Block.started -= OnBlockStart;
 			_playerControls.Player.Block.Enable();
 			
-			_playerControls.Player.Block.canceled += OnBlockEnd;
+			_playerControls.Player.Block.canceled -= OnBlockEnd;
 			_playerControls.Player.Block.Enable();
 		}
 

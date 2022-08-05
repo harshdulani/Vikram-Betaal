@@ -35,7 +35,7 @@ namespace Player.Combat
 		private void Start()
 		{
 			_state = GetComponent<PlayerState>();
-			_anim = GetComponent<Animator>();
+			CheckAndInitAnimator();
 
 			_leftHandT = leftHand.transform;
 			_rightHandT = rightHand.transform;
@@ -76,6 +76,7 @@ namespace Player.Combat
 			if (GameManager.state.IsInConversation) return;
 			if (!_state.inCombat) return;
 
+			CheckAndInitAnimator();
 			_anim.SetBool(IsBlocking, true);
 			_state.isBlocking = true;
 			_state.DisallowMovement();
@@ -86,11 +87,17 @@ namespace Player.Combat
 			if (GameManager.state.IsInConversation) return;
 			if (!_state.inCombat) return;
 
+			CheckAndInitAnimator();
 			_anim.SetBool(IsBlocking, false);
 			_state.isBlocking = false;
 			_state.AllowMovement();
 		}
 
+		private void CheckAndInitAnimator()
+		{
+			if (!_anim) _anim = GetComponent<Animator>();
+		}
+		
 		private void OnFightStart() => SetInCombatStatus(true);
 
 		private void OnFightEnd(bool isTemporary) => SetInCombatStatus(isTemporary);

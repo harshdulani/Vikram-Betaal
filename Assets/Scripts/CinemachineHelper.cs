@@ -13,12 +13,16 @@ public class CinemachineHelper : MonoBehaviour
 		
 	private Transform _player, _betaal, _oldie;
 	private bool _isUsingFightCam, _isOldieAnEnemy;
+	private Tween _fightWalkCamTween;
 	
 	private void OnEnable()
 	{
 		BetaalEvents.StartBetaalArmsAttack += OnStartBetaalAttack;
 		BetaalEvents.EndBetaalArmsAttack += OnEndBetaalAttack;
 		BetaalEvents.EndBetaalHandleAttack += OnEndBetaalAttack;
+		
+		GameEvents.ConversationStart += OnConversationStart;
+		GameEvents.ConversationEnd += OnConversationEnd;
 	}
 
 	private void OnDisable()
@@ -26,6 +30,9 @@ public class CinemachineHelper : MonoBehaviour
 		BetaalEvents.StartBetaalArmsAttack -= OnStartBetaalAttack;
 		BetaalEvents.EndBetaalArmsAttack -= OnEndBetaalAttack;
 		BetaalEvents.EndBetaalHandleAttack -= OnEndBetaalAttack;
+		
+		GameEvents.ConversationStart -= OnConversationStart;
+		GameEvents.ConversationEnd -= OnConversationEnd;
 	}
 
 	private void Start()
@@ -41,21 +48,21 @@ public class CinemachineHelper : MonoBehaviour
 		_initFightPathOffset = _fightCamTracker.m_PathOffset;
 		
 		//switch between fight and walk cam
-		DOVirtual.DelayedCall(0.5f, () =>
-									{
-										var dist = Vector3.Distance(_player.position, _isOldieAnEnemy ? _oldie .position : _betaal.position);
-										if (dist > fightCamDistance)
-										{
-											if(!_isUsingFightCam) return;
-											GoToWalkCam();
-										}
-										else
-										{
-											if(_isUsingFightCam) return;
-											GoToFightCam();
-										}
-										CuteCm.only.UpdateInFightCam(_isUsingFightCam);
-									}).SetLoops(-1);
+		_fightWalkCamTween = DOVirtual.DelayedCall(0.5f, () =>
+													  {
+														  var dist = Vector3.Distance(_player.position, _isOldieAnEnemy ? _oldie .position : _betaal.position);
+														  if (dist > fightCamDistance)
+														  {
+															  if(!_isUsingFightCam) return;
+															  GoToWalkCam();
+														  }
+														  else
+														  {
+															  if(_isUsingFightCam) return;
+															  GoToFightCam();
+														  }
+														  CuteCm.only.UpdateInFightCam(_isUsingFightCam);
+													  }).SetLoops(-1);
 	}
 
 	private void GoToFightCam()
@@ -94,5 +101,16 @@ public class CinemachineHelper : MonoBehaviour
 		DOTween.To(() => _fightCamTracker.m_PathOffset,
 				   value => _fightCamTracker.m_PathOffset = value,
 				   _initFightPathOffset, 1f);
+	}
+
+	private void OnConversationStart()
+	{
+		OnEndBetaalAttack();
+		_fightWalkCamTween.Pause();
+	}
+
+	private void OnConversationEnd()
+	{
+		_fightWalkCamTween.Restart();
 	}
 }

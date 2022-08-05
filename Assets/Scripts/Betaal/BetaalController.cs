@@ -5,6 +5,7 @@ namespace Betaal
 {
 	public class BetaalController : MonoBehaviour
 	{
+		[SerializeField] private bool isRagdoll;
 		[SerializeField] private int noOfDeaths;
 		[SerializeField] private HealthCanvas healthCanvas;
 		[Range(0,1f), SerializeField] private float healthBeforeMidFightConv;
@@ -37,8 +38,10 @@ namespace Betaal
 		private void OnEnable()
 		{
 			GameEvents.BetaalFightStart += OnBetaalFightStart;
+			GameEvents.BetaalFightEnd += OnBetaalFightEnd;
 			BetaalEvents.EndBetaalArmsAttack += OnArmsAttackEnd;
 			BetaalEvents.EndBetaalHandleAttack += OnHandleAttackEnd;
+			
 			GameEvents.ConversationStart += OnConversationStart;
 			
 			GameEvents.GameLose += OnGameLose;
@@ -47,6 +50,7 @@ namespace Betaal
 		private void OnDisable()
 		{
 			GameEvents.BetaalFightStart -= OnBetaalFightStart;
+			GameEvents.BetaalFightEnd -= OnBetaalFightEnd;
 			BetaalEvents.EndBetaalArmsAttack -= OnArmsAttackEnd;
 			BetaalEvents.EndBetaalHandleAttack -= OnBetaalFightStart;
 			
@@ -55,13 +59,27 @@ namespace Betaal
 			GameEvents.GameLose -= OnGameLose;
 		}
 
+	#if UNITY_EDITOR
+
+		private void OnValidate()
+		{
+			if(!Application.isPlaying) return;
+			
+			if (isRagdoll && _anim.enabled)
+				GoRagdoll();
+			else
+				ResetRagdoll();
+		}
+
+	#endif
+		
 		private void Start()
 		{
 			_movement = GetComponent<BetaalMovement>();
 			arms = GetComponent<BetaalBackArms>();
 			_anim = GetComponent<Animator>();
 
-			_player = GameObject.FindGameObjectWithTag("Player").transform.root;
+			CheckAndInitPlayer();
 			_transform = transform;
 			_currentHealth = maxHealth;
 			healthCanvas.DisableCanvas();
@@ -134,7 +152,7 @@ namespace Betaal
 		private void ChooseAndLaunchAttack()
 		{
 			//if(_isArmAttacking || _isHandleAttacking) return;
-
+			CheckAndInitPlayer();
 			if (Vector3.Distance(_transform.position, _player.position) > minDistanceForHandleAttack)
 				StartHandleAttack();
 			else
@@ -197,8 +215,29 @@ namespace Betaal
 			foreach (var rb in rigidbodies)
 			{
 				rb.isKinematic = false;
-				rb.AddForce(-_transform.forward * ragdollThrowBackForce, ForceMode.Impulse);
+				rb.AddForce(-_transform.forward * ragdollThrowBackForce + Vector3.up, ForceMode.Impulse);
 			}
+		}
+
+		private void ResetRagdoll()
+		{
+			_anim.enabled = true;
+			
+			foreach (var fx in lightningFx) fx.SetActive(true);
+			
+			foreach (var rb in rigidbodies)
+			{
+				rb.isKinematic = true;
+				rb.ResetInertiaTensor();
+				rb.velocity = Vector3.zero;
+				rb.angularVelocity = Vector3.zero;
+			}
+		}
+
+		private void CheckAndInitPlayer()
+		{
+			if(!_player)
+				_player = GameObject.FindGameObjectWithTag("Player").transform.root;
 		}
 
 		private void OnBetaalFightStart()
@@ -211,12 +250,13 @@ namespace Betaal
 		private void OnArmsAttackEnd()
 		{
 			_isArmAttacking = false;
-			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y),ChooseAndLaunchAttack);
+			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y), ChooseAndLaunchAttack);
 		}
+
 		private void OnHandleAttackEnd()
 		{
 			_isHandleAttacking = false;
-			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y),ChooseAndLaunchAttack);
+			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y), ChooseAndLaunchAttack);
 		}
 
 		private void OnConversationStart()
@@ -231,6 +271,18 @@ namespace Betaal
 											 _movement.StopMovementTween();
 											 EndCombat();
 										 });
+		}
+
+		private void OnBetaalFightEnd(bool isTemporary)
+		{
+			if (!isTemporary)
+			{
+				_currentHealth = maxHealth;
+				var healthNormalised = _currentHealth / (float) maxHealth;
+				healthCanvas.SetHealth(healthNormalised);
+			}
+
+			EndCombat();
 		}
 
 		private void OnGameLose()
