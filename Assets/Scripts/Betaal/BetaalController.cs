@@ -63,7 +63,7 @@ namespace Betaal
 
 		private void OnValidate()
 		{
-			if(!Application.isPlaying) return;
+			if(!Application.isPlaying || !_anim) return;
 			
 			if (isRagdoll && _anim.enabled)
 				GoRagdoll();

@@ -57,7 +57,10 @@ namespace Betaal
 													   var dist = vector.magnitude;
 													   
 													   //if player is getting away
-													   if ( dist > distanceFromPlayerRange.y) FindNewPosition(vector);
+													   if ( dist > distanceFromPlayerRange.y)
+													   {
+														   FindNewPosition(vector);
+													   }
 													   else if(dist < distanceFromPlayerRange.x)
 													   {
 														   //if player is getting too close and you are far away from the 
@@ -86,6 +89,7 @@ namespace Betaal
 		private void SetNewDest(Vector3 position)
 		{
 			_agent.SetDestination(position);
+			_agent.isStopped = false;
 			_isMoving = true;
 		}
 

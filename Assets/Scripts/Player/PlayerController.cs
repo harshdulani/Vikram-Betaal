@@ -103,8 +103,7 @@ namespace Player
 		public bool TryInteractWithBetaalStatusChange(bool b)
 		{
 			if(!allowedInteractionWithBetaalChange) return false;
-
-			print(canInteractWithBetaal + " b");
+			
 			canInteractWithBetaal = b;
 			return true;
 		}
@@ -170,8 +169,11 @@ namespace Player
 		private void OnBetaalFightEnd(bool isTemporary)
 		{
 			healthCanvas.DisableCanvas();
-			if(!isTemporary)
+			if (!isTemporary)
+			{
 				_my.currentHealth = _my.maxHealth;
+				allowedInteractionWithBetaalChange = true;
+			}
 		}
 
 		private void OnConversationStart()
