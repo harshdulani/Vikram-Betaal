@@ -26,6 +26,34 @@ namespace Betaal
 			_player = GameObject.FindGameObjectWithTag("Player").transform.root;
 
 			_transform = transform;
+			
+			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
+			                                       () =>
+			                                       {
+				                                       if (Vector3.Distance(_transform.position, initPos) > maxDistanceFromHome)
+				                                       {
+					                                       SetNewDest(initPos);
+					                                       return;
+				                                       }
+
+				                                       var vector = _transform.position - _player.position;
+
+				                                       //filhaal betaal wants to maintain the same amount of distance from player
+				                                       var dist = vector.magnitude;
+													   
+				                                       //if player is getting away
+				                                       if ( dist > distanceFromPlayerRange.y)
+				                                       {
+					                                       FindNewPosition(vector);
+				                                       }
+				                                       else if(dist < distanceFromPlayerRange.x)
+				                                       {
+					                                       //if player is getting too close and you are far away from the 
+					                                       FindNewPosition(vector);
+				                                       }
+			                                       }).SetLoops(-1);
+			
+			_movementTween.Rewind();
 		}
 
 		private void Update()
@@ -42,31 +70,7 @@ namespace Betaal
 
 		public void StartMovementTween()
 		{
-			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
-												   () =>
-												   {
-													   if (Vector3.Distance(_transform.position, initPos) > maxDistanceFromHome)
-													   {
-														   SetNewDest(initPos);
-														   return;
-													   }
-
-													   var vector = _transform.position - _player.position;
-
-													   //filhaal betaal wants to maintain the same amount of distance from player
-													   var dist = vector.magnitude;
-													   
-													   //if player is getting away
-													   if ( dist > distanceFromPlayerRange.y)
-													   {
-														   FindNewPosition(vector);
-													   }
-													   else if(dist < distanceFromPlayerRange.x)
-													   {
-														   //if player is getting too close and you are far away from the 
-														   FindNewPosition(vector);
-													   }
-												   }).SetLoops(-1);
+			_movementTween.Restart();
 		}
 
 		public void StopMovementTween() => _movementTween.Kill();
@@ -79,7 +83,7 @@ namespace Betaal
 			
 			if(dest.x > initPos.x)
 			{
-				_controller.StartArmsAttack();
+				//_controller.StartArmsAttack();
 				SetNewDest(initPos);
 				return;
 			}
@@ -93,6 +97,12 @@ namespace Betaal
 			_isMoving = true;
 		}
 
-		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
+		private void Recenter()
+		{
+			var position = _transform.position;
+			position = Vector3.Lerp(position, Vector3.right * position.x, Time.deltaTime * 10f);
+			_transform.position = position;
+			_transform.rotation = Quaternion.Lerp(_transform.rotation, Quaternion.LookRotation(_player.position - position), Time.deltaTime * 10f);
+		}
 	}
 }

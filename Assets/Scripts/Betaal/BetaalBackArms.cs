@@ -83,5 +83,14 @@ namespace Betaal
 																									BetaalEvents.InvokeEndBetaalArmsAttack();
 																								})));
 		}
+		
+		public void StopAttack()
+		{
+			if(!isAttacking) return;
+			
+			isAttacking = false;
+			rightIkTarget.DOMove(_currentRightTarget.position, 0.5f);
+			BetaalEvents.InvokeEndBetaalArmsAttack();
+		}
 	}
 }

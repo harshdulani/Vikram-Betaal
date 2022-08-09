@@ -27,7 +27,7 @@ namespace Betaal
 		private Animator _anim;
 		private Transform _transform, _player;
 		private int _currentDeathCount;
-		private bool _hasHadMidFightConv, _isArmAttacking, _isHandleAttacking;
+		private bool _hasHadMidFightConv, _isArmAttacking, _isHandleAttacking, _stoppedCombat = true;
 
 		private static readonly int HitPunch = Animator.StringToHash("hitPunch");
 		private static readonly int HitUppercut = Animator.StringToHash("hitUppercut");
@@ -145,13 +145,16 @@ namespace Betaal
 			
 			_isHandleAttacking = false;
 			_isArmAttacking = false;
+			_stoppedCombat = false;
 			
 			ChooseAndLaunchAttack();
 		}
 
 		private void ChooseAndLaunchAttack()
 		{
-			//if(_isArmAttacking || _isHandleAttacking) return;
+			if(_isArmAttacking || _isHandleAttacking || _stoppedCombat) return;
+			
+			print("chosen");
 			CheckAndInitPlayer();
 			if (Vector3.Distance(_transform.position, _player.position) > minDistanceForHandleAttack)
 				StartHandleAttack();
@@ -159,9 +162,9 @@ namespace Betaal
 				StartArmsAttack();
 		}
 
-		public void StartArmsAttack()
+		private void StartArmsAttack()
 		{
-			if(_isArmAttacking) return;
+			if(_isArmAttacking || _stoppedCombat) return;
 			
 			_isArmAttacking = true;
 			arms.AttackChest();
@@ -169,7 +172,7 @@ namespace Betaal
 
 		private void StartHandleAttack()
 		{
-			if(_isHandleAttacking) return;
+			if(_isHandleAttacking || _stoppedCombat) return;
 
 			_isHandleAttacking = true;
 			BetaalEvents.InvokeStartHandleAttack(this);
@@ -178,6 +181,8 @@ namespace Betaal
 		private void EndCombat()
 		{
 			DOTween.Kill(arms);
+			arms.StopAttack();
+			_stoppedCombat = true;
 			DOTween.Kill(this);
 		}
 
@@ -249,14 +254,20 @@ namespace Betaal
 
 		private void OnArmsAttackEnd()
 		{
-			_isArmAttacking = false;
-			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y), ChooseAndLaunchAttack);
+			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y), () =>
+			                                                                                          {
+				                                                                                          ChooseAndLaunchAttack();
+				                                                                                          _isArmAttacking = false;
+			                                                                                          });
 		}
 
 		private void OnHandleAttackEnd()
 		{
-			_isHandleAttacking = false;
-			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y), ChooseAndLaunchAttack);
+			DOVirtual.DelayedCall(Random.Range(waitBetweenAttacksRange.x, waitBetweenAttacksRange.y), () =>
+			                                                                                          {
+				                                                                                          ChooseAndLaunchAttack();
+				                                                                                          _isHandleAttacking = false;
+			                                                                                          });
 		}
 
 		private void OnConversationStart()
@@ -266,8 +277,10 @@ namespace Betaal
 
 			DOVirtual.DelayedCall(0.15f, () =>
 										 {
+											 print("wanted to end combat and " + GameManager.state.InConversationWithBetaal);
 											 if (!GameManager.state.InConversationWithBetaal) return;
 											 
+											 print("end");
 											 _movement.StopMovementTween();
 											 EndCombat();
 										 });
