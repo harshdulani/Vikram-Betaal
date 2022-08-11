@@ -13,7 +13,8 @@ namespace Oldie
 
 		private NavMeshAgent _agent;
 		private Transform _transform;
-
+		private Transform _player;
+		
 		private OldieRefBank _my;
 
 		private static readonly int BlendValue = Animator.StringToHash("blendValue");
@@ -21,13 +22,11 @@ namespace Oldie
 
 		private void OnEnable()
 		{
-			GameEvents.IntroConversationComplete += OnIntroConversationComplete;
 			GameEvents.ConversationStart += OnConversationStart;
 		}
 
 		private void OnDisable()
 		{
-			GameEvents.IntroConversationComplete -= OnIntroConversationComplete;
 			GameEvents.ConversationStart -= OnConversationStart;
 		}
 
@@ -35,13 +34,14 @@ namespace Oldie
 		{
 			_agent = GetComponent<NavMeshAgent>();
 			_my = GetComponent<OldieRefBank>();
+			_player = GameObject.FindGameObjectWithTag("Player").transform.root;
 
 			_transform = transform;
 			_agent.enabled = false;
 			
 			sittingSpot.parent = null;
-			transform.position = sittingSpot.position;
-			transform.rotation = sittingSpot.rotation;
+			_transform.position = sittingSpot.position;
+			_transform.rotation = sittingSpot.rotation;
 		}
 
 		private void Update()
@@ -66,6 +66,17 @@ namespace Oldie
 			StartMovingAnim();
 		}
 
+		public void GetReadyForFight()
+		{
+			_agent.enabled = true;
+			
+			_my.Animator.SetTrigger(StandUpSitting);
+			_transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart)
+				.OnComplete(() => 
+					            _transform
+						            .DORotateQuaternion(Quaternion.LookRotation(_player.position - _transform.position), 0.25f));
+		}
+
 		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
 
 		private void StartMovingAnim() => DOTween.To(BlendValueGetter, BlendValueSetter, 1f, 0.5f);
@@ -74,13 +85,5 @@ namespace Oldie
 		private void BlendValueSetter(float value) => _my.Animator.SetFloat(BlendValue, value);
 
 		private void OnConversationStart() => _disabledMovement = true;
-		
-		private void OnIntroConversationComplete() 
-		{
-			//_agent.enabled = true;
-
-			//_my.Animator.SetTrigger(StandUpSitting);
-			//transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart);
-		}
 	}
 }

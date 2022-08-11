@@ -44,7 +44,7 @@ namespace Oldie
 
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.U)) StartAttackAI();
+			if (Input.GetKeyDown(KeyCode.U)) StartCombat();
 		}
 
 		private void OnValidate()
@@ -55,26 +55,10 @@ namespace Oldie
 				StartAttackAI();
 		}
 
-		private void StartAttackAI()
+		public void StartCombat()
 		{
-			SetCombatBlendValue();
-
-			isInCombat = true;
-			_attackTween = DOVirtual.DelayedCall(aiAttackInterval, 
-												 () =>
-												 {
-													 if (Random.value > 0.5f) projectile.StartAttack(_player);
-												 }).SetLoops(-1);
-
-			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
-												   () =>
-												   {
-													   var vector = _transform.position - _player.position;
-													   print(vector);
-													   if (Vector3.Distance(_player.position, _transform.position) 
-														 > maxDistanceFromPlayer)
-														   FindNewPosition(vector);
-												   }).SetLoops(-1);
+			_my.Movement.GetReadyForFight();
+			StartAttackAI();
 		}
 
 		public void GetHit(int getAttackDamage, PlayerAttackType type)
@@ -89,10 +73,11 @@ namespace Oldie
 		
 			print(_currentHealth);
 			if(_currentHealth > 0) return;
-		
+			
+			Die();
 		}
 
-		public void Die()
+		private void Die()
 		{
 			GoRagdoll();
 			_my.IsDead = false;
@@ -102,6 +87,28 @@ namespace Oldie
 			GameEvents.InvokeGameWin();
 		}
 		
+		private void StartAttackAI()
+		{
+			SetCombatBlendValue();
+
+			isInCombat = true;
+			_attackTween = DOVirtual.DelayedCall(aiAttackInterval, 
+			                                     () =>
+			                                     {
+				                                     if (Random.value > 0.5f) projectile.StartAttack(_player);
+			                                     }).SetLoops(-1);
+
+			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
+			                                       () =>
+			                                       {
+				                                       var vector = _transform.position - _player.position;
+				                                       print(vector);
+				                                       if (Vector3.Distance(_player.position, _transform.position) 
+				                                         > maxDistanceFromPlayer)
+					                                       FindNewPosition(vector);
+			                                       }).SetLoops(-1);
+		}
+
 		private void GoRagdoll()
 		{
 			_my.Animator.enabled = false;

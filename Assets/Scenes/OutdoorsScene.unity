@@ -321,8 +321,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.007813454, y: 2.4999995, z: 3.6209893}
-  m_Center: {x: 11.604383, y: -3.6521897e-12, z: 1.8316362}
+  m_Size: {x: 2.4323025, y: 2.4999995, z: 3.6209888}
+  m_Center: {x: 11.795139, y: 0.0000000066203305, z: 1.8316362}
 --- !u!208 &25204199
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.004, y: 1.25, z: 1.8100001}
+  m_Extents: {x: 1.215, y: 1.25, z: 1.8100001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -3756,7 +3756,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339103254}
-  m_LocalRotation: {x: 0.02855009, y: 0.119132385, z: -0.0034270743, w: 0.9924619}
+  m_LocalRotation: {x: 0.028550126, y: 0.119132385, z: -0.0034270787, w: 0.9924619}
   m_LocalPosition: {x: 0.46892023, y: -0.7425213, z: -3.7067986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6253,7 +6253,7 @@ MonoBehaviour:
   _currentBetaalIndex: 0
   _currentSadhuIndex: 0
   _currentConversationIndex: 0
-  firstWordBy: 02000000010000000100000001000000010000000100000001000000
+  firstWordBy: 0200000001000000010000000100000001000000010000000100000002000000
 --- !u!4 &549033542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1852d1c38bff7af44aa9b59546224bc5, type: 3}
@@ -9233,8 +9233,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.007813454, y: 2.4999995, z: 3.6209893}
-  m_Center: {x: -11.604383, y: 0, z: 1.8316362}
+  m_Size: {x: 2.3931682, y: 2.4999995, z: 3.6209888}
+  m_Center: {x: -11.773609, y: 0.0000000066247194, z: 1.8316362}
 --- !u!208 &856155386
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -9245,7 +9245,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.004, y: 1.25, z: 1.8100001}
+  m_Extents: {x: 1.195, y: 1.25, z: 1.8100001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -11939,6 +11939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1066476320}
   - component: {fileID: 1066476319}
+  - component: {fileID: 1066476321}
   m_Layer: 0
   m_Name: Fight3Trigger
   m_TagString: Untagged
@@ -11974,6 +11975,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1066476321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066476318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a44343e02ced79a4ea074b141c8ed623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1069099283
 GameObject:
   m_ObjectHideFlags: 0
@@ -17453,8 +17466,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.007813454, y: 2.4999995, z: 3.6209893}
-  m_Center: {x: -11.604383, y: -3.6521897e-12, z: 1.8316362}
+  m_Size: {x: 2.3931682, y: 2.4999995, z: 3.6209888}
+  m_Center: {x: -11.773609, y: 0.0000000066247194, z: 1.8316362}
 --- !u!208 &1644075168
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17465,7 +17478,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.004, y: 1.25, z: 1.8100001}
+  m_Extents: {x: 1.195, y: 1.25, z: 1.8100001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -17657,8 +17670,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.007813456, y: 2.4999995, z: 3.620989}
-  m_Center: {x: 11.604384, y: -5.1519017e-10, z: 1.8316361}
+  m_Size: {x: 2.376128, y: 2.4999995, z: 3.620989}
+  m_Center: {x: 11.747449, y: -0.000000009521583, z: 1.8316361}
 --- !u!208 &1681312462
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17669,7 +17682,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.004, y: 1.25, z: 1.8100001}
+  m_Extents: {x: 1.18, y: 1.25, z: 1.8100001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1

@@ -154,7 +154,6 @@ namespace Betaal
 		{
 			if(_isArmAttacking || _isHandleAttacking || _stoppedCombat) return;
 			
-			print("chosen");
 			CheckAndInitPlayer();
 			if (Vector3.Distance(_transform.position, _player.position) > minDistanceForHandleAttack)
 				StartHandleAttack();
@@ -277,10 +276,8 @@ namespace Betaal
 
 			DOVirtual.DelayedCall(0.15f, () =>
 										 {
-											 print("wanted to end combat and " + GameManager.state.InConversationWithBetaal);
 											 if (!GameManager.state.InConversationWithBetaal) return;
 											 
-											 print("end");
 											 _movement.StopMovementTween();
 											 EndCombat();
 										 });

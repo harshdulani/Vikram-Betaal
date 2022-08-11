@@ -1,15 +1,13 @@
-using Betaal;
-using DG.Tweening;
 using Oldie;
+using DG.Tweening;
 using Player;
 using UnityEngine;
 
-public class Fight2Trigger : MonoBehaviour
+public class Fight3Trigger : MonoBehaviour
 {
-	private PlayerController _player;
-	[SerializeField] private BetaalController betaal;
-	private bool _hasStarted;
 	private OldieRefBank _sadhu;
+	private PlayerController _player;
+	private bool _hasStarted;
 
 	private void Start()
 	{
@@ -22,6 +20,7 @@ public class Fight2Trigger : MonoBehaviour
 		if(_hasStarted) return;
 		if(!GameManager.state.betaalFight1Over) return;
 
+		GameManager.state.IsSadhuEvil = true;
 		_hasStarted = true;
 		Lightning.only.CustomLightning(3500000);
 
@@ -30,9 +29,8 @@ public class Fight2Trigger : MonoBehaviour
 										 _player.transform.position = transform.position - Vector3.right * 5f;
 										 _player.transform.rotation = Quaternion.LookRotation(Vector3.right);
 										 _player.StopCarryingBetaal();
-										 betaal.transform.position = transform.position;
-										 betaal.gameObject.SetActive(true);
-										 betaal.DeRagdoll();
+										 _player.HideBetaal();
+										 _sadhu.Combat.StartCombat();
 									 });
 		
 		GameManager.state.startFightAfterNextConversation = true;

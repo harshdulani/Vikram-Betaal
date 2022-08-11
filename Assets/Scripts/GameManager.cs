@@ -9,12 +9,12 @@ public class GameManager : MonoBehaviour
 	
 	public bool betaalFight1Over, betaalFight2Over, startFightAfterNextConversation;
 	public bool InConversationWithBetaal { get; set; }
-	public bool IsSadhuEvil { get; private set; }
+	public bool IsSadhuEvil { get; set; }
 	public bool InPreFight { get; private set; }
 	public bool IsInConversation { get; private set; }
 	public Character ActiveSpeaker { get; set; }
 
-	private readonly Dictionary<GameObject, bool> _carDoorStatuses = new Dictionary<GameObject, bool>();
+	private readonly Dictionary<GameObject, bool> _carDoorStatuses = new();
 
 	private void OnEnable()
 	{

@@ -180,5 +180,9 @@ namespace Player
 		{
 			healthCanvas.DisableCanvas();
 		}
+		public void HideBetaal()
+		{
+			carriedBetaal.SetActive(false);
+		}
 	}
 }
