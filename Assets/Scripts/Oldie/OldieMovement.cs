@@ -77,7 +77,13 @@ namespace Oldie
 						            .DORotateQuaternion(Quaternion.LookRotation(_player.position - _transform.position), 0.25f));
 		}
 
-		private void Recenter() => _transform.position = Vector3.Lerp(_transform.position, Vector3.right * _transform.position.x, Time.deltaTime * 10f);
+		private void Recenter()
+		{
+			var position = _transform.position;
+			position = Vector3.Lerp(position, Vector3.right * position.x, Time.deltaTime * 10f);
+			_transform.position = position;
+			_transform.rotation = Quaternion.Lerp(_transform.rotation, Quaternion.LookRotation(_player.position - position), Time.deltaTime * 10f);
+		}
 
 		private void StartMovingAnim() => DOTween.To(BlendValueGetter, BlendValueSetter, 1f, 0.5f);
 		private void StopMovingAnim() => DOTween.To(BlendValueGetter, BlendValueSetter, 0f, 0.5f);

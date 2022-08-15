@@ -41,11 +41,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.93
+      value: -3.97
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.38
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -293,6 +293,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: ForceModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: NoiseModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: NoiseModule.quality
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
@@ -300,24 +308,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
-      propertyPath: VelocityModule.enabled
+      propertyPath: ForceModule.y.scalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: VelocityModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: VelocityModule.y.scalar
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: InheritVelocityModule.m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: VelocityModule.radial.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: InheritVelocityModule.enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 4.5
+      propertyPath: VelocityModule.orbitalY.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: VelocityModule.orbitalZ.scalar
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
@@ -344,8 +364,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
-      propertyPath: EmissionModule.rateOverDistance.scalar
+      propertyPath: VelocityModule.orbitalOffsetZ.scalar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: InheritVelocityModule.m_Curve.minScalar
@@ -365,11 +389,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inWeight
@@ -377,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
@@ -385,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 198696392922457284, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
@@ -426,19 +450,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6793428887157246552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8600882760851885385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c409af9b6943471458f747f2206ca19d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 25
 --- !u!135 &8345869406722836802
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -452,3 +463,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6793428887157246552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600882760851885385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c409af9b6943471458f747f2206ca19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 25

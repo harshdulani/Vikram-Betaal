@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager state;
 	[SerializeField] private List<GameObject> carDoors;
 	
-	public bool betaalFight1Over, betaalFight2Over, startFightAfterNextConversation;
+	public bool betaalFight1Over, betaalFight2Over, startFightAfterNextConversation, betaalProperlyDead;
 	public bool InConversationWithBetaal { get; set; }
 	public bool IsSadhuEvil { get; set; }
 	public bool InPreFight { get; private set; }

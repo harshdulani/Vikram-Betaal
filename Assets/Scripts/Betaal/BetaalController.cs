@@ -87,10 +87,7 @@ namespace Betaal
 			HandleController.CalculateDuration(this);
 		}
 
-		private void OnDrawGizmosSelected()
-		{
-			handleAttack.DrawGizmos();
-		}
+		private void OnDrawGizmosSelected() => handleAttack.DrawGizmos();
 
 		public void GiveDamage(int getAttackDamage, PlayerAttackType type)
 		{

@@ -231,8 +231,12 @@ public class DialogueShowController : MonoBehaviour
 		}
 
 		if (!GameManager.state.startFightAfterNextConversation) return;
+
+		if (GameManager.state.betaalProperlyDead)
+			GameEvents.InvokeSadhuFightStart();
+		else
+			GameEvents.InvokeBetaalFightStart();
 		
-		GameEvents.InvokeBetaalFightStart();
 		GameManager.state.startFightAfterNextConversation = false;
 	}
 

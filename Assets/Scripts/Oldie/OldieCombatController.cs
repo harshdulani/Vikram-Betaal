@@ -13,6 +13,7 @@ namespace Oldie
 		[SerializeField] private float maxDistanceFromPlayer, aiAttackInterval, aiRepositionInterval;
 		[SerializeField] private float proximityCooldownDuration;
 
+		[SerializeField] private HealthCanvas healthCanvas;
 		[SerializeField] private ProjectileAttack projectile;
 		[SerializeField] private ProximityAttack proximity;
 
@@ -32,6 +33,16 @@ namespace Oldie
 		private static readonly int HitUppercut = Animator.StringToHash("hitUppercut");
 		private static readonly int Dummy = Animator.StringToHash("dummy");
 
+		private void OnEnable()
+		{
+			GameEvents.SadhuFightStart += OnSadhuFightStart;
+		}
+		
+		private void OnDisable()
+		{
+			GameEvents.SadhuFightStart -= OnSadhuFightStart;
+		}
+
 		private void Start()
 		{
 			_my = GetComponent<OldieRefBank>();
@@ -42,23 +53,19 @@ namespace Oldie
 			_currentHealth = maxHealth;
 		}
 
-		private void Update()
+		private void StartCombat()
 		{
-			if (Input.GetKeyDown(KeyCode.U)) StartCombat();
-		}
-
-		private void OnValidate()
-		{
-			if(!Application.isPlaying) return;
-
-			if(isInCombat)
-				StartAttackAI();
-		}
-
-		public void StartCombat()
-		{
+			healthCanvas.EnableCanvas();
 			_my.Movement.GetReadyForFight();
 			StartAttackAI();
+		}
+
+		private void EndCombat()
+		{
+			_my.Animator.enabled = false;
+			_attackTween.Kill();
+			_movementTween.Kill();
+			healthCanvas.DisableCanvas();
 		}
 
 		public void GetHit(int getAttackDamage, PlayerAttackType type)
@@ -71,6 +78,9 @@ namespace Oldie
 								 _ => Dummy
 							 });
 		
+			var healthNormalised = _currentHealth / (float) maxHealth;
+			healthCanvas.SetHealth(healthNormalised);
+			
 			print(_currentHealth);
 			if(_currentHealth > 0) return;
 			
@@ -83,10 +93,12 @@ namespace Oldie
 			_my.IsDead = false;
 			_attackTween.Kill();
 			_movementTween.Kill();
+			EndCombat();
 			
 			GameEvents.InvokeGameWin();
 		}
-		
+
+
 		private void StartAttackAI()
 		{
 			SetCombatBlendValue();
@@ -134,7 +146,7 @@ namespace Oldie
 			_inProximityAttackCooldown = true;
 			DOVirtual.DelayedCall(proximityCooldownDuration, () => _inProximityAttackCooldown = false);
 		}
-	
+
 		private void SetCombatBlendValue() => DOTween.To(BlendValueGetter, BlendValueSetter, combatBlendValue, 0.5f);
 		private float BlendValueGetter() => _my.Animator.GetFloat(MovementCombatBlendValue);
 		private void BlendValueSetter(float value) => _my.Animator.SetFloat(MovementCombatBlendValue, value);
@@ -147,5 +159,6 @@ namespace Oldie
 
 			LaunchProximityReductionAttack();
 		}
+		private void OnSadhuFightStart() => StartCombat();
 	}
 }
