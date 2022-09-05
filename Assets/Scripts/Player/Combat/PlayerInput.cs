@@ -23,12 +23,14 @@ namespace Player.Combat
 		private void OnEnable()
 		{
 			GameEvents.BetaalFightStart += OnFightStart;
+			GameEvents.SadhuFightStart += OnFightStart;
 			GameEvents.BetaalFightEnd += OnFightEnd;
 		}
 
 		private void OnDisable()
 		{
 			GameEvents.BetaalFightStart -= OnFightStart;
+			GameEvents.SadhuFightStart -= OnFightStart;
 			GameEvents.BetaalFightEnd -= OnFightEnd;
 		}
 

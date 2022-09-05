@@ -23,11 +23,13 @@ namespace Oldie
 		private void OnEnable()
 		{
 			GameEvents.ConversationStart += OnConversationStart;
+			GameEvents.SadhuFightStart += OnSadhuFightStart;
 		}
 
 		private void OnDisable()
 		{
 			GameEvents.ConversationStart -= OnConversationStart;
+			GameEvents.SadhuFightStart -= OnSadhuFightStart;
 		}
 
 		private void Start()
@@ -91,5 +93,6 @@ namespace Oldie
 		private void BlendValueSetter(float value) => _my.Animator.SetFloat(BlendValue, value);
 
 		private void OnConversationStart() => _disabledMovement = true;
+		private void OnSadhuFightStart() => _disabledMovement = false;
 	}
 }

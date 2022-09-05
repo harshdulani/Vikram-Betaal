@@ -35,6 +35,7 @@ namespace Player
 
 			GameEvents.ConversationStart += OnConversationStart;
 			GameEvents.BetaalFightStart += OnFightEnter;
+			GameEvents.SadhuFightStart += OnFightEnter;
 			GameEvents.BetaalFightEnd += OnBetaalFightEnd;
 		}
 
@@ -43,15 +44,12 @@ namespace Player
 			PlayerInput.UsePressed -= OnUsePressed;
 			
 			GameEvents.ConversationStart -= OnConversationStart;
-
 			GameEvents.BetaalFightStart -= OnFightEnter;
+			GameEvents.SadhuFightStart -= OnFightEnter;
 			GameEvents.BetaalFightEnd -= OnBetaalFightEnd;
 		}
 
-		private void Awake()
-		{
-			DOTween.KillAll();
-		}
+		private void Awake() => DOTween.KillAll();
 
 		private void Start()
 		{

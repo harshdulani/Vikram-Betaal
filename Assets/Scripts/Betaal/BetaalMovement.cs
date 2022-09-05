@@ -16,12 +16,9 @@ namespace Betaal
 		private NavMeshAgent _agent;
 		private Transform _player, _transform;
 		private Tween _movementTween;
-
-		private BetaalController _controller;
-
+		
 		private void Start()
 		{
-			_controller = GetComponent<BetaalController>();
 			_agent = GetComponent<NavMeshAgent>();
 			_player = GameObject.FindGameObjectWithTag("Player").transform.root;
 

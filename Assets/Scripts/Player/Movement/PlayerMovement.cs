@@ -144,14 +144,8 @@ namespace Player.Movement
 								  });
 		}
 
-		private void OnConversationStart()
-		{
-			_state.DisallowMovement();
-		}
+		private void OnConversationStart() => _state.DisallowMovement();
 
-		private void OnConversationEnd()
-		{
-			_state.AllowMovement();
-		}
+		private void OnConversationEnd() => _state.AllowMovement();
 	}
 }

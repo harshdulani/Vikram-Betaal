@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 34.628983, g: 39.598877, b: 45.647545, a: 1}
+  m_IndirectSpecularColor: {r: 34.594833, g: 39.567688, b: 45.625595, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13559,6 +13559,7 @@ MonoBehaviour:
   betaalFight1Over: 0
   betaalFight2Over: 0
   startFightAfterNextConversation: 0
+  betaalProperlyDead: 0
 --- !u!4 &1249682375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 72d535b0dd7c07740a2527ae55791b76, type: 3}
@@ -23594,6 +23595,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6052011439146336699, guid: 6e59d11476b675241bcd15dfe0e5a415, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6052011439146336699, guid: 6e59d11476b675241bcd15dfe0e5a415, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6101812741145050209, guid: 6e59d11476b675241bcd15dfe0e5a415, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -23670,6 +23679,10 @@ PrefabInstance:
     - target: {fileID: 2134705061, guid: 007cbb623c7667f448f16d317c390151, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 653054278564734435, guid: 007cbb623c7667f448f16d317c390151, type: 3}
+      propertyPath: maxHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5071278863080137006, guid: 007cbb623c7667f448f16d317c390151, type: 3}
       propertyPath: m_RootOrder
