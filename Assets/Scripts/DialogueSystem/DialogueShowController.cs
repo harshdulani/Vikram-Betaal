@@ -23,7 +23,11 @@ public class DialogueShowController : MonoBehaviour
 
 	[SerializeField] private int _currentPlayerIndex, _currentBetaalIndex, _currentSadhuIndex, _currentConversationIndex;
 	[SerializeField] private List<Character> firstWordBy;
-
+	
+	[SerializeField] private float dialogueLoadDuration;
+	private Tween _dialogueLoaderTween;
+	private float _dialogueLoaded;
+	
 	private Character _currentLeftCharacter;
 	private DialogueBank _currentDialogue;
 	private Tween _tipBlinker, _tipWaiter, _tipAppear, _tipDisappear;
@@ -78,7 +82,8 @@ public class DialogueShowController : MonoBehaviour
 		rightPivotPanel.SetActive(true);
 		
 		SetCharacter(character);
-		SetText(currentDialogue);
+		//SetText(currentDialogue);
+		ShowDialogue(currentDialogue);
 	}
 
 	private void SetCharacter(Character speaker)
@@ -256,6 +261,19 @@ public class DialogueShowController : MonoBehaviour
 	}
 
 	private void SetText(string text) => dialogue.text = text;
+	
+	private void ShowDialogue(string text)
+	{
+		_dialogueLoaded = 0f;
+		_dialogueLoaderTween =
+			DOTween.To(DialogueLoaderGetter, DialogueLoaderSetter, 1f, dialogueLoadDuration)
+				.OnComplete(() => dialogue.text = "")
+				.OnUpdate(() => dialogue.text = text[..(int)(_dialogueLoaded * text.Length)])
+				.OnComplete(() => _dialogueLoaded = 2f);
+	}
+
+	private float DialogueLoaderGetter() => _dialogueLoaded;
+	private void DialogueLoaderSetter(float value) => _dialogueLoaded = value;
 
 	private void ProgressConversation()
 	{
@@ -308,6 +326,7 @@ public class DialogueShowController : MonoBehaviour
 	private void OnUsePressed()
 	{
 		if(!GameManager.state.IsInConversation) return;
+		if(_dialogueLoaderTween.IsActive()) return;
 		ProgressConversation();
 	}
 

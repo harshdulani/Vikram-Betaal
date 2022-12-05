@@ -228,6 +228,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9070493210130169274, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -272,6 +276,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6170625038081293824, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: -4332706925441422008, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: -3542885339558904099, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: -3086436065929644917, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: -1781356600409242780, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: -290750445479886849, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
       propertyPath: m_Name
       value: Oldie Variant
@@ -280,10 +308,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Oldie
       objectReference: {fileID: 0}
+    - target: {fileID: 1082271958561512970, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135921509060577837, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948933247560734027, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 128835d33781d114883243c6df46c6b3, type: 2}
+    - target: {fileID: 8817898888258712963, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
+      propertyPath: m_TagString
+      value: Oldie
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8759069508207762491, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
     - {fileID: 2382799219754379413, guid: f4d4b6b278bd4ff4d8e9adfc0ee4705a, type: 3}
@@ -708,7 +752,18 @@ MonoBehaviour:
     attackSpawnTransform: {fileID: 976205881}
     attackSpeed: 1
     delayBeforeLaunchAttack: 2
-  rigidbodies: []
+  rigidbodies:
+  - {fileID: 4463209840294227446}
+  - {fileID: 1692166830894361472}
+  - {fileID: 6675372716583982841}
+  - {fileID: 2899902699581447644}
+  - {fileID: 5068986697557249880}
+  - {fileID: 5111719928079353097}
+  - {fileID: 3175271467658601297}
+  - {fileID: 6404715228846745255}
+  - {fileID: 2853775866129462113}
+  - {fileID: 1793028143836776418}
+  - {fileID: 3248057113941109189}
   maxHealth: 150
 --- !u!114 &1399448937
 MonoBehaviour:
