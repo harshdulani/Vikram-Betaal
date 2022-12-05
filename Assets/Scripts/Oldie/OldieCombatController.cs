@@ -89,7 +89,7 @@ namespace Oldie
 		private void Die()
 		{
 			GoRagdoll();
-			_my.IsDead = false;
+			_my.IsDead = true;
 			_attackTween.Kill();
 			_movementTween.Kill();
 			EndCombat();
@@ -106,7 +106,7 @@ namespace Oldie
 			_attackTween = DOVirtual.DelayedCall(aiAttackInterval, 
 			                                     () =>
 			                                     {
-				                                     if (Random.value > 0.5f) projectile.StartAttack(_player);
+				                                     if (Random.value > 0.5f && !_my.IsDead) projectile.StartAttack(_player);
 			                                     }).SetLoops(-1);
 
 			_movementTween = DOVirtual.DelayedCall(aiRepositionInterval,
@@ -140,6 +140,8 @@ namespace Oldie
 
 		private void LaunchProximityReductionAttack()
 		{
+			if(_my.IsDead) return;
+			
 			proximity.StartAttack(_player);
 		
 			_inProximityAttackCooldown = true;

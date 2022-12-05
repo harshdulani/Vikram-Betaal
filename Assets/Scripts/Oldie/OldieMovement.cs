@@ -9,7 +9,7 @@ namespace Oldie
 	{
 		[SerializeField] private Transform sittingSpot;
 		[SerializeField] private float stoppingDistance;
-		private bool _isMoving, _disabledMovement;
+		private bool _isMoving, _disabledMovement, _isStandingUp;
 
 		private NavMeshAgent _agent;
 		private Transform _transform;
@@ -49,7 +49,7 @@ namespace Oldie
 		private void Update()
 		{
 			if(_disabledMovement) return;
-			if(GameManager.state.InPreFight) return;
+			if(GameManager.state.InPreFight || _isStandingUp) return;
 			Recenter();
 		
 			if(!_isMoving) return;
@@ -71,12 +71,17 @@ namespace Oldie
 		public void GetReadyForFight()
 		{
 			_agent.enabled = true;
-			
+			_isStandingUp = true;
 			_my.Animator.SetTrigger(StandUpSitting);
 			_transform.DOMoveZ(0f, 1.5f).SetEase(Ease.InQuart)
-				.OnComplete(() => 
-					            _transform
-						            .DORotateQuaternion(Quaternion.LookRotation(_player.position - _transform.position), 0.25f));
+				.OnComplete(() =>
+				            {
+					            _transform.DORotateQuaternion(
+							            Quaternion.LookRotation(_player.position - _transform.position),
+							            0.25f);
+					            
+					            _isStandingUp = false;
+				            });
 		}
 
 		private void Recenter()

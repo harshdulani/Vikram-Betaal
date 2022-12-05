@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { MainMenu, Playing, Paused }
+public enum GameState { MainMenu, Playing, Paused, Ended }
 
 public class MainMenuController : MonoBehaviour
 {
 	[SerializeField] private Image black;
-	[SerializeField] private GameObject menuPanel, aboutPanel, inGamePanel, retryPanel;
+	[SerializeField] private GameObject menuPanel, aboutPanel, inGamePanel, retryPanel, winPanel;
 	
 	private Tweener _colorTween;
 	
@@ -20,11 +20,13 @@ public class MainMenuController : MonoBehaviour
 	private void OnEnable()
 	{
 		GameEvents.GameLose += OnGameLose;
+		GameEvents.GameWin += OnGameWin;
 	}
 
 	private void OnDisable()
 	{
 		GameEvents.GameLose -= OnGameLose;
+		GameEvents.GameWin -= OnGameWin;
 	}
 
 	private void Start()
@@ -35,7 +37,9 @@ public class MainMenuController : MonoBehaviour
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape)) HandleEscape();
+	#if UNITY_EDITOR
 		if (Input.GetKeyUp(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	#endif
 	}
 
 	private void HandleEscape()
@@ -49,6 +53,8 @@ public class MainMenuController : MonoBehaviour
 			case GameState.Paused:
 				OnPressResumeGame();
 				break;
+			case GameState.Ended:
+				return;
 			default: throw new ArgumentOutOfRangeException();
 		}
 	}
@@ -57,6 +63,7 @@ public class MainMenuController : MonoBehaviour
 	{
 		Time.timeScale = 0f;
 		inGamePanel.SetActive(true);
+		_currentState = GameState.Paused;
 		
 		if(_colorTween.IsActive()) _colorTween.Kill();
 		_colorTween = black.DOColor(_initColor, 0.5f);
@@ -67,10 +74,16 @@ public class MainMenuController : MonoBehaviour
 		retryPanel.SetActive(true);
 	}
 
+	private void ShowWinPanel()
+	{
+		winPanel.SetActive(true);
+	}
+	
 	public void OnPressResumeGame()
 	{
 		Time.timeScale = 1f;
 		inGamePanel.SetActive(false);
+		_currentState = GameState.Playing;
 		
 		if(_colorTween.IsActive()) _colorTween.Kill();
 		_colorTween = black.DOColor(Color.clear, 0.5f);
@@ -107,6 +120,13 @@ public class MainMenuController : MonoBehaviour
 
 	private void OnGameLose()
 	{
+		_currentState = GameState.Ended;
 		DOVirtual.DelayedCall(2f, ShowRetryPanel);
+	}
+
+	private void OnGameWin()
+	{
+		_currentState = GameState.Ended;
+		DOVirtual.DelayedCall(2f, ShowWinPanel);
 	}
 }

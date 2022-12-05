@@ -98,5 +98,9 @@ public class GameManager : MonoBehaviour
 	}
 
 	private void OnCombatBegin() => EnableAllCarDoors();
-	private void OnCombatEnd(bool isTemporary) => ResetAllDoorsToInit();
+	private void OnCombatEnd(bool isTemporary)
+	{
+		if(!isTemporary)
+			ResetAllDoorsToInit();
+	}
 }

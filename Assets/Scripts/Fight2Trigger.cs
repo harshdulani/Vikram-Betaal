@@ -1,6 +1,5 @@
 using Betaal;
 using DG.Tweening;
-using Oldie;
 using Player;
 using UnityEngine;
 
@@ -9,18 +8,17 @@ public class Fight2Trigger : MonoBehaviour
 	private PlayerController _player;
 	[SerializeField] private BetaalController betaal;
 	private bool _hasStarted;
-	private OldieRefBank _sadhu;
 
 	private void Start()
 	{
 		_player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerController>();
-		_sadhu = GameObject.FindGameObjectWithTag("Oldie").transform.root.GetComponent<OldieRefBank>();
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if(_hasStarted) return;
 		if(!GameManager.state.betaalFight1Over) return;
+		if(GameManager.state.IsInConversation) return; 
 
 		_hasStarted = true;
 		Lightning.only.CustomLightning(3500000);

@@ -1,24 +1,22 @@
-using Oldie;
 using DG.Tweening;
 using Player;
 using UnityEngine;
 
 public class Fight3Trigger : MonoBehaviour
 {
-	//private OldieRefBank _sadhu;
 	private PlayerController _player;
 	private bool _hasStarted;
 
 	private void Start()
 	{
 		_player = GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerController>();
-		//_sadhu = GameObject.FindGameObjectWithTag("Oldie").transform.root.GetComponent<OldieRefBank>();
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if(_hasStarted) return;
 		if(!GameManager.state.betaalFight1Over) return;
+		if(GameManager.state.IsInConversation) return; 
 
 		GameManager.state.IsSadhuEvil = true;
 		_hasStarted = true;
