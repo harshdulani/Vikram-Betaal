@@ -745,7 +745,7 @@ MonoBehaviour:
     explosionPrefab: {fileID: 2500305870620028316, guid: 55f295d2a185e494f8dd443aa11032f9, type: 3}
     attackSpawnTransform: {fileID: 723752032}
     attackSpeed: 0.5
-    delayBeforeLaunchAttack: 2
+    delayBeforeLaunchAttack: 1.5
   proximity:
     attackPrefab: {fileID: 1975959190090480, guid: eca000ab44c908d4dab395f654753038, type: 3}
     explosionPrefab: {fileID: 2500305870620028316, guid: 55f295d2a185e494f8dd443aa11032f9, type: 3}
@@ -764,7 +764,7 @@ MonoBehaviour:
   - {fileID: 2853775866129462113}
   - {fileID: 1793028143836776418}
   - {fileID: 3248057113941109189}
-  maxHealth: 150
+  maxHealth: 450
 --- !u!114 &1399448937
 MonoBehaviour:
   m_ObjectHideFlags: 0
